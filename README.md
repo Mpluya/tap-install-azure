@@ -103,3 +103,7 @@ az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
 az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
    --name "githubsshprivatekey" \
    -f identity
+
+az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
+   --name "githubsshpublickey" \
+   -f identity.pub

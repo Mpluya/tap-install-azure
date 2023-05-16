@@ -13,7 +13,7 @@ spec:
   - git:
       url: ssh://git@github.com/Mpluya/tap-install-azure
       ref: origin/main
-      subPath: packaging
+      subPath: build-packaging
       secretRef: 
         name: tap-install-gitops-ssh
   template:
