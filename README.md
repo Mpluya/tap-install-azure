@@ -47,18 +47,20 @@ LOCATION="westus"
 VAULT_NAME="tap-eso-vault"
 
 
-#### environment variables for the Azure Key Vault resource
+> environment variables for the Azure Key Vault resource
+
 export KEYVAULT_NAME="tap-eso-vault"
 export KEYVAULT_SECRET_NAME="example-externalsecret-key"
 export KEYVAULT_SECRET_VAlUE="This is our secret now"
 export RESOURCE_GROUP="cssa-resource-group"
 export LOCATION="westus"
 
-#### environment variables for the AAD application
-# [OPTIONAL] Only set this if you're using a Azure AD Application as part of this tutorial
+> environment variables for the AAD application
+
 export APPLICATION_NAME="eso-app"
 
-#### environment variables for the Kubernetes service account & federated identity credential
+> environment variables for the Kubernetes service account & federated identity credential
+
 export SERVICE_ACCOUNT_NAMESPACE="tap-install"
 export SERVICE_ACCOUNT_NAME="eso"
 export SERVICE_ACCOUNT_ISSUER="$(az aks show --resource-group <resource_group> --name <cluster_name> --query "oidcIssuerProfile.issuerUrl" -otsv)"
