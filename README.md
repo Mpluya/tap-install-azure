@@ -1,6 +1,6 @@
 # tap-install-azure
 
-- kapp deploy -a tap-manager -f ./app -n tap-install 
+- kapp deploy -a tap-manager -f ./build-app -n tap-install 
 
 ## install eso
 helm install external-secrets \
@@ -42,21 +42,21 @@ LOCATION="westus"
 VAULT_NAME="tap-eso-vault"
 
 
-# environment variables for the Azure Key Vault resource
+#### environment variables for the Azure Key Vault resource
 export KEYVAULT_NAME="tap-eso-vault"
 export KEYVAULT_SECRET_NAME="example-externalsecret-key"
 export KEYVAULT_SECRET_VAlUE="This is our secret now"
 export RESOURCE_GROUP="cssa-resource-group"
 export LOCATION="westus"
 
-# environment variables for the AAD application
+#### environment variables for the AAD application
 # [OPTIONAL] Only set this if you're using a Azure AD Application as part of this tutorial
 export APPLICATION_NAME="eso-app"
 
-# environment variables for the Kubernetes service account & federated identity credential
+#### environment variables for the Kubernetes service account & federated identity credential
 export SERVICE_ACCOUNT_NAMESPACE="tap-install"
 export SERVICE_ACCOUNT_NAME="eso"
-export SERVICE_ACCOUNT_ISSUER="<your service account issuer url>"
+export SERVICE_ACCOUNT_ISSUER="$(az aks show --resource-group <resource_group> --name <cluster_name> --query "oidcIssuerProfile.issuerUrl" -otsv)"
 
 3. Create an Azure Key Vault and secret
 
@@ -96,6 +96,7 @@ azwi serviceaccount create phase federated-identity \
 
 
 ---
+Initial set of secrets seeded in Azure Key Vault to bootstrap kapp (gitops) to load instructions from this repo:
 az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
    --name "githubsshknownhosts" \
    -f known_hosts
@@ -107,3 +108,7 @@ az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
 az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
    --name "githubsshpublickey" \
    -f identity.pub
+
+Imperatively applied:
+- ./secretstore.yaml
+- ./tap-install-gitops-ssh-external-secret.yaml
