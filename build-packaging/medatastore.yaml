@@ -48,7 +48,7 @@ apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretExport
 metadata:
   name: store-auth-token
-  namespace: metadata-store-secrets
+  namespace: tap-install
 spec:
   toNamespaces: 
   - "*"
