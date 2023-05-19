@@ -36,11 +36,11 @@ spec:
     template:
       type: Opaque
       data:
-        auth_token: "{{ .metadatasore-auth-token }}"
+        auth_token: "{{ .metadatasoreauthtoken }}"
   data:
-  - secretKey: metadatasore-auth-token
+  - secretKey: metadatasoreauthtoken
     remoteRef:
-      key: metadatasore-auth-token
+      key: metadatasoreauthtoken
 ---
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport
