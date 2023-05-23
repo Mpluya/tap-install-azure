@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: tap-install-gitops-ssh
+  name: tap-install-gitops-ssh-too
   namespace: tap-install
 spec:
   refreshInterval: 0m
@@ -10,7 +10,7 @@ spec:
     name: azure-secret-store
 
   target:
-    name: tap-install-gitops-ssh
+    name: tap-install-gitops-ssh-too
     creationPolicy: Owner
     template:
       data:

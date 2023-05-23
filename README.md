@@ -4,6 +4,7 @@
 - with kube context set to a k8s cluster intended for tap build --> `kapp deploy -a tap-manager -f ./build-app -n tap-install`
 - with kube context set to a k8s cluster intended for tap view --> `kapp deploy -a tap-manager -f ./view-app -n tap-install`
 - with kube context set to a k8s cluster intended for tap run --> `kapp deploy -a tap-manager -f ./run-app -n tap-install`
+- with kube context set to a k8s cluster intended for tap run prod --> `kapp deploy -a tap-manager -f ./run-prod-app -n tap-install`
 
 - kapp deploy -a tap-manager -f ./build-app -n tap-install 
 
