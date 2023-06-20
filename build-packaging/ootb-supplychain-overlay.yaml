@@ -14,12 +14,10 @@ stringData:
     spec:
       params:
       #@overlay/append
-      - name: deliverable_server_address
-        default: #@ data.values.gitops.server_address  
       - name: deliverable_repository_owner
-        default: #@ data.values.gitops.deliverable_repository_owner
+        default: "Mpluya"
       - name: deliverable_repository_name
-        default: #@ data.values.gitops.deliverable_repository_name
+        default: "tap-azure-workload-config-repo"
       - name: deliverable_branch
         default: main
 
