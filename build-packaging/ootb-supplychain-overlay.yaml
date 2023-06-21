@@ -47,7 +47,7 @@ stringData:
       - name: write-deliverable
         configs:
         - name: config
-          resource: deliverable-config    
+          resource: create-deliverable   
         params:
         - name: serviceAccount
           value: default
