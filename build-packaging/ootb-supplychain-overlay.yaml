@@ -37,14 +37,14 @@ stringData:
       #@overlay/match by="name", expects="0+"
       - name: config-writer
       #@overlay/append
-      - name: deliverable-config
+      - name: create-deliverable
         configs:
           - resource: config-writer
             name: config   
         templateRef:
           kind: ClusterConfigTemplate
           name: config-deliverable-template  
-      - name: deliverable-config-writer
+      - name: write-deliverable
         configs:
         - name: config
           resource: deliverable-config    
