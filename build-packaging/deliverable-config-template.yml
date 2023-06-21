@@ -113,7 +113,7 @@ spec:
         git:
           url: #@ git_repository()
           ref:
-            branch: #@ "{}".format("#@ data.values.gitops.branch") 
+            branch: "#@ data.values.gitops.branch"
 
         #@ if/end is_monorepo_approach():
         subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
@@ -128,4 +128,4 @@ spec:
 
     data:
       #@yaml/text-templated-strings
-      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: #@ yaml.encode(deliverable())
+      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: deliverable()
