@@ -38,9 +38,6 @@ stringData:
       - name: config-writer
       #@overlay/append
       - name: create-deliverable
-        configs:
-          - resource: config-writer
-            name: config   
         templateRef:
           kind: ClusterConfigTemplate
           name: config-deliverable-template  
