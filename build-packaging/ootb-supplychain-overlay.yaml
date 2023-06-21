@@ -17,7 +17,7 @@ stringData:
       - name: deliverable_repository_owner
         default: "Mpluya"
       - name: deliverable_repository_name
-        default: "tap-azure-workload-config-repo"
+        default: "tap-azure-deliverable-config-repo"
       - name: deliverable_branch
         default: main
 
