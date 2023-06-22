@@ -127,4 +127,4 @@ spec:
       (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
         #@ load("@ytt:data", "data")
         ---
-        #@ yaml.encode(deliverable())
+        (@= yaml.encode(deliverable()) @)
