@@ -112,7 +112,7 @@ spec:
         git:
           url: #@ git_repository()
           ref:
-            branch: "#@ data.values.gitops.branch"
+            branch: #@ "#@ data.values.gitops.{}".format("branch")
 
         #@ if/end is_monorepo_approach():
         subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
