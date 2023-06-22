@@ -89,9 +89,6 @@ spec:
     #@ end
 
     #@ def deliverable():
-    
-    #@ load("@ytt:data", "data")
-    ---
     apiVersion: carto.run/v1alpha1
     kind: Deliverable
     metadata:
@@ -127,4 +124,7 @@ spec:
 
     data:
       #@yaml/text-templated-strings
-      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: #@ yaml.encode(deliverable())
+      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
+        #@ load("@ytt:data", "data")
+        ---
+        #@ yaml.encode(deliverable())
