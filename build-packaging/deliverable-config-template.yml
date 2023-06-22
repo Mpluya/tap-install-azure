@@ -105,14 +105,12 @@ spec:
           value: #@ param("gitops_ssh_secret")
 
       source:
+        #@ if/end is_monorepo_approach():
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
+
         #@ if/end is_gitops():
         git:
           url: #@ git_repository()
-          ref:
-            branch: #@ "#@ data.values.gitops.{}".format("branch")
-
-        #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
     #@ end
 
     ---
@@ -128,3 +126,5 @@ spec:
         #@ load("@ytt:data", "data")
         ---
         (@= yaml.encode(deliverable()) @)
+              ref:
+                branch: #@ "#@ data.values.gitops.{}".format("branch")
