@@ -127,4 +127,4 @@ spec:
         ---
         (@= yaml.encode(deliverable()) @)
               ref:
-                branch: #@ "#@ data.values.gitops.{}".format("branch")
+                branch: #@ data.values.gitops.branch
