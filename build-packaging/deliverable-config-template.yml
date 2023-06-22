@@ -89,7 +89,7 @@ spec:
     #@ end
 
     #@ def fragment():
-    branch: #@ data.values.gitops.branch
+    branch: #@ "{}data.values.gitops.branch".format("#@ ") 
     #@ end
 
     #@ def deliverable():
