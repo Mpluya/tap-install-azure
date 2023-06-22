@@ -20,7 +20,7 @@ spec:
             #@data/values
             ---
             gitops:
-              branch: main
+              branch: test
   deploy:
   - kapp:
       rawOptions:
