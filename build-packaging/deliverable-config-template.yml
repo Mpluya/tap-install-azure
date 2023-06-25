@@ -125,6 +125,27 @@ spec:
       (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
         #@ load("@ytt:data", "data")
         ---
-        (@= yaml.encode(deliverable()) @)
+        apiVersion: carto.run/v1alpha1
+        kind: Deliverable
+        metadata:
+          name: (@= data.values.workload.metadata.name @)
+          namespace: (@= data.values.workload.metadata.namespace @)
+          labels: (@= merge_labels({ "app.kubernetes.io/component": "deliverable", "app.tanzu.vmware.com/deliverable-type": "web" }) @)
+        spec:
+          (@= if/end hasattr(data.values.workload.spec, "serviceAccountName"): @)
+          serviceAccountName: (@= data.values.workload.spec.serviceAccountName
+
+          (@= if/end is_gitops(): @)
+          params:
+            - name: "gitops_ssh_secret"
+              value: (@= param("gitops_ssh_secret") @)
+
+          source:
+            (@= if/end is_monorepo_approach(): @)
+            subPath: (@= "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name @)
+
+            (@= if/end is_gitops(): @)
+            git:
+              url: (@= git_repository() @)
               ref:
-                branch: #@ data.values.gitops.branch
+                branch: (@= data.values.gitops.branch @)
