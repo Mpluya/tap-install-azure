@@ -1,0 +1,26 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tap-install-gitops-ssh-too
+  namespace: tap-install
+spec:
+  refreshInterval: 0m
+  secretStoreRef:
+    kind: SecretStore
+    name: azure-secret-store
+
+  target:
+    name: tap-install-gitops-ssh-too
+    creationPolicy: Owner
+    template:
+      data:
+        ssh-knownhosts: "{{ .githubsshknownhosts }}"
+        ssh-privatekey: "{{ .githubsshprivatekey }}"
+
+  data:
+  - secretKey: githubsshknownhosts
+    remoteRef:
+      key: githubsshknownhosts
+  - secretKey: githubsshprivatekey
+    remoteRef:
+      key: githubsshprivatekey
