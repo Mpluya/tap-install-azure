@@ -5,6 +5,10 @@ apiVersion: carto.run/v1alpha1
 kind: ClusterConfigTemplate
 metadata:
   name: config-deliverable-template
+  annotations:
+    kapp.k14s.io/change-group: post-pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
   labels:
     app.tanzu.vmware.com/deliverable-type: web
 spec:

@@ -2,5 +2,9 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-azure
+  annotations:
+    kapp.k14s.io/change-group: post-pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
 spec:
   package: xpkg.upbound.io/upbound/provider-azure:v0.34.0
