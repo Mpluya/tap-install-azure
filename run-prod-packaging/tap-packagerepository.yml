@@ -9,7 +9,7 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: tanzu.nexus.shared.learn.tapsme.org/tanzu-application-platform/tap-packages:1.5.0
+      image: registry.harbor.learn.tapsme.org/tap/tap-packages:1.5.2
       secretRef: 
-        name: nrm-tap-registry
+        name: tap-registry
         namespace: tap-install
