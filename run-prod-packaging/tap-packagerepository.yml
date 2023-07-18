@@ -12,4 +12,3 @@ spec:
       image: registry.harbor.learn.tapsme.org/tap/tap-packages:1.5.2
       secretRef: 
         name: tap-registry
-        namespace: tap-install
