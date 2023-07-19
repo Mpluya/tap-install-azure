@@ -1,0 +1,26 @@
+apiVersion: bindable.database.example.org/v1alpha1
+kind: PostgreSQLInstance
+metadata:
+  name: postgresql-server
+  namespace: default
+spec:
+  parameters:
+    #! supported storage sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768
+    storageGB: 32
+  compositionSelector:
+    matchLabels:
+      provider: azure
+  publishConnectionDetailsTo:
+    name: postgresql-server
+    metadata:
+      labels:
+        services.apps.tanzu.vmware.com/class: azure-postgres
+---
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+rebaseRules:
+- path: [spec]
+  type: copy
+  sources: [existing]
+  resourceMatchers:
+   - apiVersionKindMatcher: {apiVersion: bindable.database.example.org/v1alpha1, kind: PostgreSQLInstance}
