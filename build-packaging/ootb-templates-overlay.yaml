@@ -62,7 +62,7 @@ stringData:
         spec:
           tag: #@ image()
           additionalTags: 
-          - registry.harbor.learn.tapsme.org/tap-build/workloads/mae/image-repo-namespaced-mae:0.0.0
+          - #@ "{}:0.0.0".format( image() )
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
