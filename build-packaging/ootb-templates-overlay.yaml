@@ -64,7 +64,7 @@ stringData:
         spec:
           tag: resolved_image
           additionalTags: 
-          - #@ "{}:0.0.0".format( resolved_image )
+          - index.docker.io/tap-build/workloads/mae/image-repo-namespaced-mae:0.0.0
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
