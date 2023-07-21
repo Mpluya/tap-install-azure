@@ -23,6 +23,7 @@ stringData:
     spec:
       ytt: |
         #@ load("@ytt:data", "data")
+        #@ load("@ytt:stdlib", "data")
 
         #@ def merge_labels(fixed_values):
         #@   labels = {}
@@ -61,6 +62,7 @@ stringData:
           labels: #@ merge_labels({ "app.kubernetes.io/component": "build" })
         spec:
           tag: #@ image()
+          additionalTags: #@ data.randInt(0, 100)
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
