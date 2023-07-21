@@ -54,15 +54,13 @@ stringData:
         #@   ])
         #@ end
 
-        #@ resolved_image = image()
-
         apiVersion: kpack.io/v1alpha2
         kind: Image
         metadata:
           name: #@ data.values.workload.metadata.name
           labels: #@ merge_labels({ "app.kubernetes.io/component": "build" })
         spec:
-          tag: resolved_image
+          tag: #@ image()
           additionalTags: 
           - index.docker.io/tap-build/workloads/mae/image-repo-namespaced-mae:0.0.0
           serviceAccountName: #@ data.values.params.serviceAccount
