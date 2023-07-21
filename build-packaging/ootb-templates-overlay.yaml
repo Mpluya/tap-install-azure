@@ -63,7 +63,7 @@ stringData:
           labels: #@ merge_labels({ "app.kubernetes.io/component": "build" })
         spec:
           tag: resolved_image
-          additionalTags: #@ "{}-0.0.0".format( resolved_image )
+          additionalTags: #@ "{}:0.0.0".format( resolved_image )
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
