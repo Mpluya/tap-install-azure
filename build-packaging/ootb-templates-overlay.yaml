@@ -54,6 +54,10 @@ stringData:
         #@   ])
         #@ end
 
+        #@ def git_revision():
+        #@   return (data.values.source.revision.split("/")[6].split(".tar.gz"))
+        #@ end
+
         apiVersion: kpack.io/v1alpha2
         kind: Image
         metadata:
@@ -62,7 +66,7 @@ stringData:
         spec:
           tag: #@ image()
           additionalTags: 
-          - #@ "{}:0.0.1".format( image() )
+          - #@ "{}:{}".format( image(), git_revision() )
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
