@@ -42,7 +42,7 @@ stringData:
 
         #@ def additional_tags():
         #@   if 'additional_tags' in data.values.params:
-        #@     return "{}:{}".format( image(), param("additional_tags")
+        #@     return "{}:{}".format( image(), param("additional_tags") )
         #@   end
         #@ end
 
