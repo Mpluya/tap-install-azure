@@ -74,8 +74,7 @@ stringData:
         spec:
           tag: #@ image()
           #@ if hasattr(data.values.params, "additional_tags"):
-          additionalTags: 
-          - #@ additional_tags()
+          additionalTags: #@ additional_tags()
           #@ end
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
