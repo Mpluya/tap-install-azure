@@ -42,7 +42,7 @@ stringData:
 
         #@ def additional_tags():
         #@   if 'additional_tags' in data.values.params:
-        #@     return param("additional_tags")
+        #@     return "{}:{}".format( image(), param("additional_tags")
         #@   end
         #@ end
 
@@ -72,7 +72,7 @@ stringData:
         spec:
           tag: #@ image()
           additionalTags: 
-          - #@ "{}:{}".format( image(), additional_tags() )
+          - #@ additional_tags()
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
