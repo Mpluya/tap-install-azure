@@ -71,7 +71,7 @@ stringData:
           labels: #@ merge_labels({ "app.kubernetes.io/component": "build" })
         spec:
           tag: #@ image()
-          #@ if 'additional_tags' in data.values.params:
+          #@ if hasattr(data.values.params, "additional_tags"):
           additionalTags: 
           - #@ additional_tags()
           #@ end
