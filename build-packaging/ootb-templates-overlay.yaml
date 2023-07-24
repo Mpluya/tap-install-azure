@@ -72,7 +72,7 @@ stringData:
         spec:
           tag: #@ image()
           additionalTags: 
-          - #@ additional_tags()
+          - #@ "{}:{}".format( image(), additional_tags() )
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
