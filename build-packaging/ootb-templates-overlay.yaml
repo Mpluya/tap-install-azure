@@ -55,7 +55,7 @@ stringData:
         #@ end
 
         #@ def git_revision():
-        #@   return data.values.source.revision.split("/")[1]
+        #@   return data.values.source.revision.split(":")[1]
         #@ end
 
         apiVersion: kpack.io/v1alpha2
