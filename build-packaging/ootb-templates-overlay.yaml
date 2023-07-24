@@ -41,9 +41,11 @@ stringData:
         #@ end
 
         #@ def additional_tags():
-        #@   if 'additional_tags' in data.values.params:
-        #@     return "{}:{}".format( image(), param("additional_tags") )
+        #@   tags = []
+        #@   for val in param("additional_tags"):
+        #@     tags.append("{}:{}".format( image(), val))
         #@   end
+        #@   return tags
         #@ end
 
         #@ def image():
