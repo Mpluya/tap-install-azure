@@ -40,6 +40,12 @@ stringData:
         #@   return data.values.params[key]
         #@ end
 
+        #@ def additional_tags():
+        #@   if 'additional_tags' in data.values.params:
+        #@     return param("additional_tags")
+        #@   end
+        #@ end
+
         #@ def image():
         #@   return "/".join([
         #@    data.values.params.registry.server,
@@ -66,7 +72,7 @@ stringData:
         spec:
           tag: #@ image()
           additionalTags: 
-          - #@ "{}:{}".format( image(), git_revision() )
+          - #@ additional_tags()
           serviceAccountName: #@ data.values.params.serviceAccount
           builder:
             kind: ClusterBuilder
