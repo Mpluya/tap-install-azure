@@ -10,7 +10,7 @@ metadata:
   namespace: tap-install
 spec:
   packageRef:
-    refName: full-deps.buildservice.tanzu.vmware.com
+    refName: full-tbs-deps.tanzu.vmware.com
     versionSelection:
       constraints: ">1.0.0"
       prereleases: {}
