@@ -8,7 +8,7 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: registry.harbor.learn.tapsme.org/tap/full-tbs-deps-package-repo:1.11.5
+      image: registry.harbor.learn.tapsme.org/tap-airgapped/full-tbs-deps-package-repo:1.11.5
       secretRef: 
         name: tap-registry
         namespace: tap-install
