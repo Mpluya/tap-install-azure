@@ -2,4 +2,15 @@
 #@overlay/match-child-defaults missing_ok=True
 ---
 #@schema/type any=True
-ootb_supplychain_basic_install: {}
+ootb_supplychain_basic_install:
+  registry:
+    ca_cert_data: ""
+    server: registry.harbor.learn.tapsme.org
+    repository: tap-build/workloads
+  external_delivery: true
+  gitops:
+    ssh_secret: tenant-gitops-ssh
+    server_address: ssh://git@github.com
+    repository_owner: Mpluya
+    repository_name: tap-azure-workload-config-repo
+    branch: main
