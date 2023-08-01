@@ -12,7 +12,7 @@ stringData:
     #@ basic_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-to-url"})
     #@ testing_scanning_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-test-scan-to-url"})
     
-    #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
+    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
     ---
     spec:
       params:
