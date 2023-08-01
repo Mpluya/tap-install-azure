@@ -26,10 +26,6 @@ stringData:
     ---
     spec:
       resources:
-      #@overlay/match by="name", expects="0+"
-      #@overlay/remove
-      - name: deliverable
-
       #@overlay/match by=overlay.index(2)
       #@overlay/insert before=True
       - name: source-scanner
@@ -44,6 +40,14 @@ stringData:
         templateRef:
           kind: ClusterSourceTemplate
           name: source-scanner-template
+
+    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      #@overlay/remove
+      - name: deliverable
 
     #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
     ---
