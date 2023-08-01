@@ -77,7 +77,7 @@ stringData:
           kind: ClusterTemplate
           name: config-writer-deliverable-template
 
-
+    #! USE CONFIG-WRITER OF TYPE CLUSTERCONFIGTEMPLATE INSTEAD OF CLUSTERTEMPLATE REGARDLESS OF THE SUPPLY CHAIN TO KEEP THINGS SIMPLE
     #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
     ---
     spec:
