@@ -8,8 +8,11 @@ stringData:
   ootb-supply-chain-overlay.yaml: |
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:template", "template")
-        
-    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    
+    #@ basic_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-to-url"})
+    #@ testing_scanning_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-test-scan-to-url"})
+    
+    #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
     ---
     spec:
       params:
@@ -22,7 +25,7 @@ stringData:
         default: main
 
 
-    #@overlay/match by=overlay.subset({"apiVersion": "carto.run/v1alpha1", "kind": "ClusterSupplyChain","metadata":{"name":"source-test-scan-to-url"}}), expects="0+"
+    #@overlay/match by=testing_scanning_sc, expects="0+"
     ---
     spec:
       resources:
@@ -41,7 +44,7 @@ stringData:
           kind: ClusterSourceTemplate
           name: source-scanner-template
 
-    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
     ---
     spec:
       resources:
@@ -49,7 +52,7 @@ stringData:
       #@overlay/remove
       - name: deliverable
 
-    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
     ---
     spec:
       resources:
@@ -75,7 +78,7 @@ stringData:
           name: config-writer-deliverable-template
 
 
-    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
     ---
     spec:
       resources:
