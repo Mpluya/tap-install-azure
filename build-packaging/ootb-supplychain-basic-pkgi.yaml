@@ -9,7 +9,7 @@ metadata:
     kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
     kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
 spec:
-  serviceAccountName: tap-installer-sa
+  serviceAccountName: tap-tap-install-sa
   packageRef:
     refName: ootb-supply-chain-basic.tanzu.vmware.com
     versionSelection:
