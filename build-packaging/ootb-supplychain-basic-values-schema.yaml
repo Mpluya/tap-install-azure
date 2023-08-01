@@ -6,6 +6,8 @@ ootb_supplychain_basic_install:
   carvel_package:
     workflow_enabled: true
     gitops_subpath: packages
+    name_suffix: cssa.vmware.com
+    openapiv3_enabled: true
   registry:
     ca_cert_data: ""
     server: registry.harbor.learn.tapsme.org
