@@ -9,8 +9,8 @@ stringData:
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:template", "template")
     
-    #@ basic_sc = overlay.subset({"name":"source-to-url"})
-    #@ testing_scanning_sc = overlay.subset({"name":"source-test-scan-to-url"})
+    #@ basic_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-to-url"})
+    #@ testing_scanning_sc = overlay.subset({"kind": "ClusterSupplyChain", "name":"source-test-scan-to-url"})
     
     #@overlay/match by=overlay.or_op(testing_scanning_sc, basic_sc), expects="0+"
     ---
