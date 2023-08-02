@@ -2,9 +2,10 @@
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
- name: tanzu-java-web-package
- namespace: tap-install
+  name: tanzu-java-web-package
+  namespace: tap-install
 spec:
+  serviceAccountName: tap-install-sa
   fetch:
   - git:
       url: ssh://git@github.com/Mpluya/tap-azure-workload-config-repo.git
