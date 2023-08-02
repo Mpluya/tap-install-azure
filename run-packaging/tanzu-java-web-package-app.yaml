@@ -3,7 +3,7 @@ apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
  name: tanzu-java-web-package
- namespace: mae
+ namespace: tap-install
 spec:
   fetch:
   - git:
