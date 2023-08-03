@@ -10,7 +10,9 @@ stringData:
     #@ load("@ytt:template", "template")
     
     #@ basic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-to-url"}})
+    #@ imagebasic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"basic-image-to-url"}})
     #@ testingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url"}})
+    #@ imagetestingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url "}})
     
     #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
     ---
@@ -77,8 +79,7 @@ stringData:
           kind: ClusterTemplate
           name: config-writer-deliverable-template
 
-    #! USE CONFIG-WRITER OF TYPE CLUSTERCONFIGTEMPLATE INSTEAD OF CLUSTERTEMPLATE REGARDLESS OF THE SUPPLY CHAIN TO KEEP THINGS SIMPLE
-    #@overlay/match by=overlay.subset({"kind":"ClusterSupplyChain"}), expects="0+"
+    #@overlay/match by=overlay.or_op(testingscanning, basic, imagebasic, imagetestingscanning), expects="0+"
     ---
     spec:
       resources:
