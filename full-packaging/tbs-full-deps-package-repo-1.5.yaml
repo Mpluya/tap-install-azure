@@ -1,0 +1,14 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: pkgr
+  name: tbs-full-deps-repository-1-5
+  namespace: tap-install
+spec:
+  fetch:
+    imgpkgBundle:
+      image: registry.harbor.learn.tapsme.org/tap-build/buildservice:1.10.10
+      secretRef: 
+        name: tap-registry
+        namespace: tap-install
