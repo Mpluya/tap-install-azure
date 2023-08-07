@@ -2,7 +2,7 @@
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
-  name: greeter-source-package-app
+  name: greeter-source-canary-sample-package-app
   namespace: tap-install
 spec:
   serviceAccountName: tap-install-sa
