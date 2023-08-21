@@ -47,13 +47,24 @@ stringData:
         #@   return tags
         #@ end
 
-        #@ def image():
+        #@ def image_by_namespace():
         #@   return "/".join([
         #@    data.values.params.registry.server,
         #@    "/".join([
         #@      data.values.params.registry.repository,
         #@      data.values.workload.metadata.namespace,
         #@    ]),
+        #@    "-".join([
+        #@      data.values.workload.metadata.name,
+        #@      data.values.workload.metadata.namespace,
+        #@    ])
+        #@   ])
+        #@ end
+
+        #@ def image():
+        #@   return "/".join([
+        #@    data.values.params.registry.server,
+        #@    data.values.params.registry.repository,
         #@    "-".join([
         #@      data.values.workload.metadata.name,
         #@      data.values.workload.metadata.namespace,
