@@ -30,7 +30,7 @@ spec:
     - vmware
     organizationalUnits:
     - vmware mambg
-  secretName: tap-gui-cert
+  secretName: vault-ui-cert
   isCA: false
   dnsNames:
   - vault.view.cssa.tapsme.org
