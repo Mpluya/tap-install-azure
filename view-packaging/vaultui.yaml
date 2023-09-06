@@ -7,8 +7,34 @@ spec:
   virtualhost:
     fqdn: vault.view.cssa.tapsme.org
     tls:
-      secretName: vault
+      secretName: vault-ui-cert
   routes:
   - services:
     - name: vault
       port: 8200
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-ui-cert
+  namespace: default
+spec:
+  subject:
+    countries:
+    - US
+    provinces:
+    - California
+    localities:
+    - San Fransisco
+    organizations:
+    - vmware
+    organizationalUnits:
+    - vmware mambg
+  secretName: tap-gui-cert
+  isCA: false
+  dnsNames:
+  - vault.view.cssa.tapsme.org
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+    group: cert-manager.io
