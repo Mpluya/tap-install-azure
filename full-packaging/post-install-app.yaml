@@ -21,3 +21,4 @@ spec:
   - kapp:
       rawOptions:
       - --diff-changes=true
+      - --wait=false
