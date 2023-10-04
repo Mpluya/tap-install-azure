@@ -68,7 +68,7 @@ obtained your cluster’s OIDC issuer URL
 ```
    export SERVICE_ACCOUNT_NAMESPACE="tap-install"
    export SERVICE_ACCOUNT_NAME="eso"
-   export SERVICE_ACCOUNT_ISSUER="$(az aks show --resource-group <resource_group> --name <cluster_name> --query "oidcIssuerProfile.issuerUrl" -otsv)"
+   export SERVICE_ACCOUNT_ISSUER="$(az aks show --resource-group cssa-resource-group --name tap-view --query "oidcIssuerProfile.issuerUrl" -otsv)"
 ```
 3. Create an Azure Key Vault and secret (for initial validation)
 ```
@@ -78,7 +78,7 @@ obtained your cluster’s OIDC issuer URL
 
    az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
       --name "${KEYVAULT_SECRET_NAME}" \
-      --value ${KEYVAULT_SECRET_VAlUE}"
+      --value "${KEYVAULT_SECRET_VAlUE}"
 ```
 
 4. Create an AAD application or user-assigned managed identity and grant permissions to access the secret
