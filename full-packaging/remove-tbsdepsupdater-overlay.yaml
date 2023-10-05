@@ -8,14 +8,6 @@ stringData:
   remove-tbsdepsupdater-overlay.yaml: |
     #@ load("@ytt:overlay", "overlay")
 
-    #@overlay/match by=overlay.subset({"kind": "Secret","metadata":{"name":"dependency-updater-pull-secret", "namespace":"build-service"}}), expects="0+"
-    ---
-    #@overlay/remove
-
-    #@overlay/match by=overlay.subset({"kind": "ServiceAccount","metadata":{"name":"dependency-updater-serviceaccount","namespace":"build-service"}}), expects="0+"
-    ---
-    #@overlay/remove
-
     #@overlay/match by=overlay.subset({"kind": "TanzuNetDependencyUpdater","metadata":{"name":"dependency-updater","namespace":"build-service"}}), expects="0+"
     ---
     #@overlay/remove
