@@ -6,6 +6,7 @@ metadata:
   name: tbs-full-deps-repository 
   namespace: tap-install
 spec:
+  paused: true
   fetch:
     imgpkgBundle:
       image: registry.harbor.learn.tapsme.org/tap-build-service/full-tbs-deps:1.6.3

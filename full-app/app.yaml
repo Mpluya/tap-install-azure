@@ -23,4 +23,3 @@ spec:
   - kapp:
       rawOptions:
       - --diff-changes=true
-      - --dangerous-allow-empty-list-of-resources=true
