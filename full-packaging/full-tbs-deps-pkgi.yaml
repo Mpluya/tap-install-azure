@@ -1,0 +1,17 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: full-tbs-deps
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-group: pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
+    ext.packaging.carvel.dev/ytt-paths-from-secret-name.0: remove-tbsdepsupdater-overlay
+spec:
+  serviceAccountName: tap-tap-install-sa
+  packageRef:
+    refName: full-tbs-deps.tanzu.vmware.com
+    versionSelection:
+      constraints: 1.6.3
