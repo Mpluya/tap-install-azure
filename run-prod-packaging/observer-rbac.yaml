@@ -39,4 +39,4 @@ metadata:
   name: amr-observer-editor-token
   namespace: amr-observer-system
   annotations:
-    kubernetes.io/service-account.name: amr-observer
+    kubernetes.io/service-account.name: amr-observer-editor
