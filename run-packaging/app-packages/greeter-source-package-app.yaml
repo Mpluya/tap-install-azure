@@ -5,6 +5,7 @@ metadata:
   name: greeter-source-package-app
   namespace: tap-install
 spec:
+  paused: true
   serviceAccountName: tap-install-sa
   fetch:
   - git:
