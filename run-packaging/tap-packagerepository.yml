@@ -8,6 +8,6 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: registry.harbor.learn.tapsme.org/tap/tap-packages:1.6.1
+      image: registry.harbor.learn.tapsme.org/tap/tap-packages:1.7.0-rc.7
       secretRef: 
         name: tap-registry
