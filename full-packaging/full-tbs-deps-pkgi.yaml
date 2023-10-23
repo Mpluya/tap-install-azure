@@ -11,6 +11,6 @@ metadata:
 spec:
   serviceAccountName: tap-tap-install-sa
   packageRef:
-    refName: full-tbs-deps.tanzu.vmware.com
+    refName: full-deps.buildservice.tanzu.vmware.com
     versionSelection:
       constraints: 1.6.3
