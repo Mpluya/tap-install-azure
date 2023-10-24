@@ -13,4 +13,5 @@ spec:
   packageRef:
     refName: full-deps.buildservice.tanzu.vmware.com
     versionSelection:
-      constraints: 1.6.3
+      constraints: 1.7.0-rc.10
+      prereleases: {}
