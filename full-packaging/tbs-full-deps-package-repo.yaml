@@ -9,7 +9,7 @@ spec:
   paused: true
   fetch:
     imgpkgBundle:
-      image: registry.harbor.learn.tapsme.org/tap-build-service/full-tbs-deps:1.7.0-rc.13
+      image: registry.harbor.learn.tapsme.org/tap-build-service/full-tbs-deps:1.7.0
       secretRef: 
         name: tap-registry
         namespace: tap-install
