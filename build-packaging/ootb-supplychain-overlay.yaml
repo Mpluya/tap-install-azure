@@ -27,25 +27,6 @@ stringData:
         default: main
 
 
-    #@overlay/match by=testingscanning, expects="0+"
-    ---
-    spec:
-      resources:
-      #@overlay/match by=overlay.index(2)
-      #@overlay/insert before=True
-      - name: source-scanner
-        params:
-        - default: scan-policy
-          name: scanning_source_policy
-        - default: blob-source-scan-template
-          name: scanning_source_template
-        sources:
-        - name: source
-          resource: source-tester
-        templateRef:
-          kind: ClusterSourceTemplate
-          name: source-scanner-template
-
     #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
     ---
     spec:
