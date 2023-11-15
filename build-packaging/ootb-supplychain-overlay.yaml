@@ -40,18 +40,18 @@ stringData:
     spec:
       resources:
       #@overlay/match by="name", expects="0+"
-      - name: api-descriptors
+      - name: config-writer
       #@overlay/append
       - name: create-deliverable
         configs:
-          - resource: api-descriptors
-            name: api-config   
+          - resource: config-writer
+            name: config   
         templateRef:
           kind: ClusterConfigTemplate
           name: config-deliverable-template  
       - name: write-deliverable
         configs:
-        - name: deliverable-config
+        - name: config
           resource: create-deliverable   
         params:
         - name: serviceAccount
@@ -59,5 +59,16 @@ stringData:
         templateRef:
           kind: ClusterTemplate
           name: config-writer-deliverable-template
+
+    #@overlay/match by=overlay.or_op(testingscanning, basic, imagebasic, imagetestingscanning), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: config-writer
+        #@overlay/replace
+        templateRef:
+          kind: ClusterConfigTemplate
+          name: config-writer-template
           
          
