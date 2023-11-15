@@ -70,5 +70,3 @@ stringData:
         templateRef:
           kind: ClusterConfigTemplate
           name: config-writer-template
-          
-         
