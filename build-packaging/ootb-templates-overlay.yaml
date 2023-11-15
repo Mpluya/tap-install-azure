@@ -9,14 +9,6 @@ stringData:
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:template", "template")
 
-    #@overlay/match by=overlay.subset({"kind": "ClusterTemplate","metadata":{"name":"config-writer-template"}}), expects="0+"
-    ---
-    #@overlay/replace
-    kind: ClusterConfigTemplate
-    spec:
-      #@overlay/match missing_ok=True
-      configPath: .status.completionTime
-  
     #@overlay/match by=overlay.subset({"kind": "ClusterImageTemplate","metadata":{"name":"kpack-template"}}), expects="0+"
     ---
     spec:
