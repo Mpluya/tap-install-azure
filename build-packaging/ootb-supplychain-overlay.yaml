@@ -45,13 +45,13 @@ stringData:
       - name: create-deliverable
         configs:
           - resource: api-descriptors
-            name: config   
+            name: api-config   
         templateRef:
           kind: ClusterConfigTemplate
           name: config-deliverable-template  
       - name: write-deliverable
         configs:
-        - name: config
+        - name: deliverable-config
           resource: create-deliverable   
         params:
         - name: serviceAccount
