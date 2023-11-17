@@ -44,7 +44,7 @@ stringData:
       - name: source-jackery
         sources:
         - name: source
-        resource: source-tester
+          resource: source-tester
         templateRef:
           kind: ClusterSourceTemplate
           name: testing-pipeline
