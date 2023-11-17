@@ -17,7 +17,9 @@ spec:
       default: 
         apps.tanzu.vmware.com/pipeline: test
   
-  #@ label_exclusions = "[\"" + "\", \"".join(data.values.label_propagation_exclusions) + "\"]"
+  #! label_exclusions = "[\"" + "\", \"".join(data.values.label_propagation_exclusions) + "\"]"
+
+  #@ label_exclusions = "kapp.k14s.io/app", "kapp.k14s.io/association"
   #@yaml/text-templated-strings
   ytt: |
     #@ load("@ytt:data", "data")
