@@ -50,6 +50,7 @@ stringData:
           kind: ClusterSourceTemplate
           name: testing-pipeline
 
+
     #@overlay/match by=testingscanning, expects="0+"
     ---
     spec:
