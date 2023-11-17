@@ -17,14 +17,8 @@ spec:
       secretRef: 
         name: tap-install-gitops-ssh
   template:
-  - ytt:
-      ignoreUnknownComments: true
-      inline:
-        paths:
-          values.yaml: |
-            #@data/values
-            ---
-            label_propagation_exclusions: ["kapp.k14s.io/app", "kapp.k14s.io/association"]
+  - ytt: {}
+
   deploy:
   - kapp:
       rawOptions:
