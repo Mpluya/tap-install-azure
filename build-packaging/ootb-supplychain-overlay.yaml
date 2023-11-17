@@ -35,31 +35,6 @@ stringData:
       #@overlay/remove
       - name: deliverable
 
-    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
-    ---
-    spec:
-      resources:
-      #@overlay/match by="name", expects="0+"
-      - name: config-writer
-      #@overlay/append
-      - name: create-deliverable
-        configs:
-          - resource: config-writer
-            name: config   
-        templateRef:
-          kind: ClusterConfigTemplate
-          name: config-deliverable-template  
-      - name: write-deliverable
-        configs:
-        - name: config
-          resource: create-deliverable   
-        params:
-        - name: serviceAccount
-          value: default
-        templateRef:
-          kind: ClusterTemplate
-          name: config-writer-deliverable-template
-
     #@overlay/match by=testingscanning, expects="0+"
     ---
     spec:
@@ -86,6 +61,30 @@ stringData:
         - name: source
           resource: source-jackery
 
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: config-writer
+      #@overlay/append
+      - name: create-deliverable
+        configs:
+          - resource: config-writer
+            name: config   
+        templateRef:
+          kind: ClusterConfigTemplate
+          name: config-deliverable-template  
+      - name: write-deliverable
+        configs:
+        - name: config
+          resource: create-deliverable   
+        params:
+        - name: serviceAccount
+          value: default
+        templateRef:
+          kind: ClusterTemplate
+          name: config-writer-deliverable-template
 
     #@overlay/match by=overlay.or_op(testingscanning, basic, imagebasic, imagetestingscanning), expects="0+"
     ---
