@@ -60,6 +60,33 @@ stringData:
           kind: ClusterTemplate
           name: config-writer-deliverable-template
 
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: source-tester
+      #@overlay/append
+      - name: source-jackery
+        sources:
+        - name: source
+          resource: source-tester
+        templateRef:
+          kind: ClusterSourceTemplate
+          name: testing-pipeline
+
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: image-provider
+        #@overlay/replace
+        sources:
+        - name: source
+          resource: source-jackery
+
+
     #@overlay/match by=overlay.or_op(testingscanning, basic, imagebasic, imagetestingscanning), expects="0+"
     ---
     spec:
