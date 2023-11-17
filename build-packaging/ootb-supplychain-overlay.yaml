@@ -60,7 +60,7 @@ stringData:
           kind: ClusterTemplate
           name: config-writer-deliverable-template
 
-    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    #@overlay/match by=overlay.or_op(testingscanning), expects="0+"
     ---
     spec:
       resources:
@@ -75,7 +75,7 @@ stringData:
           kind: ClusterSourceTemplate
           name: testing-pipeline
 
-    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    #@overlay/match by=overlay.or_op(testingscanning), expects="0+"
     ---
     spec:
       resources:
