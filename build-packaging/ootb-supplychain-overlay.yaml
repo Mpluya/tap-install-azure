@@ -47,7 +47,7 @@ stringData:
           resource: source-tester
         templateRef:
           kind: ClusterSourceTemplate
-          name: testing-pipeline
+          name: quality-pipeline
 
 
     #@overlay/match by=testingscanning, expects="0+"
