@@ -34,6 +34,24 @@ spec:
             ---
             gitops:
               branch: main
+  - ytt:
+      ignoreUnknownComments: true
+      inline:
+        paths:
+          values.yaml: |
+            #@data/values
+            ---
+            gitops:
+              branch: main
+  - ytt:
+      ignoreUnknownComments: true
+      inline:
+        paths:
+          values.yaml: |
+            #@data/values
+            ---
+            gitops:
+              branch: main
   deploy:
   - kapp:
       rawOptions:
