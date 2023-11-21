@@ -85,14 +85,14 @@ spec:
     #@       strip_trailing_slash(data.values.params.gitops_server_address),
     #@       strip_trailing_slash(data.values.params.deliverable_repository_owner),
     #@       "_git",
-    #@       data.values.params.gitops_repository_name,
+    #@       data.values.params.deliverable_repository_name,
     #@     ])
     #@   end
     #@
     #@   return "/".join([
     #@     strip_trailing_slash(data.values.params.gitops_server_address),
-    #@     strip_trailing_slash(data.values.params.gitops_repository_owner),
-    #@     data.values.params.gitops_repository_name,
+    #@     strip_trailing_slash(data.values.params.deliverable_repository_owner),
+    #@     data.values.params.deliverable_repository_name,
     #@   ]) + ".git"
     #@ end
 
