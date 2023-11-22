@@ -15,6 +15,9 @@ spec:
     base:
       apiVersion: dbforpostgresql.azure.upbound.io/v1beta1
       kind: FlexibleServer
+      metadata:
+        labels:
+          testing.upbound.io/example-name: example
       spec:
         forProvider:
           administratorLogin: myPgAdmin
@@ -67,15 +70,15 @@ spec:
     base:
       apiVersion: dbforpostgresql.azure.upbound.io/v1beta1
       kind: FlexibleServerFirewallRule
+      metadata:
+        labels:
+          testing.upbound.io/example-name: example
       spec:
         forProvider:
-          serverIdRef:
-            policy: 
-              resolution: 'Optional'
           serverIdSelector:
             matchControllerRef: true
-            policy: 
-              resolution: 'Optional'
+            matchLabels:
+              testing.upbound.io/example-name: example
           #! wip
           startIpAddress: 70.163.251.107
           endIpAddress: 70.163.251.107
