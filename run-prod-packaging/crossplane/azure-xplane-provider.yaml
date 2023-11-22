@@ -7,4 +7,4 @@ metadata:
     kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
     kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
 spec:
-  package: xpkg.upbound.io/upbound/provider-azure-management:v0.37.0
+  package: xpkg.upbound.io/upbound/provider-azure-dbforpostgresql:v0.38.2
