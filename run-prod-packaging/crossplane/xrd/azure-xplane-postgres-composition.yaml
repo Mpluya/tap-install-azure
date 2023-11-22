@@ -69,8 +69,13 @@ spec:
       kind: FlexibleServerFirewallRule
       spec:
         forProvider:
+          serverIdRef:
+            policy: 
+              resolution: 'Optional'
           serverIdSelector:
             matchControllerRef: true
+            policy: 
+              resolution: 'Optional'
           #! wip
           startIpAddress: 70.163.251.107
           endIpAddress: 70.163.251.107
