@@ -10,7 +10,7 @@ ootb_supplychain_basic_install:
     openapiv3_enabled: true
   registry:
     ca_cert_data: ""
-    server: registry.harbor.learn.tapsme.org
+    server: cxscssa.azurecr.io
     repository: tap-build/workloads
   external_delivery: true
   gitops:
