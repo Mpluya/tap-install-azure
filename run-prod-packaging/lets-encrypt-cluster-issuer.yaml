@@ -65,3 +65,51 @@ metadata:
     kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: cert-manager
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: cert-manager
+imagePullSecrets:
+  - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: demo
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: demo
+imagePullSecrets:
+  - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: mae
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: mae
+imagePullSecrets:
+  - name: tap-registry
