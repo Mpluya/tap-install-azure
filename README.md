@@ -1,14 +1,5 @@
 # tap-install-azure
 
-
-- with kube context set to a k8s cluster intended for tap build --> `kapp deploy -a tap-manager -f ./build-app -n tap-install`
-- with kube context set to a k8s cluster intended for tap view --> `kapp deploy -a tap-manager -f ./view-app -n tap-install`
-- with kube context set to a k8s cluster intended for tap run --> `kapp deploy -a tap-manager -f ./run-app -n tap-install`
-- with kube context set to a k8s cluster intended for tap run prod --> `kapp deploy -a tap-manager -f ./run-prod-app -n tap-install`
-- with kube context set to a k8s cluster intended for tap full --> `kapp deploy -a tap-manager -f ./full-app -n tap-install`
-
-- kapp deploy -a tap-manager -f ./build-app -n tap-install 
-
 ## install eso
 helm install external-secrets \
    external-secrets/external-secrets \
@@ -18,31 +9,30 @@ helm install external-secrets \
 
 
 ## enable azure workload identity
+
+Enabling Azure Workload Identity for External Secrets Operator:
 https://external-secrets.io/v0.8.1/provider/azure-key-vault/#workload-identity
 
 Quickstart on Azure Workload Identity:
 https://azure.github.io/azure-workload-identity/docs/quick-start.html
 
-1. Complete the installation guide
-Installation guide. At this point, you should have already:
+Complete the installation guide for azure workload identity. This can now be easily done during your aks cluster creation:
+- `az aks create -g "${RESOURCE_GROUP}" -n myAKSCluster --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys` 
 
-installed the mutating admission webhook
-obtained your cluster’s OIDC issuer URL
-[optional] installed the Azure AD Workload Identity CLI
+   OR
 
-```
-   export AZURE_TENANT_ID="$(az account show -s <AzureSubscriptionID> --query tenantId -otsv)"
-   helm repo add azure-workload-identity https://azure.github.io/azure-workload-identity/charts
-   helm repo update
-   helm install workload-identity-webhook azure-workload-identity/workload-identity-webhook \
-      --namespace azure-workload-identity-system \
-      --create-namespace \
-      --set azureTenantID="${AZURE_TENANT_ID}"
-   curl -sL https://github.com/Azure/azure-workload-identity/releases/download/v1.1.0/azure-wi-webhook.yaml | envsubst | kubectl apply -f -
-```
+- `az aks update -g "${RESOURCE_GROUP}" -n myAKSCluster --enable-oidc-issuer --enable-workload-identity` (for an update)
+
+Full details on enabling azure workload identity on aks is documented [here](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster).
+
+At this point, you should have already:
+- enabled azure workload identity
+- obtained your cluster’s OIDC issuer URL
 
 
-2. Export environment variables
+## configure azure key vault
+
+1. Export environment variables
 ```
    TENANT_ID=$(az account show --query tenantId | tr -d \")
    RESOURCE_GROUP="cssa-resource-group"
@@ -70,7 +60,7 @@ obtained your cluster’s OIDC issuer URL
    export SERVICE_ACCOUNT_NAME="eso"
    export SERVICE_ACCOUNT_ISSUER="$(az aks show --resource-group cssa-resource-group --name tap-view --query "oidcIssuerProfile.issuerUrl" -otsv)"
 ```
-3. Create an Azure Key Vault and secret (for initial validation)
+2. Create an Azure Key Vault and secret (for initial validation)
 ```
    az keyvault create --resource-group "${RESOURCE_GROUP}" \
       --location "${LOCATION}" \
@@ -81,7 +71,7 @@ obtained your cluster’s OIDC issuer URL
       --value "${KEYVAULT_SECRET_VAlUE}"
 ```
 
-4. Create an AAD application or user-assigned managed identity and grant permissions to access the secret
+3. Create an AAD application or user-assigned managed identity and grant permissions to access the secret
 ```
    azwi serviceaccount create phase app --aad-application-name "${APPLICATION_NAME}"
    
@@ -92,7 +82,7 @@ obtained your cluster’s OIDC issuer URL
 ```
 
 
-5. Create a Kubernetes service account
+4. Create a Kubernetes service account
 ```
    azwi serviceaccount create phase sa \
    --aad-application-name "${APPLICATION_NAME}" \
@@ -100,7 +90,7 @@ obtained your cluster’s OIDC issuer URL
    --service-account-name "${SERVICE_ACCOUNT_NAME}"
 ```
 
-6. Establish federated identity credential between the identity and the service account issuer & subject
+5. Establish federated identity credential between the identity and the service account issuer & subject
 ```
    azwi serviceaccount create phase federated-identity \
    --aad-application-name "${APPLICATION_NAME}" \
@@ -110,7 +100,7 @@ obtained your cluster’s OIDC issuer URL
 ```
 
 ---
-Initial set of secrets seeded in Azure Key Vault to bootstrap kapp (gitops) to load instructions from this repo:
+Initial set of secrets seeded in Azure Key Vault to bootstrap kapp (gitops) to load manifests from this repo:
 ```
    az keyvault secret set --vault-name "${KEYVAULT_NAME}" \
       --name "githubsshknownhosts" \
@@ -128,3 +118,11 @@ Initial set of secrets seeded in Azure Key Vault to bootstrap kapp (gitops) to l
 Imperatively applied:
 - ./secretstore.yaml
 - ./tap-install-gitops-ssh-external-secret.yaml
+
+
+## install TAP via gitops (package mgmt)
+- with kube context set to a k8s cluster intended for tap build --> `kapp deploy -a tap-manager -f ./build-app -n tap-install`
+- with kube context set to a k8s cluster intended for tap view --> `kapp deploy -a tap-manager -f ./view-app -n tap-install`
+- with kube context set to a k8s cluster intended for tap run --> `kapp deploy -a tap-manager -f ./run-app -n tap-install`
+- with kube context set to a k8s cluster intended for tap run prod --> `kapp deploy -a tap-manager -f ./run-prod-app -n tap-install`
+- with kube context set to a k8s cluster intended for tap full --> `kapp deploy -a tap-manager -f ./full-app -n tap-install`
