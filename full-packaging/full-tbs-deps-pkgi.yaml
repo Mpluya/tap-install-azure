@@ -13,7 +13,7 @@ spec:
   packageRef:
     refName: full-deps.buildservice.tanzu.vmware.com
     versionSelection:
-      constraints: 1.7.29
+      constraints: ">=1.7.29"
       prereleases: {}
   values:
     - secretRef:

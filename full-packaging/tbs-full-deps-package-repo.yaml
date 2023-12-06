@@ -6,10 +6,8 @@ metadata:
   name: tbs-full-deps-repository 
   namespace: tap-install
 spec:
-  paused: true
   fetch:
     imgpkgBundle:
-      image: cxscssa.azurecr.io/tanzu-build-service-full-deps/full-deps-package-repo:1.7.1
+      image: cxscssa.azurecr.io/tanzu-build-service-full-deps/full-deps-package-repo:1.7.0
       secretRef: 
         name: tap-registry
-        namespace: tap-install
