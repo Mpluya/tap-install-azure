@@ -76,11 +76,32 @@ stringData:
         #@   return data.values.source.revision.split(":")[1]
         #@ end
 
+        #@ def correlationId():
+        #@   if hasattr(data.values.workload, "annotations") and hasattr(data.values.workload.annotations, "apps.tanzu.vmware.com/correlationid"):
+        #@     return data.values.workload.annotations["apps.tanzu.vmware.com/correlationid"]
+        #@   end
+        #@   url = ""
+        #@   if hasattr(data.values.workload.spec, "source"):
+        #@     if hasattr(data.values.workload.spec.source, "git"):
+        #@       url = data.values.workload.spec.source.git.url
+        #@     elif hasattr(data.values.workload.spec.source, "image"):
+        #@       url = data.values.workload.spec.source.image.split("@")[0]
+        #@     end
+        #@     url = url + "?sub_path=" + getattr(data.values.workload.spec.source, "subPath", "/")
+        #@   end
+        #@   if param("maven"):
+        #@     url = maven_repository_url() + "/" + maven_param("groupId").replace(".", "/") + "/" + maven_param("artifactId")  
+        #@   end
+        #@   return url
+        #@ end
+
         apiVersion: kpack.io/v1alpha2
         kind: Image
         metadata:
           name: #@ data.values.workload.metadata.name
           labels: #@ merge_labels({ "app.kubernetes.io/component": "build" })
+        annotations:
+          apps.tanzu.vmware.com/correlationid: #@ correlationId()
         spec:
           tag: #@ image()
           #@ if hasattr(data.values.params, "additional_tags"):
