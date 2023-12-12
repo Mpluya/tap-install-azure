@@ -57,3 +57,20 @@ spec:
   - secretKey: amrcloudeventhandleredittoken
     remoteRef:
       key: amrcloudeventhandleredittoken
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretExport
+metadata:
+  name: amr-observer-edit-token
+  namespace: tap-install
+spec:
+  toNamespaces: 
+    - amr-observer-system
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: amr-observer-edit-token
+  namespace: amr-observer-system
+spec:
+  fromNamespace: tap-install
