@@ -19,3 +19,7 @@ ootb_supplychain_basic_install:
     repository_owner: Mpluya
     repository_name: tap-azure-workload-config-repo
     branch: main
+  maven:
+    repository:
+      url: ""
+      secret_name: ""
