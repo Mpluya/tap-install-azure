@@ -39,6 +39,23 @@ stringData:
         #@   return data.values.params[key]
         #@ end
 
+        #@ def maven_param(key):
+        #@   if not key in data.values.params["maven"]:
+        #@     return None
+        #@   end
+        #@   return data.values.params["maven"][key]
+        #@ end
+
+        #@ def maven_repository_url():
+        #@   if maven_param("repository") and "url" in maven_param("repository"):
+        #@     return maven_param("repository")["url"]
+        #@   elif param("maven_repository_url"):
+        #@     return param("maven_repository_url")
+        #@   else:
+        #@     return None
+        #@   end   
+        #@ end
+
         #@ def additional_tags():
         #@   tags = []
         #@   for val in param("additional_tags"):
