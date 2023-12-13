@@ -8,6 +8,6 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: cxscssa.azurecr.io/tanzu-build-service-full-deps/full-deps-package-repo:1.7.0
+      image: cxscssa.azurecr.io/tanzu-build-service-full-deps/full-deps-package-repo:1.7.1
       secretRef: 
         name: tap-registry
