@@ -5,6 +5,7 @@ metadata:
   name: ootb-supply-chain-basic
   namespace: tap-install
   annotations:
+    packaging.carvel.dev/downgradable: ""
     kapp.k14s.io/change-group: pkgi
     kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
     kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
