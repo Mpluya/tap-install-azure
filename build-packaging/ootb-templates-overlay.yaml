@@ -19,10 +19,9 @@ stringData:
         #@ load("@ytt:assert", "assert")
 
         #@ def merge_labels(fixed_values):
-        #@  label_exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association"]) + "\"]"
         #@   labels = {}
         #@   if hasattr(data.values.workload.metadata, "labels"):
-        #@     exclusions = (@= label_exclusions @)
+        #@     exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association"]) + "\"]"
         #@     for k,v in dict(data.values.workload.metadata.labels).items():
         #@       if k not in exclusions:
         #@         labels[k] = v
