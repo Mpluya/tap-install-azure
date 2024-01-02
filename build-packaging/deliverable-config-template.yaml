@@ -120,7 +120,7 @@ spec:
         git:
           url: #@ git_repository()
           ref:
-            branch: #@ data.values.gitops.branch
+            branch: #@ param("gitops_branch")
     #@ end
 
     #@ def shared_conf():
