@@ -12,6 +12,9 @@ metadata:
   labels:
     app.tanzu.vmware.com/deliverable-type: web
 spec:
+  params:
+    - name: env
+      default: dev
   configPath: .data
 
   ytt: |
