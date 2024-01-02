@@ -18,6 +18,7 @@ spec:
     #@ load("@ytt:yaml", "yaml")
     #@ load("@ytt:data", "data")
     #@ load("@ytt:assert", "assert")
+    #@ load("@ytt:overlay", "overlay")
 
     #@ def merge_labels(fixed_values):
     #@   labels = {}
@@ -123,8 +124,8 @@ spec:
     #@ end
 
     #@ def shared_conf():
-    #@overlay/match missing_ok=True
-    shared_conf: val
+      #@overlay/match missing_ok=True
+      shared_conf: val
     #@ end
 
     #@ def add_shared_conf(old, _):
