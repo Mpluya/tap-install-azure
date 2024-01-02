@@ -102,7 +102,7 @@ spec:
     metadata:
       name: #@ data.values.workload.metadata.name
       namespace: #@ data.values.workload.metadata.namespace
-      labels: #@ merge_labels({ "app.kubernetes.io/component": "deliverable", "app.tanzu.vmware.com/deliverable-type": "web", "carto.run/workload-name": data.values.workload.metadata.name, "carto.run/workload-namespace": data.values.workload.metadata.namespace })
+      labels: #@ merge_labels({ "app.kubernetes.io/test": "mae", "app.kubernetes.io/component": "deliverable", "app.tanzu.vmware.com/deliverable-type": "web", "carto.run/workload-name": data.values.workload.metadata.name, "carto.run/workload-namespace": data.values.workload.metadata.namespace })
     spec:
       #@ if/end hasattr(data.values.workload.spec, "serviceAccountName"):
       serviceAccountName: #@ data.values.workload.spec.serviceAccountName
