@@ -125,7 +125,7 @@ spec:
 
     #@ def shared_conf():
     #@overlay/match missing_ok=True
-    shared_conf: val
+    apiVersion: carto.run/v1alpha2
     #@ end
 
     #@ def add_shared_conf(old, _):
