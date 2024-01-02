@@ -118,6 +118,17 @@ spec:
         #@ if/end is_gitops():
         git:
           url: #@ git_repository()
+          ref:
+            branch: #@ data.values.gitops.branch
+    #@ end
+
+    #@ def shared_conf():
+    #@overlay/match missing_ok=True
+    shared_conf: val
+    #@ end
+
+    #@ def add_shared_conf(old, _):
+    #@   return yaml.encode(overlay.apply(yaml.decode(old), shared_conf()))
     #@ end
 
     ---
@@ -128,10 +139,6 @@ spec:
       labels: #@ merge_labels({ "app.kubernetes.io/component": "config" })
 
     data:
+      #@overlay/replace via=add_shared_conf
       #@yaml/text-templated-strings
-      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
-        #@ load("@ytt:data", "data")
-        ---
-        (@= yaml.encode(deliverable()) @)
-              ref:
-                branch: #@ data.values.gitops.branch
+      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: (@= yaml.encode(deliverable()) @)
