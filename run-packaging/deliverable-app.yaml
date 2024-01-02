@@ -26,6 +26,7 @@ spec:
           values.yaml: |
             #@data/values
             ---
+            env: dev
             gitops:
               branch: main
   deploy:

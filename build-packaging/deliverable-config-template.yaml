@@ -113,7 +113,7 @@ spec:
 
       source:
         #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name + "/" + data.values.env
 
         #@ if/end is_gitops():
         git:
