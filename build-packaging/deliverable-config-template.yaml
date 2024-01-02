@@ -140,6 +140,6 @@ spec:
       labels: #@ merge_labels({ "app.kubernetes.io/component": "config" })
 
     data:
-      #@overlay/replace via=add_shared_conf
       #@yaml/text-templated-strings
+      #@overlay/replace via=add_shared_conf
       (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: (@= yaml.encode(deliverable()) @)
