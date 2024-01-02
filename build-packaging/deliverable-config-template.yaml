@@ -133,6 +133,10 @@ spec:
     #@ end
 
     ---
+    #@ load("@ytt:overlay", "overlay")
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:yaml", "yaml")
+    
     apiVersion: v1
     kind: ConfigMap
     metadata:
