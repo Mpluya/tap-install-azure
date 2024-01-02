@@ -114,37 +114,25 @@ spec:
 
       source:
         #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name + "/" + data.values.env
 
         #@ if/end is_gitops():
         git:
           url: #@ git_repository()
-          ref:
-            branch: #@ param("gitops_branch")
-    #@ end
-
-    #@ def shared_conf():
-    #@overlay/match missing_ok=True
-    apiVersion: carto.run/v1alpha2
-    #@ end
-
-    #@ def add_shared_conf(old, _):
-    #@   return yaml.encode(overlay.apply(yaml.decode(old), shared_conf()))
     #@ end
 
     ---
-    #@ load("@ytt:overlay", "overlay")
-    #@ load("@ytt:data", "data")
-    #@ load("@ytt:yaml", "yaml")
-    
     apiVersion: v1
     kind: ConfigMap
     metadata:
       name: #@ data.values.workload.metadata.name + "-deliverable"
       labels: #@ merge_labels({ "app.kubernetes.io/component": "config" })
-    
-    #@overlay/match by=overlay.subset({"kind": "ConfigMap"}),expects="1+"
+
     data:
-      #@overlay/replace via=add_shared_conf
       #@yaml/text-templated-strings
-      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: (@= yaml.encode(deliverable()) @)
+      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
+        #@ load("@ytt:data", "data")
+        ---
+        (@= yaml.encode(deliverable()) @)
+              ref:
+                branch: #@ data.values.gitops.branch
