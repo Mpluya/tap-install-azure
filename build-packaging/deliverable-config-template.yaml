@@ -12,9 +12,6 @@ metadata:
   labels:
     app.tanzu.vmware.com/deliverable-type: web
 spec:
-  params:
-    - name: env
-      default: dev
   configPath: .data
 
   ytt: |
@@ -116,7 +113,7 @@ spec:
 
       source:
         #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name + "/" + data.values.params.env
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
 
         #@ if/end is_gitops():
         git:
