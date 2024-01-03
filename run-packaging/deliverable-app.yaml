@@ -23,12 +23,29 @@ spec:
       ignoreUnknownComments: true
       inline:
         paths:
-          values.yaml: |
-            #@data/values
+          update-subpath.yaml: |
+            #@ load("@ytt:overlay", "overlay")
+            #@ load("@ytt:data", "data")
+            #@ load("@ytt:yaml", "yaml")
+
+            #@ def replace_after_last_slash(input_fragment):
+            #@   input_str = yaml.decode(yaml.encode(input_fragment))
+            #@   last_slash_index = input_str.rfind("/")
+            #@   if last_slash_index == -1:
+            #@     return input_str   
+            #@   end
+            #@   result = input_str[:last_slash_index + 1] + "qa"  
+            #@   return result
+            #@ end
+
+            #@overlay/match by=overlay.subset({"kind":"Deliverable"}), expects="0+"
             ---
-            env: dev
-            gitops:
-              branch: main
+            spec:
+              #@overlay/match missing_ok=True
+              source:
+                #@overlay/match missing_ok=True
+                #@overlay/replace via=lambda left,_: replace_after_last_slash(left)
+                subPath:
   deploy:
   - kapp:
       rawOptions:
