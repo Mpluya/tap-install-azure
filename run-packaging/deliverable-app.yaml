@@ -26,7 +26,7 @@ spec:
           values.yaml: |
             #@data/values
             ---
-            env: dev
+            env: qa
             gitops:
               branch: main
           update-subpath.yaml: |
