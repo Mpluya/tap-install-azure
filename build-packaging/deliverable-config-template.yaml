@@ -127,7 +127,7 @@ spec:
         image: #@ image()
 
         #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name + "/dev"
     #@ end
 
     ---
@@ -139,9 +139,4 @@ spec:
 
     data:
       #@yaml/text-templated-strings
-      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: |
-        #@ load("@ytt:data", "data")
-        ---
-        (@= yaml.encode(deliverable()) @)
-              ref:
-                branch: #@ data.values.gitops.branch
+      (@= data.values.workload.metadata.name @)-(@= data.values.workload.metadata.namespace @)-deliverable.yml: #@ yaml.encode(deliverable())
