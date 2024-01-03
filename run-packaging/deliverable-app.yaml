@@ -40,7 +40,7 @@ spec:
             #@   if last_slash_index == -1:
             #@     return input_str   
             #@   end
-            #@   result = input_str[:last_slash_index + 1] + "qa"  
+            #@   result = input_str[:last_slash_index + 1] + data.values.env
             #@   return result
             #@ end
 
