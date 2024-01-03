@@ -27,8 +27,6 @@ spec:
             #@data/values
             ---
             env: prod
-            gitops:
-              branch: main
           update-subpath.yaml: |
             #@ load("@ytt:overlay", "overlay")
             #@ load("@ytt:data", "data")
