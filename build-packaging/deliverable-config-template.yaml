@@ -102,23 +102,32 @@ spec:
     metadata:
       name: #@ data.values.workload.metadata.name
       namespace: #@ data.values.workload.metadata.namespace
-      labels: #@ merge_labels({ "app.kubernetes.io/component": "deliverable", "app.tanzu.vmware.com/deliverable-type": "web", "carto.run/workload-name": data.values.workload.metadata.name, "carto.run/workload-namespace": data.values.workload.metadata.namespace })
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "deliverable", "app.tanzu.vmware.com/deliverable-type": "web" })  
     spec:
       #@ if/end hasattr(data.values.workload.spec, "serviceAccountName"):
       serviceAccountName: #@ data.values.workload.spec.serviceAccountName
 
-      #@ if/end is_gitops():
+      #@ if/end is_gitops() or 'serviceAccount' in data.values.params:
       params:
+        #@ if/end is_gitops():
         - name: "gitops_ssh_secret"
           value: #@ param("gitops_ssh_secret")
-
+        #@ if/end 'serviceAccount' in data.values.params:
+        - name: "serviceAccount"
+          value: #@ param("serviceAccount")
+    
       source:
-        #@ if/end is_monorepo_approach():
-        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name + "/dev"
-
         #@ if/end is_gitops():
         git:
           url: #@ git_repository()
+          ref:
+            branch: #@ param("gitops_branch")
+
+        #@ if/end not is_gitops():
+        image: #@ image()
+
+        #@ if/end is_monorepo_approach():
+        subPath: #@ "config/" + data.values.workload.metadata.namespace + "/" + data.values.workload.metadata.name
     #@ end
 
     ---
