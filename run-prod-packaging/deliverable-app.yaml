@@ -26,8 +26,32 @@ spec:
           values.yaml: |
             #@data/values
             ---
+            env: prod
             gitops:
-              branch: prod
+              branch: main
+          update-subpath.yaml: |
+            #@ load("@ytt:overlay", "overlay")
+            #@ load("@ytt:data", "data")
+            #@ load("@ytt:yaml", "yaml")
+
+            #@ def replace_after_last_slash(input_fragment):
+            #@   input_str = yaml.decode(yaml.encode(input_fragment))
+            #@   last_slash_index = input_str.rfind("/")
+            #@   if last_slash_index == -1:
+            #@     return input_str   
+            #@   end
+            #@   result = input_str[:last_slash_index + 1] + data.values.env
+            #@   return result
+            #@ end
+
+            #@overlay/match by=overlay.subset({"kind":"Deliverable"}), expects="0+"
+            ---
+            spec:
+              #@overlay/match missing_ok=True
+              source:
+                #@overlay/match missing_ok=True
+                #@overlay/replace via=lambda left,_: replace_after_last_slash(left)
+                subPath:
   deploy:
   - kapp:
       rawOptions:
