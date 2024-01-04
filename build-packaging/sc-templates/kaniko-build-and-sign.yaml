@@ -60,7 +60,7 @@ spec:
       env:
       - name: "DOCKER_CONFIG"
         value: "/docker-config/"
-      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
       script: |
         #!/usr/bin/env bash
 
