@@ -105,7 +105,6 @@ spec:
         - sign
         - --key k8s://tap-install/cosign
         - ${image}@${digest}
-        - --tlog-upload=false
       securityContext:
         runAsUser: 0
     - name: write-image-ref
