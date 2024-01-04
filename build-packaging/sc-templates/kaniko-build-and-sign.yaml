@@ -101,8 +101,8 @@ spec:
           mountPath: /kaniko/ssl/certs
     - name: sign
       image: bitnami/cosign:2.2.2
-      args:
-        - sign --key k8s://tap-install/cosign ${image}@${digest}
+      script: |
+        sign --key k8s://tap-install/cosign ${image}@${digest} --tlog-upload=false
       securityContext:
         runAsUser: 0
     - name: write-image-ref
