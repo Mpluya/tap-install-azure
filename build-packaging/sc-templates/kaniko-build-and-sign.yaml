@@ -39,7 +39,7 @@ spec:
       name: image_ref
   steps:
     - name: pull-source-code
-      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
       script: |
         #!/usr/bin/env bash
 
@@ -60,7 +60,7 @@ spec:
       env:
       - name: "DOCKER_CONFIG"
         value: "/docker-config/"
-      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
       script: |
         #!/usr/bin/env bash
 
@@ -82,7 +82,7 @@ spec:
       env:
       - name: "DOCKER_CONFIG"
         value: "/kaniko/.docker"
-      image: dev.registry.tanzu.vmware.com/ootb-templates/kaniko@sha256:45a2d95c12a1627ddbe7dee4b18c906d3d4633fa6d354e57beb698e6c4c5fe83
+      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:45a2d95c12a1627ddbe7dee4b18c906d3d4633fa6d354e57beb698e6c4c5fe83
       args:
         - $(params.extra_args)
         - --dockerfile=$(params.dockerfile)
@@ -108,7 +108,7 @@ spec:
       securityContext:
         runAsUser: 0
     - name: write-image-ref
-      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
       script: |
         #!/usr/bin/env bash
 
