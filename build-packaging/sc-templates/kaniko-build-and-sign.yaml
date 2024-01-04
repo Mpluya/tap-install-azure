@@ -1,0 +1,129 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: kaniko-build
+  namespace: tap-tasks
+spec:
+  description: This task builds a simple Dockerfile with kaniko and pushes
+    to a registry. It then stores the image ref as a result.
+  params:
+    - name: source_tar
+      description: URL to tarball of source code
+      type: string
+    - name: image
+      description: Name (reference) of the image to build.
+      type: string
+    - name: dockerfile
+      description: Path to the Dockerfile to build.
+      type: string
+      default: ./Dockerfile
+    - name: context
+      description: The build context used by Kaniko.
+      type: string
+      default: .
+    - name: extra_args
+      description: Extra args to pass to Kaniko build
+      type: array
+      default: []
+    - name: ca_cert_data
+      type: string
+      default: ""
+      description: >
+        PEM encoded certificate data for the image registry where the image
+        will be pushed to.
+  results:
+    - description: Digest of the image just built.
+      name: image_digest
+    - description: Ref of the image just built.
+      name: image_ref
+  steps:
+    - name: pull-source-code
+      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      script: |
+        #!/usr/bin/env bash
+
+        set -o errexit
+        set -o xtrace
+
+        source="$(params.source_tar)"
+
+        cd `mktemp -d`
+        curl -sL -o source.tar.gz "${source}"
+        tar --touch --no-overwrite-dir -xzf source.tar.gz -C /source
+      securityContext:
+        runAsUser: 0
+      volumeMounts:
+        - name: source-dir
+          mountPath: /source
+    - name: copy-docker-config-and-certs
+      env:
+      - name: "DOCKER_CONFIG"
+        value: "/docker-config/"
+      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      script: |
+        #!/usr/bin/env bash
+
+        set -o errexit
+        set -o xtrace
+
+        cp /tekton/creds/.docker/config.json /docker-config/
+
+        cp /etc/ssl/certs/ca-certificates.crt /certs/ca-certificates.crt
+        if [[ ! -z "$(params.ca_cert_data)" ]]; then
+          echo "$(params.ca_cert_data)" >> /certs/ca-certificates.crt
+        fi
+      volumeMounts:
+        - name: docker-config
+          mountPath: /docker-config
+        - name: ca-certs
+          mountPath: /certs
+    - name: build-and-push
+      env:
+      - name: "DOCKER_CONFIG"
+        value: "/kaniko/.docker"
+      image: dev.registry.tanzu.vmware.com/ootb-templates/kaniko@sha256:45a2d95c12a1627ddbe7dee4b18c906d3d4633fa6d354e57beb698e6c4c5fe83
+      args:
+        - $(params.extra_args)
+        - --dockerfile=$(params.dockerfile)
+        - --context=dir:///source/$(params.context)
+        - --destination=$(params.image)
+        - --digest-file=$(results.image_digest.path)
+        - --ignore-path=//product_uuid
+      securityContext:
+        runAsUser: 0
+      volumeMounts:
+        - name: source-dir
+          mountPath: /source
+        - name: docker-config
+          mountPath: /kaniko/.docker
+        - name: ca-certs
+          mountPath: /kaniko/ssl/certs
+    - name: sign
+      image: bitnami/cosign:2.2.2
+      args:
+        - ${image}@${digest}
+        - --tlog-upload=false
+        - --key k8s://tap-install/cosign
+      securityContext:
+        runAsUser: 0
+    - name: write-image-ref
+      image: dev.registry.tanzu.vmware.com/ootb-templates/scripting-base@sha256:b31bb7c399a5bddd802f20891d4e2f493bb7183286cfb13feba8b5aaea33a3bd
+      script: |
+        #!/usr/bin/env bash
+
+        set -o errexit
+        set -o xtrace
+
+        image="$(params.image)"
+        digest_path="$(results.image_digest.path)"
+        digest="$(cat ${digest_path})"
+
+        echo -n "${image}@${digest}" | tee "$(results.image_ref.path)"
+  volumes:
+    - name: docker-config
+      emptyDir: {}
+    - name: source-dir
+      emptyDir: {}
+    - name: ca-certs
+      emptyDir: {}
