@@ -11,3 +11,4 @@ stringData:
     secrets:
       #@overlay/append
       - name: tenant-gitops-ssh
+      - name: cosign
