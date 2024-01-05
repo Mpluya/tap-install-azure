@@ -11,7 +11,7 @@ stringData:
     #@ load("@ytt:data", "data")
 
     #@ def replace_expr(old, _):
-    #@   new = regexp.replace("(?m)value: #@ \"config/.*", old, "value: #@ \"config/\" + data.values.workload.metadata.namespace + \"/\" + data.values.workload.metadata.name + \"/"  + data.values.env + "\"")
+    #@   new = regexp.replace("(?m)value: #@ \"config/.*", old, "value: #@ \"config/\" + data.values.workload.metadata.namespace + \"/\" + data.values.workload.metadata.name + \"/dev" + "\"")
     #@   return new
     #@ end
 
