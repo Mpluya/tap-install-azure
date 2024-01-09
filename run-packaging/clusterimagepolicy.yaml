@@ -1,0 +1,9 @@
+---
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: warn
+spec:
+  images:
+  - glob: "**"
+  mode: warn
