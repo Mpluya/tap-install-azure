@@ -10,4 +10,4 @@ spec:
   authorities:
     - key:
         secretRef:
-          name: secretName
+          name: cosign
