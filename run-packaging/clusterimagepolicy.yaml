@@ -11,4 +11,4 @@ spec:
       secretRef:
         name: cosign
   - static:
-    action: pass
+      action: pass
