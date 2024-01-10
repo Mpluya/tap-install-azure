@@ -7,3 +7,7 @@ spec:
   images:
   - glob: "**"
   mode: warn
+  authorities:
+    - key:
+        secretRef:
+          name: secretName
