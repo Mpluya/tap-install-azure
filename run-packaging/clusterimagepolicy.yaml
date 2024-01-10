@@ -16,7 +16,7 @@ spec:
         carto.run/workload-name: tanzu-java-web-app-1-7-azure
   authorities:
   - static:
-      action: pass
+      action: fail
   - key:
       secretRef:
         name: cosign
