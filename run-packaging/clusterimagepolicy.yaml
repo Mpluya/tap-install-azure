@@ -7,8 +7,8 @@ spec:
   images:
   - glob: cxscssa.azurecr.io/tap-build/workloads/*
   authorities:
-    - key:
-        secretRef:
-          name: cosign
-    - static:
-      action: pass
+  - key:
+      secretRef:
+        name: cosign
+  - static:
+    action: pass
