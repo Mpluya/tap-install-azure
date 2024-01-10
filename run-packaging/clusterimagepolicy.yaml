@@ -1,0 +1,15 @@
+---
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: workload-image-policy
+spec:
+  mode: warn
+  images:
+  - glob: cxscssa.azurecr.io/tap-build/workloads/*
+  authorities:
+  - static:
+      action: pass
+  - key:
+      secretRef:
+        name: cosign
