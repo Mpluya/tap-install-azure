@@ -5,7 +5,7 @@ metadata:
   name: warn
 spec:
   images:
-  - glob: "**"
+  - glob: cxscssa.azurecr.io/tap-build/workloads/*
   mode: warn
   authorities:
     - key:
