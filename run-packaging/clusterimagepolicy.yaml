@@ -7,6 +7,13 @@ spec:
   mode: warn
   images:
   - glob: cxscssa.azurecr.io/tap-build/workloads/*
+  match:
+  - group: workload
+    resource: pods
+    version: v1
+    selector:
+      matchLabels:
+        carto.run/workload-name: app-golang-kaniko
   authorities:
   - static:
       action: pass
