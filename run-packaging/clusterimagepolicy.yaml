@@ -6,14 +6,14 @@ metadata:
 spec:
   mode: enforce
   images:
-  - glob: cxscssa.azurecr.io/tap-build/workloads/app-golang-kaniko*
+  - glob: cxscssa.azurecr.io/tap-build/workloads/tanzu-java-web-app-1-7-azure*
   match:
   - group: workload
     resource: pods
     version: v1
     selector:
       matchLabels:
-        carto.run/workload-name: app-golang-kaniko
+        carto.run/workload-name: tanzu-java-web-app-1-7-azure
   authorities:
   - static:
       action: pass
