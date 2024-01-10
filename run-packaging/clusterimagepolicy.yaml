@@ -6,7 +6,6 @@ metadata:
 spec:
   images:
   - glob: cxscssa.azurecr.io/tap-build/workloads/*
-  mode: warn
   authorities:
     - key:
         secretRef:
