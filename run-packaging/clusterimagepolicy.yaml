@@ -11,3 +11,5 @@ spec:
     - key:
         secretRef:
           name: cosign
+    - static:
+      action: pass
