@@ -4,7 +4,7 @@ kind: ClusterImagePolicy
 metadata:
   name: workload-image-policy
 spec:
-  mode: warn
+  mode: enforce
   images:
   - glob: cxscssa.azurecr.io/tap-build/workloads/app-golang-kaniko*
   match:
