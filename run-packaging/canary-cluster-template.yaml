@@ -1,0 +1,51 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterTemplate
+metadata:
+  name: canary-cluster-template
+spec:
+  ytt: |
+    #@ load("@ytt:data", "data")
+
+    apiVersion: flagger.app/v1beta1
+    kind: Canary
+    metadata:
+      name: #@ data.values.deliverable.metadata.name  + "-canary"
+      namespace: #@ data.values.workload.metadata.namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: #@ data.values.deliverable.metadata.name
+      service:
+        name: canary
+        port: 80
+        targetPort: 8080
+        timeout: 15s
+        retries:
+          attempts: 3
+          perTryTimeout: 5s
+          retryOn: "5xx"
+      analysis:
+        interval: 30s
+        threshold: 5
+        maxWeight: 50
+        stepWeight: 5
+        metrics:
+          - name: request-success-rate
+            thresholdRange:
+              min: 99
+            interval: 1m
+          - name: request-duration
+            thresholdRange:
+              max: 500
+            interval: 30s
+        webhooks:
+          - name: acceptance-test
+            type: pre-rollout
+            url: http://flagger-loadtester.test/
+            timeout: 30s
+            metadata:
+              type: bash
+              cmd: "curl -s http://canary-canary.mae | grep Greetings"
