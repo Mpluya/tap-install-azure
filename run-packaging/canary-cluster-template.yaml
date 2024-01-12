@@ -48,7 +48,7 @@ spec:
             timeout: 30s
             metadata:
               type: bash
-              cmd: #@ "curl -s http://{}-canary.{} | grep Soring".format(data.values.deliverable.metadata.name, data.values.workload.metadata.namespace)
+              cmd: #@ "curl -s http://{}-canary.{} | grep Spring".format(data.values.deliverable.metadata.name, data.values.workload.metadata.namespace)
           - name: load-test
             url: http://flagger-loadtester.test/
             type: rollout
