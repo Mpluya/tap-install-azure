@@ -5,6 +5,22 @@ kind: ClusterTemplate
 metadata:
   name: canary-cluster-template
 spec:
+
+  healthRule:
+    multiMatch:
+      healthy:
+        matchConditions:
+          - key: 'status.conditions[?(@.type=="Promoted")].status'
+            operator: 'In'
+            values: [ 'True' ]
+            messagePath: 'status.conditions[?(@.type=="Promoted")].message'
+      unhealthy:
+        matchFields:
+          - key: 'status.conditions[?(@.type=="Promoted")].status'
+            operator: 'In'
+            values: ['False']
+            messagePath: 'status.conditions[?(@.type=="Promoted")].message'
+
   ytt: |
     #@ load("@ytt:data", "data")
 
