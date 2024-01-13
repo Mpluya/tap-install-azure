@@ -9,7 +9,7 @@ spec:
   healthRule:
     multiMatch:
       healthy:
-        matchConditions:
+        matchFields:
           - key: 'status.conditions[?(@.type=="Promoted")].status'
             operator: 'In'
             values: [ 'True' ]
