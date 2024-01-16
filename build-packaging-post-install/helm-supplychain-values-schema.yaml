@@ -33,6 +33,17 @@ helm_supply_chain_install:
     image:
       policy: lax-scan-policy
       template: trivy-private-image-scan-template
+    active_keychains: []
+    service_account:
+      publisher: default
+      scanner: default
+    workspace:
+      bindings: []
+      size: 4Gi
+    steps:
+      env_vars: []
+
+
   supported_workloads:
   - type: helm
     cluster_config_template_name: config-template
