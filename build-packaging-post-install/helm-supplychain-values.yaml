@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ootb-basic-values
+  name: helm-supply-chain-values
   namespace: tap-install
 stringData:
   values.yaml: #@ yaml.encode(data.values.helm_supply_chain_install)
