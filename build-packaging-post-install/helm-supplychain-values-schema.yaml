@@ -3,6 +3,7 @@
 ---
 #@schema/type any=True
 helm_supply_chain_install:
+  label_propagation_exclusions: ["kapp.k14s.io/app", "kapp.k14s.io/association"]
   ca_cert_data: ""
   registry:
     ca_cert_data: ""
