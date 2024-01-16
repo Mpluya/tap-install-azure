@@ -18,6 +18,17 @@ helm_supply_chain_install:
     repository_owner: Mpluya
     repository_name: tap-azure-workload-config-repo
     branch: main
+    repository_prefix:
+    username: supplychain
+    email: supplychain
+    commit_message: supplychain@cluster.local
+    commit_strategy: direct
+    pull_request:
+      server_kind:
+      commit_branch: ""
+      pull_request_title:
+      pull_request_body:
+
   scanning:
     image:
       policy: lax-scan-policy
