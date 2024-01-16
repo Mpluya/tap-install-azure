@@ -25,3 +25,8 @@ helm_supply_chain_install:
   supported_workloads:
   - type: helm
     cluster_config_template_name: config-template
+  maven:
+    repository:
+      url: "https://repo.maven.apache.org/maven2"
+      secretRef:
+        name: ""
