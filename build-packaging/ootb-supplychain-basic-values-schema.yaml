@@ -2,7 +2,7 @@
 #@overlay/match-child-defaults missing_ok=True
 ---
 #@schema/type any=True
-ootb_supplychain_basic_install:
+helm_supply_chain_install:
   carvel_package:
     workflow_enabled: true
     gitops_subpath: packages
