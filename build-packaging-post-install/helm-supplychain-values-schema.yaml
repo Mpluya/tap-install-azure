@@ -3,6 +3,7 @@
 ---
 #@schema/type any=True
 helm_supply_chain_install:
+  ca_cert_data: ""
   registry:
     ca_cert_data: ""
     server: cxscssa.azurecr.io
