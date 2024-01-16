@@ -1,0 +1,23 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+#@schema/type any=True
+helm_supply_chain_install:
+  registry:
+    ca_cert_data: ""
+    server: cxscssa.azurecr.io
+    repository: tap-build/workloads
+  external_delivery: true
+  image_scanner_template_name: image-vulnerability-scan-trivy
+  image_scanner_cli:
+    image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:675673a6d495d6f6a688497b754cee304960d9ad56e194cf4f4ea6ab53ca71d6
+  gitops:
+    ssh_secret: tenant-gitops-ssh
+    server_address: ssh://git@github.com
+    repository_owner: Mpluya
+    repository_name: tap-azure-workload-config-repo
+    branch: main
+  scanning:
+    image:
+      policy: lax-scan-policy
+      template: trivy-private-image-scan-template

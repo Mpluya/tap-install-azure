@@ -1,0 +1,28 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: helm-supply-chain-app
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  fetch:
+  - git:
+      url: ssh://git@github.com/Mpluya/custom-cartographer-supply-chain
+      ref: origin/main
+      secretRef: 
+        name: tap-install-gitops-ssh
+  template:
+  - ytt:
+      ignoreUnknownComments: true
+      valuesFrom:
+      inline:
+        pathsFrom:
+        - secretRef:
+            name: helm-supply-chain-values
+  deploy:
+  - kapp:
+      rawOptions:
+      - --diff-changes=true
+      - --wait=false
