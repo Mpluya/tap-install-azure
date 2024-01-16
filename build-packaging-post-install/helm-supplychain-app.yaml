@@ -17,8 +17,6 @@ spec:
   - ytt:
       ignoreUnknownComments: true
       valuesFrom:
-      inline:
-        pathsFrom:
         - secretRef:
             name: helm-supply-chain-values
   deploy:
