@@ -10,7 +10,7 @@ spec:
   fetch:
   - git:
       url: ssh://git@github.com/Mpluya/custom-cartographer-supply-chain
-      ref: origin/main
+      ref: origin/passconfig
       secretRef: 
         name: tap-install-gitops-ssh
   template:
