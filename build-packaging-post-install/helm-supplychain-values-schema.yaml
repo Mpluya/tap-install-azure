@@ -21,7 +21,7 @@ helm_supply_chain_install:
     server_address: 
     repository_owner: 
     repository_name: 
-    branch: 
+    branch: ""
     repository_prefix:
     username: 
     email: 
