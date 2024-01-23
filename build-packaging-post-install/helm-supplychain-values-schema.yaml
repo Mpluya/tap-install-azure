@@ -23,9 +23,9 @@ helm_supply_chain_install:
     repository_name: 
     branch: ""
     repository_prefix:
-    username: 
-    email: 
-    commit_message: 
+    username: ""
+    email: ""
+    commit_message: ""
     commit_strategy: 
     pull_request:
       server_kind:
