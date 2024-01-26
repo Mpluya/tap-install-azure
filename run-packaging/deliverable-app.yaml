@@ -36,6 +36,12 @@ spec:
       subPath: config/mae/angular-frontend
       secretRef: 
         name: tap-install-gitops-ssh
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+      ref: origin/main
+      subPath: config/demo/go-app
+      secretRef: 
+        name: tap-install-gitops-ssh
   template:
   - ytt:
       ignoreUnknownComments: true
