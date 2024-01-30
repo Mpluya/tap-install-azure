@@ -15,6 +15,3 @@ spec:
       constraints: ">=2.2.0"
       prereleases: {}
   serviceAccountName: tap-tap-install-sa
-  values:
-  - secretRef:
-      name: tap-values
