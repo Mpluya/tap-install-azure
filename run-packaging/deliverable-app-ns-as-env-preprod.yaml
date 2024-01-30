@@ -47,7 +47,7 @@ spec:
   deploy:
   - kapp:
       mapNs: 
-      - mae-qa=mae-preprod
+      - mae=mae-preprod
       rawOptions:
       - --dangerous-override-ownership-of-existing-resources=true
       - --dangerous-allow-empty-list-of-resources=true
