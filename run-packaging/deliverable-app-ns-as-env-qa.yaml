@@ -1,7 +1,7 @@
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
-  name: deliverables-ns-as-env
+  name: deliverables-ns-as-env-qa
   namespace: tap-install
 spec:
   serviceAccountName: tap-install-sa
