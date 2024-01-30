@@ -136,3 +136,19 @@ metadata:
   namespace: mae-qa
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: mae-preprod
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: mae-preprod
+imagePullSecrets:
+  - name: tap-registry
