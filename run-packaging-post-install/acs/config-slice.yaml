@@ -2,7 +2,7 @@ apiVersion: config.apps.tanzu.vmware.com/v1alpha4
 kind: ConfigurationSlice
 metadata:
   name: cook-app-one-config
-  namespace: mae
+  namespace: jeremy
 spec:
   interval: 30s
   configurationSource: cook-app-one-config-source

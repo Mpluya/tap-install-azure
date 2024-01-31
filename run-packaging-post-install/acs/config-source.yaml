@@ -2,7 +2,7 @@ apiVersion: config.apps.tanzu.vmware.com/v1alpha4
 kind: ConfigurationSource
 metadata:
   name: cook-app-one-config-source
-  namespace: mae
+  namespace: jeremy
 spec:
   backends:
     - type: git
