@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-metadata-store-hba-configmap
+  namespace: postgres-metadata-store
+  annotations:
+    kapp.k14s.io/change-group: "postgres-metadata-store"
+data:
+  pg_hba.custom.conf: |
+    host all all all md5
+    host all all all scram-sha-256
+    host all all all password
