@@ -184,27 +184,27 @@ spec:
             podTemplate:
               spec:
                 serviceAccountName: tap-acme-http01-solver
-# ---
-# apiVersion: secretgen.carvel.dev/v1alpha1
-# kind: SecretImport
-# metadata:
-#   name: tap-registry
-#   namespace: postgres-metadata-store
-#   annotations:
-#     kapp.k14s.io/change-group: post-pkgi
-#     kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
-#     kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
-# spec:
-#   fromNamespace: tap-install
-# ---
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: tap-acme-http01-solver
-#   namespace: postgres-metadata-store
-#   annotations:
-#     kapp.k14s.io/change-group: post-pkgi
-#     kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
-#     kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
-# imagePullSecrets:
-#   - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: postgres-metadata-store
+  annotations:
+    kapp.k14s.io/change-group: post-pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: postgres-metadata-store
+  annotations:
+    kapp.k14s.io/change-group: post-pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgi"
+imagePullSecrets:
+  - name: tap-registry
