@@ -1,0 +1,36 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: vmware-postgres-operator
+  namespace: vmware-postgres-operator
+  annotations:
+    kapp.k14s.io/change-group: "postgres-operator-package"
+    kapp.k14s.io/change-rule.create-order-0: "upsert after upserting pkgi"
+    packaging.carvel.dev/downgradable: ""
+spec:
+  serviceAccountName: pg-operator-install-sa
+  packageRef:
+    refName: postgres-operator.sql.tanzu.vmware.com
+    versionSelection:
+      constraints: ">0.0.0"
+      prereleases: {}
+  values:
+    - secretRef:
+        name: vmware-postgres-operator-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vmware-postgres-operator-values
+  namespace: vmware-postgres-operator
+stringData:
+  values.yaml: |
+    resources:
+      limits:
+        cpu: 500m
+        memory: 300Mi
+      requests:
+        cpu: 500m
+        memory: 300Mi
+    enableSecurityContext: true

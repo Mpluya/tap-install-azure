@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vmware-postgres-operator
+  annotations:
+    kapp.k14s.io/change-group: "postgres-operator"
