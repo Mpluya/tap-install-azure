@@ -6,10 +6,10 @@ metadata:
     kapp.k14s.io/change-rule.create-order-1: "upsert after upserting postgres-operator"
     kapp.k14s.io/change-rule.create-order-3: "delete before deleting postgres-operator"
   name: tanzu-tds-repository
-  namespace: tap-install
+  namespace: vmware-postgres-operator
 spec:
   fetch:
     imgpkgBundle:
       image: cxscssa.azurecr.io/tanzu-data-services/tds-packages:1.12.0
       secretRef: 
-        name: registry-credentials
+        name: tap-registry
