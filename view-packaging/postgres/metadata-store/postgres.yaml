@@ -28,39 +28,3 @@ spec:
   customConfig:
     pghba:
       name: pg-metadata-store-hba-configmap
-  monitorPodConfig:
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: type
-                    operator: In
-                    values:
-                      - data
-                      - monitor
-                  - key: postgres-instance
-                    operator: In
-                    values:
-                      - pg-metadata-store
-              topologyKey: kubernetes.io/hostname
-            weight: 100
-  dataPodConfig:
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: type
-                    operator: In
-                    values:
-                      - data
-                      - monitor
-                  - key: postgres-instance
-                    operator: In
-                    values:
-                      - pg-metadata-store
-              topologyKey: kubernetes.io/hostname
-            weight: 100
