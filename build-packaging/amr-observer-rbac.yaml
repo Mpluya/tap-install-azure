@@ -53,7 +53,7 @@ spec:
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretExport
 metadata:
-  name: amr-observer-editor-token
+  name: amr-observer-edit-token
   namespace: tap-install
 spec:
   toNamespaces: 
@@ -62,7 +62,7 @@ spec:
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport
 metadata:
-  name: amr-observer-editor-token
+  name: amr-observer-edit-token
   namespace: amr-observer-system
 spec:
   fromNamespace: tap-install
