@@ -35,7 +35,7 @@ automountServiceAccountToken: false
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: amr-observer-editor-token
+  name: amr-observer-edit-token
   namespace: tap-install
 spec:
   secretStoreRef:
@@ -44,24 +44,17 @@ spec:
   refreshInterval: "1m"
   target:
     template:
-      metadata:
-        annotations:
-          kubernetes.io/service-account.name: amr-observer
       data:
-        ca.crt: "{{ .amrcloudeventhandlercacrt | b64dec }}"
-        token: "{{ .amrcloudeventhandleredittoken | b64dec }}"
+        token: "{{ .cehEditToken | b64dec }}"
   data:
-  - secretKey: amrcloudeventhandlercacrt
+  - secretKey: cehEditToken
     remoteRef:
-      key: amrcloudeventhandlercacrt
-  - secretKey: amrcloudeventhandleredittoken
-    remoteRef:
-      key: amrcloudeventhandleredittoken
+      key: cehEditToken
 ---
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretExport
 metadata:
-  name: amr-observer-editor-token
+  name: amr-observer-edit-token
   namespace: tap-install
 spec:
   toNamespaces: 
@@ -70,7 +63,7 @@ spec:
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport
 metadata:
-  name: amr-observer-editor-token
+  name: amr-observer-edit-token
   namespace: amr-observer-system
 spec:
   fromNamespace: tap-install
