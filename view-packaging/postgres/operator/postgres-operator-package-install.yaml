@@ -34,4 +34,3 @@ stringData:
         cpu: 500m
         memory: 300Mi
     enableSecurityContext: true
-    certManagerClusterIssuerName: letsencrypt-production
