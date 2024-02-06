@@ -48,12 +48,12 @@ spec:
       subPath: config/jeremy/cook-app-one
       secretRef: 
         name: tap-install-gitops-ssh
-  # - git:
-  #     url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
-  #     ref: origin/main
-  #     subPath: config/mae/react-frontend
-  #     secretRef: 
-  #       name: tap-install-gitops-ssh
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+      ref: origin/main
+      subPath: config/mae/react-frontend
+      secretRef: 
+        name: tap-install-gitops-ssh
   template:
   - ytt:
       ignoreUnknownComments: true
