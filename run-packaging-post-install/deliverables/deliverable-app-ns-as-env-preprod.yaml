@@ -20,7 +20,7 @@ spec:
           values.yaml: |
             #@data/values
             ---
-            env: dev
+            env: prod
           update-subpath.yaml: |
             #@ load("@ytt:overlay", "overlay")
             #@ load("@ytt:data", "data")
