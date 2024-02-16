@@ -41,7 +41,7 @@ spec:
             metadata:
               #@overlay/match missing_ok=True
               #@overlay/replace via=lambda left, right: left+right
-              name: -preprod
+              name: -qa
 
             #@overlay/match by=overlay.subset({"kind":"Deliverable"}), expects="0+"
             ---
