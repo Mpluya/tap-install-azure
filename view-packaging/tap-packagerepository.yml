@@ -9,6 +9,3 @@ spec:
   fetch:
     imgpkgBundle:
       image: cxscssa.azurecr.io/tap-1-7-1/tap-packages:1.7.1
-      secretRef: 
-        name: tap-registry
-        namespace: tap-install
