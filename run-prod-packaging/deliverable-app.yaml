@@ -9,6 +9,12 @@ spec:
   - git:
       url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
       ref: origin/main
+      subPath: config/mae/hello
+      secretRef: 
+        name: tap-install-gitops-ssh
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+      ref: origin/main
       subPath: config/mae/tanzu-java-web-app-1-7-azure
       secretRef: 
         name: tap-install-gitops-ssh
