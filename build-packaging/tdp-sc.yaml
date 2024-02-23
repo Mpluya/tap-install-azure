@@ -8,7 +8,7 @@ spec:
       params:
         - default: default
           name: serviceAccount
-        - default: "cxscssa.azurecr.io/tap-1-7-1/tap-packages@sha256:29f978561d7d931c9a118c167eae905ce41990131013339aaff10c291ac6c42b"
+        - default: "cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:001d3879720c2dc131ec95db6c6a34ff3c2f912d9d8b7ffacb8da08a844b740f"
           name: tdp_configurator_bundle
       templateRef:
         kind: ClusterSourceTemplate
