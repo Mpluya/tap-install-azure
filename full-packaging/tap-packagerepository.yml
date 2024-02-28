@@ -8,7 +8,7 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: cxscssa.azurecr.io/tap-1-8-0/tap-packages:1.8.0-rc.15
+      image: cxscssa.azurecr.io/tap-1-8-0/tap-packages:1.8.0-rc.19
       secretRef: 
         name: tap-registry
         namespace: tap-install
