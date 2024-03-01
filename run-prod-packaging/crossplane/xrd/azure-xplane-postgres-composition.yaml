@@ -19,6 +19,7 @@ spec:
         labels:
           testing.upbound.io/example-name: example
       spec:
+        deletionPolicy: Orphan
         forProvider:
           administratorLogin: myPgAdmin
           administratorPasswordSecretRef:
@@ -74,6 +75,7 @@ spec:
         labels:
           testing.upbound.io/example-name: example
       spec:
+        deletionPolicy: Orphan
         forProvider:
           serverIdSelector:
             matchControllerRef: true
@@ -87,6 +89,7 @@ spec:
       apiVersion: kubernetes.crossplane.io/v1alpha1
       kind: Object
       spec:
+        deletionPolicy: Orphan
         forProvider:
           manifest:
             apiVersion: secretgen.k14s.io/v1alpha1
