@@ -8,7 +8,7 @@ spec:
     fqdn: opencost.view.cssa.tapsme.org
     tls:
       secretName: opencost
-    routes:
+  routes:
     - conditions:
       - prefix: /
       services:
