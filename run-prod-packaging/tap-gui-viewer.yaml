@@ -130,3 +130,6 @@ rules:
 - apiGroups: ['apiextensions.k8s.io']
   resources: ['customresourcedefinitions']
   verbs: ['get', 'watch', 'list']
+- apiGroups: [data.packaging.carvel.dev]
+  resources: [packages]
+  verbs: ['get', 'watch', 'list']

@@ -133,3 +133,6 @@ rules:
 - apiGroups: ['flagger.app']
   resources: ['canaries']
   verbs: ['get', 'watch', 'list']
+- apiGroups: [data.packaging.carvel.dev]
+  resources: [packages]
+  verbs: ['get', 'watch', 'list']
