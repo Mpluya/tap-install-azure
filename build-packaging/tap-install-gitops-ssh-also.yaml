@@ -10,7 +10,7 @@ spec:
     name: azure-secret-store
 
   target:
-    name: tap-install-gitops-ssh-too
+    name: tap-install-gitops-ssh-also
     creationPolicy: Owner
     template:
       data:
