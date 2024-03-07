@@ -8,6 +8,7 @@ metadata:
     kapp.k14s.io/change-group: pkgi
     kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
     kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
+    packaging.carvel.dev/downgradable: ""
 spec:
   serviceAccountName: tap-tap-install-sa
   packageRef:
