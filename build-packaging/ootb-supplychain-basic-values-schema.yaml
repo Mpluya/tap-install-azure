@@ -23,3 +23,6 @@ ootb_supplychain_basic_install:
     repository:
       url: ""
       secret_name: ""
+  supported_workloads:
+  - cluster_config_template: statefulset-template
+    type: statefulset
