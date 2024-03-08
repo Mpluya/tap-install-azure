@@ -102,7 +102,6 @@ spec:
       replicas: #@ int(data.values.workload.metadata.annotations.replicas)
       selector:
         matchLabels: #@ data.values.config.metadata.labels
-      volumeClaimTemplates: struct.encode([{"metadata":{"name":"poop"},"spec":{"accessModes":["poop"],"storageClassName":"efs-sc","resources":{"requests":{"storage":"poop"}}}}])
       template: #@ data.values.config
     ---
     apiVersion: v1
