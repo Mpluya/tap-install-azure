@@ -16,4 +16,4 @@ spec:
     versionSelection:
       constraints: 0.1.16
       prereleases: {}
-  serviceAccountName: supply-chain-tap-install-sa
+  serviceAccountName: tap-tap-install-sa
