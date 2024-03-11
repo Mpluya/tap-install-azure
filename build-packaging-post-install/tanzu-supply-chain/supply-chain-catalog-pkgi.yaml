@@ -1,0 +1,16 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    packaging.carvel.dev/package-ClusterRole: supply-chain-catalog-tap-install-cluster-role
+    packaging.carvel.dev/package-ClusterRoleBinding: supply-chain-catalog-tap-install-cluster-rolebinding
+    packaging.carvel.dev/package-ServiceAccount: tap-tap-install-sa
+  name: supply-chain-catalog
+  namespace: tap-install
+spec:
+  packageRef:
+    refName: supply-chain-catalog.apps.tanzu.vmware.com
+    versionSelection:
+      constraints: 0.1.1
+      prereleases: {}
+  serviceAccountName: tap-tap-install-sa
