@@ -1,0 +1,18 @@
+kind: PackageInstall
+metadata:
+  annotations:
+    packaging.carvel.dev/package-ClusterRole: supply-chain-tap-install-cluster-role
+    packaging.carvel.dev/package-ClusterRoleBinding: supply-chain-tap-install-cluster-rolebinding
+    packaging.carvel.dev/package-ServiceAccount: supply-chain-tap-install-sa
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRole: supply-chain-tap-install-cluster-role
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: supply-chain-tap-install-cluster-rolebinding
+    tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: supply-chain-tap-install-sa
+  name: supply-chain
+  namespace: tap-install
+spec:
+  packageRef:
+    refName: supply-chain.apps.tanzu.vmware.com
+    versionSelection:
+      constraints: 0.1.16
+      prereleases: {}
+  serviceAccountName: supply-chain-tap-install-sa
