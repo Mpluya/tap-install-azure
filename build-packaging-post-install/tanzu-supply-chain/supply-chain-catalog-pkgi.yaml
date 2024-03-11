@@ -4,7 +4,6 @@ kind: ServiceAccount
 metadata:
   annotations:
     packaging.carvel.dev/package: supply-chain-catalog-tap-install
-    tkg.tanzu.vmware.com/tanzu-package: supply-chain-catalog-tap-install
   name: supply-chain-catalog-tap-install-sa
   namespace: tap-install
 ---
@@ -13,7 +12,6 @@ kind: ClusterRole
 metadata:
   annotations:
     packaging.carvel.dev/package: supply-chain-catalog-tap-install
-    tkg.tanzu.vmware.com/tanzu-package: supply-chain-catalog-tap-install
   name: supply-chain-catalog-tap-install-cluster-role
 rules:
   - apiGroups:
@@ -28,7 +26,6 @@ kind: ClusterRoleBinding
 metadata:
   annotations:
     packaging.carvel.dev/package: supply-chain-catalog-tap-install
-    tkg.tanzu.vmware.com/tanzu-package: supply-chain-catalog-tap-install
   name: supply-chain-catalog-tap-install-cluster-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
