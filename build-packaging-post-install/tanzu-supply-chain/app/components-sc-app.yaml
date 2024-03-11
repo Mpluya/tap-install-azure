@@ -18,11 +18,14 @@ spec:
       url: ssh://git@github.com/Mpluya/tanzu-supply-chain-learn.git
       ref: origin/main
       subPath: pipelines
+      secretRef:
+        name: tap-install-gitops-ssh
   - git:
       url: ssh://git@github.com/Mpluya/tanzu-supply-chain-learn.git
       ref: origin/main
       subPath: tasks
-
+      secretRef:
+        name: tap-install-gitops-ssh
   template:
   - ytt: {}
 
