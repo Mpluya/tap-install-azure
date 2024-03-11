@@ -6,7 +6,7 @@ metadata:
   annotations:
     kapp.k14s.io/change-group: "tanzu-supplychain-components"
 spec:
-  serviceAccountName: tap-install-sa
+  serviceAccountName: tanzu-supplychain-sa
   fetch:
   - git:
       url: ssh://git@github.com/Mpluya/tanzu-supply-chain-learn.git
