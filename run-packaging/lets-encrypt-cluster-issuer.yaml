@@ -104,3 +104,11 @@ metadata:
   namespace: mae-preprod
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: supplychains
+imagePullSecrets:
+  - name: tap-registry
