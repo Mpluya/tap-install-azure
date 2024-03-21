@@ -13,7 +13,7 @@ spec:
   - git:
       url: ssh://git@github.com/Mpluya/myfirstsupplychaingroup.git
       ref: origin/main
-      subPath: supplychains
+      subPath: supplychains/build
       secretRef: 
         name: tap-install-gitops-ssh
 
