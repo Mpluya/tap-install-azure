@@ -57,14 +57,6 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: mae
-spec:
-  fromNamespace: tap-install
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -72,14 +64,6 @@ metadata:
   namespace: mae
 imagePullSecrets:
   - name: tap-registry
----
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: dev2
-spec:
-  fromNamespace: tap-install
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -89,14 +73,6 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: jeremy
-spec:
-  fromNamespace: tap-install
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -104,14 +80,6 @@ metadata:
   namespace: jeremy
 imagePullSecrets:
   - name: tap-registry
----
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: demo
-spec:
-  fromNamespace: tap-install
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -121,14 +89,6 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: mae-qa
-spec:
-  fromNamespace: tap-install
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -136,14 +96,6 @@ metadata:
   namespace: mae-qa
 imagePullSecrets:
   - name: tap-registry
----
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: tap-registry
-  namespace: mae-preprod
-spec:
-  fromNamespace: tap-install
 ---
 apiVersion: v1
 kind: ServiceAccount
