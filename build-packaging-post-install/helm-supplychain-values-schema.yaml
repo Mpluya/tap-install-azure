@@ -16,6 +16,7 @@ helm_supply_chain_install:
   image_scanning_cli:
     image: cxscssa.azurecr.io/tap-1-7-0/tap-packages@sha256:675673a6d495d6f6a688497b754cee304960d9ad56e194cf4f4ea6ab53ca71d6
   image_scanner_template_name: image-vulnerability-scan-trivy
+  image_scanning_workspace_size: 16Gi
   gitops:
     ssh_secret: ""
     server_address: 
