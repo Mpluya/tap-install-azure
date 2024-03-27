@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: supply-chain.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.1.16
+      constraints: ">=0.1.18"
       prereleases: {}
   serviceAccountName: supply-chain-tap-install-sa

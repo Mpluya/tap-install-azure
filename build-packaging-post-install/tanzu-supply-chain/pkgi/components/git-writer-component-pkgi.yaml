@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: git-writer.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.1.3
+      constraints: ">=0.1.4"
       prereleases: {}
   serviceAccountName: git-writer-component-tap-install-sa

@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: conventions.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.0.3
+      constraints: ">=0.0.4"
       prereleases: {}
   serviceAccountName: conventions-component-tap-install-sa
