@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: source.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.0.1
+      constraints: ">=0.0.1"
       prereleases: {}
   serviceAccountName: source-component-tap-install-sa

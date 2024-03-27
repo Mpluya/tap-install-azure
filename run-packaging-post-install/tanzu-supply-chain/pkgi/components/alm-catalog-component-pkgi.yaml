@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: alm-catalog.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.1.4
+      constraints: ">=0.1.4"
       prereleases: {}
   serviceAccountName: alm-catalog-component-tap-install-sa

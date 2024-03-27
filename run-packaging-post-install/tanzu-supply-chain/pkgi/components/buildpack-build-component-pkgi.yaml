@@ -49,6 +49,6 @@ spec:
   packageRef:
     refName: buildpack-build.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: 0.0.2
+      constraints: ">=0.0.2"
       prereleases: {}
   serviceAccountName: buildpack-build-component-tap-install-sa
