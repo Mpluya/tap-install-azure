@@ -7,5 +7,5 @@ spec:
   packageRef:
     refName: tekton.tanzu.vmware.com
     versionSelection:
-      constraints: 0.50.3+tanzu.4
+      constraints: ">=0.50.3+tanzu.4"
   serviceAccountName: tap-install-sa
