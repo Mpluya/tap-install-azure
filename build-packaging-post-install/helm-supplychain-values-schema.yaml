@@ -44,6 +44,7 @@ helm_supply_chain_install:
       scanner: default
     workspace:
       bindings: []
+      size: 16Gi
     steps:
       env_vars: []
 
