@@ -1,0 +1,9 @@
+apiVersion: kpack.io/v1alpha2
+kind: ClusterBuildpack
+metadata:
+  name: go-lite-3.3.1
+spec:
+  image: cxscssa.azurecr.io/tanzu-build-service-full-deps/go-lite@sha256:2203428486bf505e14d483b9bb518572273324783a8c518d4bd225deb82e68c5
+  serviceAccountRef:
+    name: dependencies-pull-serviceaccount
+    namespace: build-service
