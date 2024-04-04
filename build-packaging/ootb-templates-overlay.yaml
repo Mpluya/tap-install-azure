@@ -9,7 +9,6 @@ stringData:
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:regexp", "regexp")
     #@ load("@ytt:data", "data")
-    #@ load("calver.star", "get_current_datetime")
     
     #@ def replace_expr(old, _):
     #@   new = regexp.replace("(?m)value: #@ \"config/.*", old, "value: #@ \"config/\" + data.values.workload.metadata.namespace + \"/\" + data.values.workload.metadata.name + \"/dev" + "\"")
