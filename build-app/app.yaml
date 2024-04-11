@@ -23,7 +23,7 @@ spec:
         paths:
           additionalLabels.yml: |
             #@ load("@ytt:overlay", "overlay")
-            #@overlay/match by=overlay.subset({"kind":"Config",}),expects="1+"
+            #@overlay/match by=overlay.subset({"kind":"Config"}),expects="1+"
             ---
             #@overlay/match missing_ok=True
             additionalLabels:
