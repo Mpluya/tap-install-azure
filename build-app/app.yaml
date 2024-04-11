@@ -17,7 +17,20 @@ spec:
       secretRef: 
         name: tap-install-gitops-ssh
   template:
-  - ytt: {}
+  - ytt:
+      ignoreUnknownComments: true
+      inline:
+        paths:
+          additionalLabels.yml: |
+            #@ load("@ytt:overlay", "overlay")
+            #@overlay/match by=overlay.subset({"kind":"Config",}),expects="1+"
+            ---
+            #@overlay/match missing_ok=True
+            additionalLabels:
+              #@overlay/match missing_ok=True
+              department: pve
+              #@overlay/match missing_ok=True
+              cost-center: addtotab
   deploy:
   - kapp:
       rawOptions:
