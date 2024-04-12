@@ -65,6 +65,8 @@ spec:
       name: clusterBuilder
     - name: registry
       default: {}
+    - name: buildServiceBindings
+      default: []
   ytt: |
     #@ load("@ytt:data", "data")
     #@ load("@ytt:regexp", "regexp")
@@ -138,7 +140,7 @@ spec:
           value: #@ tpb_config
         - name: TPB_CONFIG_STRING
           value: #@ tpb_config_string
-
+        services: #@ data.values.params.buildServiceBindings
 ---
 apiVersion: carto.run/v1alpha1
 kind: ClusterSourceTemplate
