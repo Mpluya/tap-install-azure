@@ -21,7 +21,7 @@ spec:
       ignoreUnknownComments: true
       inline:
         paths:
-          overlay-tap-package.yml: |
+          overlay-tap-app.yml: |
             #@ load("@ytt:overlay", "overlay")
             #@ def with_name(vlan):
             ytt:
@@ -31,14 +31,13 @@ spec:
                   - secretRef:
                       name: tap-pkg-overlay-secret
             #@ end
-            #@overlay/match by=overlay.subset({"kind":"Package","metadata":{"namespace":"tap-install"}}),expects="1+"
+            #@overlay/match by=overlay.subset({"kind":"App","metadata":{"namespace":"tap-install"}}),expects="1+"
             ---
             spec:
               template:
-                spec:
-                  template:
-                    #@overlay/match by=lambda idx, left, right: "ytt" in left, expects="1+"
-                    #@overlay/replace via=lambda left, right: overlay.apply(left, with_name(left))
+                #@overlay/match by=lambda idx, left, right: "ytt" in left, expects="1+"
+                #@overlay/replace via=lambda left, right: overlay.apply(left, with_name(left))
+                -
   deploy:
   - kapp:
       rawOptions:
