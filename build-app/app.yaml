@@ -20,16 +20,9 @@ spec:
   - ytt:
       ignoreUnknownComments: true
       inline:
-        paths:
-          overlay-tap-pkgi.yml: |
-            #@ load("@ytt:overlay", "overlay")
-            #@overlay/match by=overlay.subset({"kind":"PackageInstall","metadata":{"namespace":"tap-install"}}),expects="1+"
-            ---
-            metadata:
-              #@overlay/match missing_ok=True
-              annotations:
-                #@overlay/match missing_ok=True
-                ext.packaging.carvel.dev/ytt-paths-from-secret-name.99: tap-namespaces-overlay-secret
+        pathsFrom:
+          - secretRef:
+              name: tap-pkg-overlay-secret
   deploy:
   - kapp:
       rawOptions:
