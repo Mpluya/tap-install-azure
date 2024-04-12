@@ -20,7 +20,7 @@ spec:
   - ytt:
       ignoreUnknownComments: true
       inline:
-        pathsFrom:
+        paths:
           overlay-tap-package.yml: |
             #@ load("@ytt:overlay", "overlay")
             #@ def with_name(vlan):
