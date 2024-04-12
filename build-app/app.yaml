@@ -23,7 +23,6 @@ spec:
         pathsFrom:
           overlay-tap-package.yml: |
             #@ load("@ytt:overlay", "overlay")
-        
             #@ def with_name(vlan):
             ytt:
               #@overlay/match missing_ok=True
@@ -32,7 +31,6 @@ spec:
                   - secretRef:
                       name: tap-pkg-overlay-secret
             #@ end
-            
             #@overlay/match by=overlay.subset({"kind":"Package","metadata":{"namespace":"tap-install"}}),expects="1+"
             ---
             spec:
