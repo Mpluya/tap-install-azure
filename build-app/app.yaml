@@ -31,7 +31,7 @@ spec:
                   - secretRef:
                       name: tap-pkg-overlay-secret
             #@ end
-            #@overlay/match by=overlay.subset({"kind":"App","metadata":{"namespace":"tap-install"}}),expects="1+"
+            #@overlay/match by=overlay.subset({"kind":"App","metadata":{"name":"tap", "namespace":"tap-install"}}),expects="1+"
             ---
             spec:
               template:
