@@ -17,27 +17,27 @@ spec:
       secretRef: 
         name: tap-install-gitops-ssh
   template:
-  - ytt:
-      ignoreUnknownComments: true
-      inline:
-        paths:
-          overlay-tap-app.yml: |
-            #@ load("@ytt:overlay", "overlay")
-            #@ def with_name(vlan):
-            ytt:
-              #@overlay/match missing_ok=True
-              inline:
-                pathsFrom:
-                  - secretRef:
-                      name: tap-pkg-overlay-secret
-            #@ end
-            #@overlay/match by=overlay.subset({"kind":"App","metadata":{"name":"tap", "namespace":"tap-install"}}),expects="1+"
-            ---
-            spec:
-              template:
-                #@overlay/match by=lambda idx, left, right: "ytt" in left, expects="1+"
-                #@overlay/replace via=lambda left, right: overlay.apply(left, with_name(left))
-                -
+  - ytt: {}
+#      ignoreUnknownComments: true
+#      inline:
+#        paths:
+#          overlay-tap-app.yml: |
+#            #@ load("@ytt:overlay", "overlay")
+#            #@ def with_name(vlan):
+#            ytt:
+#              #@overlay/match missing_ok=True
+#              inline:
+#                pathsFrom:
+#                  - secretRef:
+#                      name: tap-pkg-overlay-secret
+#            #@ end
+#            #@overlay/match by=overlay.subset({"kind":"App","metadata":{"name":"tap", "namespace":"tap-install"}}),expects="1+"
+#            ---
+#            spec:
+#              template:
+#                #@overlay/match by=lambda idx, left, right: "ytt" in left, expects="1+"
+#                #@overlay/replace via=lambda left, right: overlay.apply(left, with_name(left))
+#                -
   deploy:
   - kapp:
       rawOptions:
