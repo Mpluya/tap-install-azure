@@ -1,0 +1,28 @@
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: petclinic-image-package-app
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-sa
+  fetch:
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-workload-config-repo.git
+      ref: origin/main
+      secretRef: 
+        name: tap-install-gitops-ssh
+      subPath: packages/petclinic-image-package.mae.cssa.vmware.com/packages
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-workload-config-repo.git
+      ref: origin/main
+      secretRef: 
+        name: tap-install-gitops-ssh-too
+      subPath: packages/petclinic-image-package.mae.cssa.vmware.com/prod
+  template:
+  - ytt: {}
+  
+  deploy:
+  - kapp:
+      intoNs: mae
+      rawOptions: ["--dangerous-allow-empty-list-of-resources=true"]
