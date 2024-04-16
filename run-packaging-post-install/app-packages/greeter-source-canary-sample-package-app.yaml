@@ -1,0 +1,28 @@
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: greeter-source-canary-sample-package-app
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-sa
+  fetch:
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-workload-config-repo.git
+      ref: origin/main
+      secretRef: 
+        name: tap-install-gitops-ssh
+      subPath: packages/greeter-source-canary-sample-package.dev2.cssa.vmware.com/packages
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-workload-config-repo.git
+      ref: origin/main
+      secretRef: 
+        name: tap-install-gitops-ssh-too
+      subPath: packages/greeter-source-canary-sample-package.dev2.cssa.vmware.com/test              
+  template:
+  - ytt: {}
+  
+  deploy:
+  - kapp:
+      intoNs: dev2
+      rawOptions: ["--dangerous-allow-empty-list-of-resources=true"]
