@@ -60,7 +60,7 @@ spec:
 #      subPath: config/mae/react-frontend
 #      secretRef:
 #        name: tap-install-gitops-ssh
-#  template:
+  template:
   - ytt:
       ignoreUnknownComments: true
       inline:
