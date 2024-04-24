@@ -12,6 +12,12 @@ spec:
         subPath: config/mae/hello
         secretRef:
           name: tap-install-gitops-ssh
+    - git:
+        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+        ref: origin/main
+        subPath: config/jeremy/wednesday-java-web-app
+        secretRef:
+          name: tap-install-gitops-ssh
     #  - git:
     #      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
     #      ref: origin/main
