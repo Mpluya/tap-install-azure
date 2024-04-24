@@ -1,0 +1,70 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: deliverables
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-sa
+  fetch:
+#  - git:
+#      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#      ref: origin/main
+#      subPath: config/mae/hello
+#      secretRef:
+#        name: tap-install-gitops-ssh
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+      ref: origin/main
+      subPath: config/jeremy/wednesday-java-web-app
+      secretRef:
+        name: tap-install-gitops-ssh
+#  - git:
+#      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#      ref: origin/main
+#      subPath: config/mae/tanzu-java-web-app-1-7-azure
+#      secretRef:
+#        name: tap-install-gitops-ssh
+#  - git:
+#      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#      ref: origin/main
+#      subPath: config/mae/java-rest-service-azure
+#      secretRef:
+#        name: tap-install-gitops-ssh
+  template:
+  - ytt:
+      ignoreUnknownComments: true
+      inline:
+        paths:
+          values.yaml: |
+            #@data/values
+            ---
+            env: prod
+          update-subpath.yaml: |
+            #@ load("@ytt:overlay", "overlay")
+            #@ load("@ytt:data", "data")
+            #@ load("@ytt:yaml", "yaml")
+
+            #@ def replace_after_last_slash(input_fragment):
+            #@   input_str = yaml.decode(yaml.encode(input_fragment))
+            #@   last_slash_index = input_str.rfind("/")
+            #@   if last_slash_index == -1:
+            #@     return input_str   
+            #@   end
+            #@   result = input_str[:last_slash_index + 1] + data.values.env
+            #@   return result
+            #@ end
+
+            #@overlay/match by=overlay.subset({"kind":"Deliverable"}), expects="0+"
+            ---
+            spec:
+              #@overlay/match missing_ok=True
+              source:
+                #@overlay/match missing_ok=True
+                #@overlay/replace via=lambda left,_: replace_after_last_slash(left)
+                subPath:
+  deploy:
+  - kapp:
+      rawOptions:
+      - --dangerous-override-ownership-of-existing-resources=true
+      - --dangerous-allow-empty-list-of-resources=true
+      - --diff-changes=true
