@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tap-pkgi-overlay-secret
+  namespace: tap-install
+stringData:
+  overlay-tap-pkgi.yml: |
+    #@ load("@ytt:overlay", "overlay")
+    
+    #@ def match_packageinstall():
+    kind: PackageInstall
+    #@ end
+    
+    ---
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: label-namespaces-overlay
+      namespace: tap-install #! TODO: configurable
+    stringData:
+      label-namespaces.yaml: |
+        #@ load("@ytt:overlay", "overlay")
+    
+        #@ def match_namespace():
+        kind: Namespace
+        #@ end
+    
+        #@overlay/match by=overlay.subset(match_namespace()), expects="0+"
+        ---
+        metadata:
+          #@overlay/match missing_ok=True
+          labels:
+            #@overlay/match missing_ok=True
+            custom-lbl: custom-lbl-value
+    
+    #@overlay/match by=overlay.subset(match_packageinstall()), expects="1+"
+    ---
+    metadata:
+      #@overlay/match missing_ok=True
+      annotations:
+        #@overlay/match missing_ok=True
+        ext.packaging.carvel.dev/ytt-paths-from-secret-name.99: label-namespaces-overlay
