@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    packaging.carvel.dev/package: managed-resource-controller-tap-install
+  name: managed-resource-controller-tap-install-sa
+  namespace: tap-install
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    packaging.carvel.dev/package: managed-resource-controller-tap-install
+  name: managed-resource-controller-tap-install-cluster-role
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    packaging.carvel.dev/package: managed-resource-controller-tap-install
+  name: managed-resource-controller-tap-install-cluster-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: managed-resource-controller-tap-install-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: managed-resource-controller-tap-install-sa
+    namespace: tap-install
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    packaging.carvel.dev/package-ClusterRole: managed-resource-controller-tap-install-cluster-role
+    packaging.carvel.dev/package-ClusterRoleBinding: managed-resource-controller-tap-install-cluster-rolebinding
+    packaging.carvel.dev/package-ServiceAccount: managed-resource-controller-tap-install-sa
+  name: managed-resource-controller
+  namespace: tap-install
+spec:
+  packageRef:
+    refName: managed-resource-controller.apps.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=0.1.5"
+      prereleases: {}
+  serviceAccountName: managed-resource-controller-tap-install-sa
