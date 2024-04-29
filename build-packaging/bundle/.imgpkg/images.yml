@@ -1,7 +1,0 @@
----
-apiVersion: imgpkg.carvel.dev/v1alpha1
-images:
-- annotations:
-    kbld.carvel.dev/id: tdp-configurator
-  image: cxscssa.azurecr.io/tap-1-9-0/tap-packages@sha256:dae5627b8d36af3c310d88115cf29013d476917851faf31701026cf799eefe1a
-kind: ImagesLock
