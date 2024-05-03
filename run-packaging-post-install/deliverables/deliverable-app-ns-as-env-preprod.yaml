@@ -36,13 +36,6 @@ spec:
             #@   return result
             #@ end
 
-            #@overlay/match by=overlay.subset({"kind": "Deliverable"}), expects="0+"
-            ---
-            metadata:
-              #@overlay/match missing_ok=True
-              #@overlay/replace via=lambda left, right: left+right
-              name: -preprod
-
             #@overlay/match by=overlay.subset({"kind":"Deliverable"}), expects="0+"
             ---
             spec:
