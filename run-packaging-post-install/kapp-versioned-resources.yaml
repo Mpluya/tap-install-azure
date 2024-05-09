@@ -1,0 +1,49 @@
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+templateRules:
+  - resourceMatchers:
+      - apiVersionKindMatcher: {apiVersion: v1, kind: ConfigMap}
+    affectedResources:
+      objectReferences:
+        - resourceMatchers:
+            - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
+          path: [spec, template, spec, containers, {allIndexes: true}, env, {allIndexes: true}, valueFrom, configMapKeyRef]
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config
+  namespace: mae
+  annotations:
+    kapp.k14s.io/versioned: ""
+    kapp.k14s.io/versioned-keep-original: ""
+data:
+  special.how: very-good
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: mae
+  labels:
+    app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
+          env:
+            - name: SPECIAL_LEVEL_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: special-config
+                  key: special.how
