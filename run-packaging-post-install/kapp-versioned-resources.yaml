@@ -79,3 +79,8 @@ spec:
                 configMapKeyRef:
                   name: special-config
                   key: special.how
+            - name: SPECIAL_LEVEL_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: workload-secrets
+                  key: database
