@@ -8,6 +8,13 @@ templateRules:
         - resourceMatchers:
             - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
           path: [spec, template, spec, containers, {allIndexes: true}, env, {allIndexes: true}, valueFrom, configMapKeyRef]
+  - resourceMatchers:
+      - apiVersionKindMatcher: {apiVersion: v1, kind: Secret}
+    affectedResources:
+      objectReferences:
+        - resourceMatchers:
+            - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
+          path: [spec, template, spec, containers, {allIndexes: true}, env, {allIndexes: true}, valueFrom, secretKeyRef]
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -34,6 +41,9 @@ spec:
     name: workload-secrets
     creationPolicy: Owner
     template:
+      annotations:
+        kapp.k14s.io/versioned: ""
+        kapp.k14s.io/versioned-keep-original: ""
       data:
         database: "{{ .database }}"
   data:
