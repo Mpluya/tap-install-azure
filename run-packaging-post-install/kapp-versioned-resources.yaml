@@ -35,11 +35,11 @@ spec:
     creationPolicy: Owner
     template:
       data:
-        known_hosts: "{{ .githubsshknownhostsstring }}"
+        database: "{{ .database }}"
   data:
-    - secretKey: githubsshknownhostsstring
+    - secretKey: database
       remoteRef:
-        key: githubsshknownhostsstring
+        key: database
 ---
 apiVersion: apps/v1
 kind: Deployment
