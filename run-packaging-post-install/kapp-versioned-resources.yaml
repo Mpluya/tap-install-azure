@@ -18,7 +18,7 @@ metadata:
     kapp.k14s.io/versioned: ""
     kapp.k14s.io/versioned-keep-original: ""
 data:
-  special.how: very-good
+  special.how: bathroom
 ---
 apiVersion: apps/v1
 kind: Deployment
