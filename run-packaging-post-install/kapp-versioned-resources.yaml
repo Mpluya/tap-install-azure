@@ -24,7 +24,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: workload-secrets
-  namespace: mae
+  namespace: tap-install
 spec:
   secretStoreRef:
     kind: SecretStore
