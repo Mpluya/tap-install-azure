@@ -18,9 +18,9 @@ metadata:
 type: Opaque
 stringData:
   type: postgresql
-  provider: azure
-  host: EXAMPLE.DATABASE.AZURE.COM
-  port: "5432"
+  provider: aws
+  host: EXAMPLE.DATABASE.AWS.COM
+  port: "0000"
   database: "EXAMPLE-DB-NAME"
   username: "USER@EXAMPLE"
   password: "PASSWORD"
