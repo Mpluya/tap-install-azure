@@ -31,10 +31,10 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: workload-secrets
-  namespace: tap-install
+  namespace: mae
 spec:
   secretStoreRef:
-    kind: SecretStore
+    kind: ClusterSecretStore #uses temp clustersecretstore at ignored folder
     name: azure-secret-store
   refreshInterval: "1m"
   target:
