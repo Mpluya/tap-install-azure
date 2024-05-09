@@ -20,6 +20,27 @@ metadata:
 data:
   special.how: bathroom
 ---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tenant-secrets
+  namespace: tap-install
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: azure-secret-store
+  refreshInterval: "1m"
+  target:
+    name: workload-secrets
+    creationPolicy: Owner
+    template:
+      data:
+        known_hosts: "{{ .githubsshknownhostsstring }}"
+  data:
+    - secretKey: githubsshknownhostsstring
+      remoteRef:
+        key: githubsshknownhostsstring
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
