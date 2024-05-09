@@ -35,7 +35,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore #uses temp clustersecretstore at ignored folder
-    name: azure-secret-store
+    name: azure-cluster-secret-store
   refreshInterval: "1m"
   target:
     name: workload-secrets
