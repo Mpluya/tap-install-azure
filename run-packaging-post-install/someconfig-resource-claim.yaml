@@ -9,3 +9,18 @@ spec:
     kind: Secret
     name: someconfig-secret
     namespace: mae
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: someconfig-secret
+  namespace: mae
+type: Opaque
+stringData:
+  type: postgresql
+  provider: azure
+  host: EXAMPLE.DATABASE.AZURE.COM
+  port: "5432"
+  database: "EXAMPLE-DB-NAME"
+  username: "USER@EXAMPLE"
+  password: "PASSWORD"
