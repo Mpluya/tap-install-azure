@@ -18,12 +18,12 @@ spec:
         subPath: config/mae/hello-too
         secretRef:
           name: tap-install-gitops-ssh
-    - git:
-        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
-        ref: origin/main
-        subPath: config/mae/direct-binding-sample
-        secretRef:
-          name: tap-install-gitops-ssh
+#    - git:
+#        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#        ref: origin/main
+#        subPath: config/mae/direct-binding-sample
+#        secretRef:
+#          name: tap-install-gitops-ssh
     - git:
         url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
         ref: origin/main
