@@ -13,4 +13,4 @@ spec:
       image: registry.tanzu.vmware.com/build-service-dependency-updater/package-repo
       tagSelection:
         semver:
-          constraints: 1.8.x
+          constraints: 1.9.x
