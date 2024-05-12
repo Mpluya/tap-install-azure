@@ -61,7 +61,7 @@ metadata:
     kapp.k14s.io/versioned: ""
     kapp.k14s.io/versioned-keep-original: ""
 data:
-  mae: large
+  mae: bGFyZ2U=
 ---
 apiVersion: apps/v1
 kind: Deployment
