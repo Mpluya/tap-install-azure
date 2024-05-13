@@ -50,10 +50,6 @@ spec:
     name: workload-secrets
     creationPolicy: Merge
     template:
-      metadata:
-        annotations:
-          kapp.k14s.io/versioned: ""
-          kapp.k14s.io/versioned-keep-original: ""
       data:
         database: "{{ .database }}"
   data:
