@@ -13,4 +13,4 @@ spec:
       image: cxscssa.azurecr.io/build-service-dependency-updater/package-repo
       tagSelection:
         semver:
-          constraints: 1.9.x
+          constraints: 1.9.47
