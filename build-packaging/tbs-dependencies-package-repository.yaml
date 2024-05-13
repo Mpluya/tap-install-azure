@@ -10,7 +10,7 @@ spec:
     imgpkgBundle:
       secretRef:
         name: tanzu-registry
-      image: registry.tanzu.vmware.com/build-service-dependency-updater/package-repo
+      image: cxscssa.azurecr.io/build-service-dependency-updater/package-repo
       tagSelection:
         semver:
           constraints: 1.9.x
