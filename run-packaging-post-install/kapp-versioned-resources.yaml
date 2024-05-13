@@ -3,7 +3,7 @@ kind: Config
 rebaseRules:
   - path: [data]
     type: copy
-    sources: [existing, new]
+    sources: [existing]
     resourceMatchers:
       - kindNamespaceNameMatcher:
           kind: Secret
