@@ -9,7 +9,7 @@ spec:
   fetch:
     imgpkgBundle:
       secretRef:
-        name: tanzu-registry
+        name: tap-registry
       image: cxscssa.azurecr.io/build-service-dependency-updater/package-repo
       tagSelection:
         semver:
