@@ -37,7 +37,7 @@ spec:
   refreshInterval: "1m"
   target:
     name: workload-secrets
-    creationPolicy: Merge
+    creationPolicy: Owner
     template:
       metadata:
         annotations:
