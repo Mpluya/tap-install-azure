@@ -1,5 +1,14 @@
 apiVersion: kapp.k14s.io/v1alpha1
 kind: Config
+rebaseRules:
+  - path: [spec, data]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Secret
+          namespace: mae
+          name: workload-secrets
 templateRules:
   - resourceMatchers:
       - apiVersionKindMatcher: {apiVersion: v1, kind: ConfigMap}
