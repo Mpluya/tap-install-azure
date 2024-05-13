@@ -25,17 +25,6 @@ templateRules:
             - apiVersionKindMatcher: {apiVersion: apps/v1, kind: Deployment}
           path: [spec, template, spec, containers, {allIndexes: true}, env, {allIndexes: true}, valueFrom, secretKeyRef]
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: special-config
-  namespace: mae
-  annotations:
-    kapp.k14s.io/versioned: ""
-    kapp.k14s.io/versioned-keep-original: ""
-data:
-  special.how: bathroom
----
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -67,7 +56,6 @@ metadata:
     kapp.k14s.io/versioned-keep-original: ""
 data:
   mae: bGFyZ2U=
-  database: Cg==
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -101,3 +89,14 @@ spec:
                 secretKeyRef:
                   name: workload-secrets
                   key: database
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config
+  namespace: mae
+  annotations:
+    kapp.k14s.io/versioned: ""
+    kapp.k14s.io/versioned-keep-original: ""
+data:
+  special.how: bathroom
