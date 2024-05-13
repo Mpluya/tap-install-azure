@@ -39,23 +39,27 @@ spec:
     name: workload-secrets
     creationPolicy: Merge
     template:
+      metadata:
+        annotations:
+          kapp.k14s.io/versioned: ""
+          kapp.k14s.io/versioned-keep-original: ""
       data:
         database: "{{ .database }}"
   data:
     - secretKey: database
       remoteRef:
         key: database
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: workload-secrets
-  namespace: mae
-  annotations:
-    kapp.k14s.io/versioned: ""
-    kapp.k14s.io/versioned-keep-original: ""
-data:
-  mae: bGFyZ2U=
+#---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: workload-secrets
+#  namespace: mae
+#  annotations:
+#    kapp.k14s.io/versioned: ""
+#    kapp.k14s.io/versioned-keep-original: ""
+#data:
+#  mae: bGFyZ2U=
 ---
 apiVersion: apps/v1
 kind: Deployment
