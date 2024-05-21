@@ -17,3 +17,4 @@ spec:
     - kapp:
         rawOptions:
           - --diff-changes=true
+          - --dangerous-override-ownership-of-existing-resources=true
