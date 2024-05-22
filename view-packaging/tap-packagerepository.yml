@@ -8,4 +8,4 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: cxscssa.azurecr.io/tap-1-9-1/tap-packages:1.9.1
+      image: cxscssa.azurecr.io/tap-1-10-0/tap-packages:1.10.0
