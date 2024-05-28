@@ -59,7 +59,7 @@ spec:
   packageRef:
     refName: trivy-scanning.component.apps.tanzu.vmware.com
     versionSelection:
-      constraints: ">=0.2.0-alpha"
+      constraints: 0.2.0-alpha
       prereleases: {}
   serviceAccountName: trivy-scanning-component-tap-install-sa
 status:
