@@ -60,7 +60,7 @@ spec:
     #     subPath: config/mae/app-golang-kaniko
     #     secretRef:
     #       name: tap-install-gitops-ssh
-     - git:
+    - git:
          url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
          ref: origin/main
          subPath: config/mae/server-java-web-app-1-7-azure
