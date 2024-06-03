@@ -134,7 +134,7 @@ spec:
 
     #@ if is_gitops():
     ---
-    apiVersion: tekton.dev/v1beta1
+    apiVersion: tekton.dev/v1
     kind: TaskRun
     metadata:
       generateName: #@ data.values.workload.metadata.name + "-deliverable-config-writer-"
@@ -169,7 +169,7 @@ spec:
 
     #@ else:
     ---
-    apiVersion: tekton.dev/v1beta1
+    apiVersion: tekton.dev/v1
     kind: TaskRun
     metadata:
       generateName: #@ data.values.workload.metadata.name + "-deliverable-config-writer-"
