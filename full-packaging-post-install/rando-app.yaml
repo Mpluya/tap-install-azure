@@ -8,11 +8,11 @@ spec:
   fetch:
     - git:
         lfsSkipSmudge: true
-        url: ssh://git@github.com/Mpluya/repo-with-large-file-storage.git
+        url: https://github.com/Mpluya/repo-with-large-file-storage.git
         ref: origin/master
         subPath: test/dood
         secretRef:
-          name: tap-install-gitops-ssh
+          name: git-credentials
   template:
     - ytt: {}
   deploy:
