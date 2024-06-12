@@ -7,6 +7,7 @@ spec:
   serviceAccountName: tap-install-sa
   fetch:
     - git:
+        lfsSkipSmudge: true
         url: ssh://git@github.com/Mpluya/repo-with-large-file-storage.git
         ref: origin/master
         subPath: test
