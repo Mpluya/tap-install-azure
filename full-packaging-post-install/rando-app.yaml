@@ -10,7 +10,7 @@ spec:
         lfsSkipSmudge: true
         url: ssh://git@github.com/Mpluya/repo-with-large-file-storage.git
         ref: origin/master
-        subPath: test
+        subPath: test/dood
         secretRef:
           name: tap-install-gitops-ssh
   template:
