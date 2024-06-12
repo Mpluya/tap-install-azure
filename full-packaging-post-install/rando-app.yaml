@@ -1,0 +1,20 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: rando-app
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-sa
+  fetch:
+    - git:
+        url: ssh://git@github.com/Mpluya/repo-with-large-file-storage.git
+        ref: origin/main
+        subPath: test
+        secretRef:
+          name: tap-install-gitops-ssh
+  template:
+    - ytt: {}
+  deploy:
+    - kapp:
+        rawOptions:
+          - --dangerous-allow-empty-list-of-resources=true
