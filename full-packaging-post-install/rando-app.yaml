@@ -8,7 +8,7 @@ spec:
   fetch:
     - git:
         url: ssh://git@github.com/Mpluya/repo-with-large-file-storage.git
-        ref: origin/main
+        ref: origin/master
         subPath: test
         secretRef:
           name: tap-install-gitops-ssh
