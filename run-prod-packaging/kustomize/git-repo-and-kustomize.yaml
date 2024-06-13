@@ -14,3 +14,19 @@ spec:
   timeout: 60s
   secretRef:
     name: tenant-gitops-ssh
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: carvel-workload-kustomize-packages
+  namespace: kustomize-fun
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: packages-gitops-repo
+    namespace: kustomize-fun
+  path: "./packages/carvel-workload-kustomize.kustomize-fun.cssa.vmware.com/packages"
+  interval: 5m
+  timeout: 5m
+  prune: true
+  wait: true
