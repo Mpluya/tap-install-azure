@@ -1,0 +1,17 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: pkgi
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
+    kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
+    packaging.carvel.dev/downgradable: ""
+  name: acs
+  namespace: tap-install
+spec:
+  packageRef:
+    refName: application-configuration-service.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=2.2.0"
+      prereleases: {}
+  serviceAccountName: tap-tap-install-sa
