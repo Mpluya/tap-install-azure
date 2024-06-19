@@ -25,5 +25,5 @@ stringData:
             args:
             - --concurrent=30
             - --requeue-dependency=5s
-            - --artifact-retention-records 20
-            - --artifact-retention-ttl 5m0s
+            - --artifact-retention-records=20
+            - --artifact-retention-ttl=5m0s
