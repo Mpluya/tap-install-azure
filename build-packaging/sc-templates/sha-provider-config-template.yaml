@@ -1,0 +1,96 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterConfigTemplate
+metadata:
+  name: git-sha-provider
+spec:
+
+  params:
+    - name: serviceAccount
+      default: default
+    - name: registry
+      default: {}
+
+  configPath: .status.results[?(@.name=="config")].value
+
+  healthRule:
+    multiMatch:
+      healthy:
+        matchConditions:
+          - status: "True"
+            type: Succeeded
+      unhealthy:
+        matchConditions:
+          - status: "False"
+            type: Succeeded
+
+  lifecycle: tekton
+
+  #@ label_exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association"]) + "\"]"
+  #@yaml/text-templated-strings
+  ytt: |
+    #@ load("@ytt:data", "data")
+
+    #@ def param(key):
+    #@   if not key in data.values.params:
+    #@     return None
+    #@   end
+    #@   return data.values.params[key]
+    #@ end
+    
+    #@ def merge_labels(fixed_values):
+    #@   labels = {}
+    #@   if hasattr(data.values.workload.metadata, "labels"):
+    #@     exclusions = (@= label_exclusions @)
+    #@     for k,v in dict(data.values.workload.metadata.labels).items():
+    #@       if k not in exclusions:
+    #@         labels[k] = v
+    #@       end
+    #@     end
+    #@   end
+    #@   labels.update(fixed_values)
+    #@   return labels
+    #@ end
+    
+    #@ def merged_tekton_params():
+    #@   params = []
+    #@   params.append({ "name": "config", "value": data.values.configs.config })
+    #@   params.append({ "name": "ca_cert_data", "value": ca_cert_data() })
+    #@   return params
+    #@ end
+
+    #@ def ca_cert_data():
+    #@   if "ca_cert_data" not in param("registry"):
+    #@     return ""
+    #@   end
+    #@
+    #@   return param("registry")["ca_cert_data"]
+    #@ end
+    
+    apiVersion: tekton.dev/v1
+    kind: TaskRun
+    metadata:
+      generateName: #@ data.values.workload.metadata.name + "-git-sha-provider-"
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "git-sha-provider" })
+    spec:
+      #@ if/end hasattr(data.values.workload.spec, "serviceAccountName"):
+      serviceAccountName: #@ data.values.workload.spec.serviceAccountName
+      params: #@ merged_tekton_params()
+      computeResources:
+        requests:
+          cpu: .5
+          memory: 500Mi
+        limits:
+          cpu: 1
+          memory: 1000Mi
+      taskRef:
+        resolver: cluster
+        params:
+          - name: kind
+            value: task
+          - name: namespace
+            value: tap-tasks
+          - name: name
+            value: git-sha-provider

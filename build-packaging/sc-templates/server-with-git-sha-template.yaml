@@ -1,0 +1,192 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterConfigTemplate
+metadata:
+  name: server-with-git-sha-template
+spec:
+  configPath: .data
+
+  params:
+    - name: ports
+      default:
+      - containerPort: 8080
+        port: 8080
+        name: http
+
+  healthRule:
+    alwaysHealthy: {}
+
+  #@ label_exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association"]) + "\"]"
+  #@yaml/text-templated-strings
+  ytt: |
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:yaml", "yaml")
+    #@ load("@ytt:overlay", "overlay")
+    #@ load("@ytt:struct", "struct")
+    #@ load("@ytt:template", "template")
+    #@ load("@ytt:assert", "assert")
+    
+    #@ def param(key):
+    #@   if not key in data.values.params:
+    #@     return None
+    #@   end
+    #@   return data.values.params[key]
+    #@ end
+    
+    #@ def auto_scaling_param(key):
+    #@   if param("autoscaling") == None:
+    #@    return None
+    #@   end 
+    #@   if not key in data.values.params["autoscaling"]:
+    #@     return None
+    #@   end
+    #@   return data.values.params["autoscaling"][key]
+    #@ end
+    
+    #@ def merge_labels(fixed_values):
+    #@   labels = {}
+    #@   if hasattr(data.values.workload.metadata, "labels"):
+    #@     exclusions = (@= label_exclusions @)
+    #@     for k,v in dict(data.values.workload.metadata.labels).items():
+    #@       if k not in exclusions:
+    #@         labels[k] = v
+    #@       end
+    #@     end
+    #@   end
+    #@   labels.update(fixed_values)
+    #@   return labels
+    #@ end
+
+    #@ def intOrString(v):
+    #@   return v if type(v) == "int" else int(v.strip()) if v.strip().isdigit() else v
+    #@ end
+
+    #@ def merge_ports(ports_spec, containers):
+    #@   ports = {}
+    #@   for c in containers:
+    #@     for p in getattr(c, "ports", []):
+    #@       ports[p.containerPort] = {"targetPort": p.containerPort, "port": p.containerPort, "name": getattr(p, "name", str(p.containerPort))}
+    #@     end
+    #@   end
+    #@   for p in ports_spec:
+    #@     targetPort = getattr(p, "containerPort", p.port)
+    #@     type(targetPort) in ("string", "int") or fail("containerPort must be a string or int")
+    #@     targetPort = intOrString(targetPort)
+    #@     
+    #@     port = p.port
+    #@     type(port) in ("string", "int") or fail("port must be a string or int")
+    #@     port = int(port)
+    #@     ports[p.port] = {"targetPort": targetPort, "port": port, "name": getattr(p, "name", str(p.port))}
+    #@   end
+    #@   return ports.values()
+    #@ end
+    
+    #@ def hasCpuMetrics():
+    #@   return auto_scaling_param('cpu_average_utilization') != None
+    #@ end
+    
+    #@ def hasCustomMetrics():
+    #@   return auto_scaling_param('metrics') != None
+    #@ end
+    
+    #@ def validateScalingInputs():
+    #@   if hasCustomMetrics() and hasCpuMetrics():
+    #@     assert.fail("Configured custom metrics and cpu metric. Please only configure one.")
+    #@   end
+    #@ end
+    
+    #@ def gitSha():
+    #@  name = "git_sha"
+    #@  for val in data.values.configs.git.config:
+    #@    if val.name == name:
+    #@      return val.value
+    #@    end
+    #@  end
+    #@  assert.fail("name not in config")
+    #@ end
+    
+    #@ def addGitShaAnnotation():
+    #@overlay/match-child-defaults missing_ok=True
+    metadata:
+      annotations:
+        unused: #@ template.replace({"apps.tanzu.vmware.com/git-sha": gitSha() })
+    #@ end
+    
+    #@ def delivery():
+    #@ validateScalingInputs()
+    ---
+    apiVersion: kapp.k14s.io/v1alpha1
+    kind: Config
+    rebaseRules:
+      - path: [spec, replicas]
+        type: copy
+        sources: [existing, new]
+        resourceMatchers:
+          - apiGroupKindMatcher: {apiGroup: apps, kind: Deployment}
+    ---
+    apiVersion: autoscaling/v2
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: #@ data.values.workload.metadata.name
+    spec:
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: #@ data.values.workload.metadata.name
+      minReplicas: #@ 1 if auto_scaling_param('min_replicas') == None else data.values.params.autoscaling.min_replicas
+      maxReplicas: #@ 10 if auto_scaling_param('max_replicas') == None else data.values.params.autoscaling.max_replicas
+      #@ if auto_scaling_param('metrics') == None:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: #@ 65 if auto_scaling_param('cpu_average_utilization') == None else data.values.params.autoscaling.cpu_average_utilization
+      #@ else:
+      metrics: #@ data.values.params.autoscaling.metrics
+      #@ end
+    ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: #@ data.values.workload.metadata.name
+      annotations:
+        kapp.k14s.io/update-strategy: "fallback-on-replace"
+        ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
+        kapp.k14s.io/change-rule: "upsert after upserting servicebinding.io/ServiceBindings"
+        unused: #@ template.replace({"apps.tanzu.vmware.com/git-sha": gitSha() })
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
+    spec:
+      selector:
+        matchLabels: #@ data.values.configs.service.config.metadata.labels
+      template: #@ overlay.apply(data.values.configs.service.config,addGitShaAnnotation())
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: #@ data.values.workload.metadata.name
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
+    spec:
+      selector: #@ data.values.configs.service.config.metadata.labels
+      ports:
+      #@ hasattr(data.values.params, "ports") and len(data.values.params.ports) or assert.fail("one or more ports param must be provided.")
+      #@ declared_ports = []
+      #@ if "ports" in data.values.params:
+      #@   declared_ports = data.values.params.ports
+      #@ else:
+      #@   declared_ports = struct.encode([{ "containerPort": 8080, "port": 8080, "name": "http"}])
+      #@ end
+      #@ for p in merge_ports(declared_ports, data.values.configs.service.config.spec.containers):
+      - #@ p
+      #@ end
+    #@ end
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: #@ data.values.workload.metadata.name + "-server-with-git-sha"
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "server-with-git-sha" })
+    data:
+      delivery.yml: #@ yaml.encode(delivery())
