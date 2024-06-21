@@ -136,16 +136,3 @@ stringData:
                     apps.tanzu.vmware.com/workload-type: #@ supported_workload.type
             #@ end
             #@ end
-        #@overlay/append
-        - name: git-sha-provider
-          configs:
-            - name: config
-              resource: config-provider
-          templateRef:
-            kind: ClusterConfigTemplate
-            name: git-sha-provider
-          params:
-            - name: serviceAccount
-              default: #@ data.values.service_account
-            - name: registry
-              value: #@ data.values.registry
