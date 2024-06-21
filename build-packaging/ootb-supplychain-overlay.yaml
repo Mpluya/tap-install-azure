@@ -8,6 +8,8 @@ stringData:
   ootb-supply-chain-overlay.yaml: |
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:template", "template")
+    #@ load("@ytt:data", "data")
+    
     
     #@ basic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-to-url"}})
     #@ imagebasic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"basic-image-to-url"}})
@@ -97,8 +99,6 @@ stringData:
           kind: ClusterConfigTemplate
           name: config-writer-template
                                     
-    #@ load("@ytt:data", "data")
-    #@ load("@ytt:overlay", "overlay")
     #@overlay/match by=testingscanning, expects="0+"
     ---
     spec:
