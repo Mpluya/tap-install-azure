@@ -103,6 +103,20 @@ stringData:
     ---
     spec:
       resources:
+        #@overlay/match by=overlay.index(6)
+        #@overlay/insert before=True
+        - name: git-sha-provider
+          configs:
+            - name: config
+              resource: config-provider
+          templateRef:
+            kind: ClusterConfigTemplate
+            name: git-sha-provider
+          params:
+            - name: serviceAccount
+              default: #@ data.values.service_account
+            - name: registry
+              value: #@ data.values.registry
         #@overlay/match by="name", expects="1+"
         #@overlay/replace
         - name: app-config
