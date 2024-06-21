@@ -103,25 +103,6 @@ stringData:
     ---
     spec:
       resources:
-        #@overlay/match by="name", expects="1+"
-        #@overlay/replace
-        - name: app-config
-          configs:
-            - name: config
-              resource: git-sha-provider
-              templateRef:
-                kind: ClusterConfigTemplate
-                #@ if len(data.values.supported_workloads) == 1:
-                name: #@ data.values.supported_workloads[0].cluster_config_template_name
-                #@ else:
-                options:
-                  #@ for supported_workload in data.values.supported_workloads:
-                  - name: #@ supported_workload.cluster_config_template_name
-                    selector:
-                      matchLabels:
-                        apps.tanzu.vmware.com/workload-type: #@ supported_workload.type
-                #@ end
-                #@ end
         #@overlay/append
         - name: git-sha-provider
           configs:
