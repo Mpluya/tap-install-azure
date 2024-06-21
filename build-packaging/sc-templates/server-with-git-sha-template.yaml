@@ -26,6 +26,7 @@ spec:
     #@ load("@ytt:struct", "struct")
     #@ load("@ytt:template", "template")
     #@ load("@ytt:assert", "assert")
+    #@ load("@ytt:json", "json")
     
     #@ def param(key):
     #@   if not key in data.values.params:
@@ -112,6 +113,8 @@ spec:
       annotations:
         unused: #@ template.replace({"apps.tanzu.vmware.com/git-sha": gitSha() })
     #@ end
+    
+    #@ config = struct.encode(json.decode(data.values.config))
     
     #@ def delivery():
     #@ validateScalingInputs()

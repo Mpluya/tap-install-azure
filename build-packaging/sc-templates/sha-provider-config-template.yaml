@@ -56,7 +56,7 @@ spec:
     
     #@ def merged_tekton_params():
     #@   params = []
-    #@   params.append({ "name": "config", "value": data.values.configs.config })
+    #@   params.append({ "name": "config", "value": data.values.configs.config.config })
     #@   params.append({ "name": "ca_cert_data", "value": ca_cert_data() })
     #@   return params
     #@ end

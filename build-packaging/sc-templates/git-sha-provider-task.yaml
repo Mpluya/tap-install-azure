@@ -47,6 +47,8 @@ spec:
       script: |-
         #!/usr/bin/env bash
         
+        set -x 
+        
         # setup creds and certs
         if [[ -f /tekton/creds/.docker/config.json ]]; then
           cp /tekton/creds/.docker/config.json /docker-config/
@@ -63,14 +65,13 @@ spec:
         serviceConfig='$(params.config)'
         
         # extract image from config 
-        image=$(echo -n $serviceConfig | jq -r '.config.spec.containers[0].image')
+        image=$(echo -n $serviceConfig | jq -r '.spec.containers[0].image')
         
         # get image metadata and then extract git sha from source label
         gitSha=$(oras manifest fetch-config ${image} | jq -r '.config.Labels.["org.opencontainers.image.source"]' | awk -F':' '{print $2}')
         
         # remove last-applied-configuration annotation due to results limits and add sha to annotations 
-        updatedConfig=$(echo -n $serviceConfig | jq 'del(.config.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | jq -c --arg sha "$gitSha" '.config.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
-       
-        # output the updated config
-        echo -n "$updatedConfig" > $(results.config.path)
-
+        updatedConfig=$(echo -n $serviceConfig | jq 'del(.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | jq -c --arg sha "$gitSha" '.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
+        
+        # write results
+        echo -n "$updatedConfig" > "$(results.config.path)"
