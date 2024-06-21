@@ -96,7 +96,9 @@ stringData:
         templateRef:
           kind: ClusterConfigTemplate
           name: config-writer-template
-
+                                    
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:overlay", "overlay")
     #@overlay/match by=testingscanning, expects="0+"
     ---
     spec:
