@@ -110,7 +110,7 @@ spec:
     #@    if index == -1:
     #@      assert.fail("name not in config")
     #@    else:
-    #@      return val[index + len(key):]
+    #@      return val[index + len(name):]
     #@    end
     #@  end
     #@ end
