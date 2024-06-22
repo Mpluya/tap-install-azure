@@ -104,7 +104,7 @@ spec:
     #@ config = struct.encode(json.decode(data.values.config))
     
     #@ def gitSha():
-    #@  name = "apps.tanzu.vmware.com/git-sha"
+    #@  name = "git-sha"
     #@  for val in config.metadata.annotations:
     #@    index = val.find(name)
     #@    if index == -1:
