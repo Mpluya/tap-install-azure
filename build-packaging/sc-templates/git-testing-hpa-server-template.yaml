@@ -3,7 +3,7 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterConfigTemplate
 metadata:
-  name: git-testing-hpa-server-template
+  name: server-with-git-sha-template
   annotations:
     doc: |
       This template consumes an input named config which contains a
@@ -103,11 +103,24 @@ spec:
     
     #@ config = struct.encode(json.decode(data.values.config))
     
+    #@ def gitSha():
+    #@  name = "apps.tanzu.vmware.com/git-sha"
+    #@  for val in config.metadata.annotations:
+    #@    if val.name == name:
+    #@      return val.value
+    #@    end
+    #@  end
+    #@  assert.fail("name not in config")
+    #@ end
+    
+    
     #@ def delivery():
     #@ validateScalingInputs()
     ---
     apiVersion: kapp.k14s.io/v1alpha1
     kind: Config
+    additionalLabels:
+      gitsha: #@ gitSha()
     rebaseRules:
       - path: [spec, replicas]
         type: copy
