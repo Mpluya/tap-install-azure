@@ -106,8 +106,8 @@ spec:
     #@ def gitSha():
     #@  name = "apps.tanzu.vmware.com/git-sha"
     #@  for val in config.metadata.annotations:
-    #@    if val.name == name:
-    #@      return val.value
+    #@    if val.startswith(name):
+    #@      return val
     #@    end
     #@  end
     #@  assert.fail("name not in config")
