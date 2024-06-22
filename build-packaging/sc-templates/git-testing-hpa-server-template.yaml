@@ -111,6 +111,7 @@ spec:
     #@      assert.fail("name not in config")
     #@    else:
     #@      return val[index + len(key):]
+    #@    end
     #@  end
     #@ end
     
