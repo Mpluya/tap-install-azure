@@ -108,7 +108,6 @@ spec:
     #@  result = ""
     #@  for a in config.metadata.annotations:
     #@    result += a
-    #@    end
     #@  end
     #@  return result
     #@  assert.fail("name not in config")
