@@ -107,7 +107,7 @@ spec:
     #@  name = "apps.tanzu.vmware.com/git-sha"
     #@  for val in config.metadata.annotations:
     #@    if val.startswith(name):
-    #@      return val.split(":")[1]
+    #@      return val
     #@    end
     #@  end
     #@  assert.fail("name not in config")
