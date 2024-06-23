@@ -104,15 +104,14 @@ spec:
     #@ config = struct.encode(json.decode(data.values.config))
     
     #@ def gitSha():
-    #@  name = "git-sha"
+    #@  name = "apps.tanzu.vmware.com/git-sha"
     #@  for val in config.metadata.annotations:
     #@    index = val.find(name)
-    #@    if index == -1:
-    #@      assert.fail("name not in config")
-    #@    else:
+    #@    if index >= 0:
     #@      return val[index + len(name):]
     #@    end
     #@  end
+    #@  assert.fail("name not in config")
     #@ end
     
     
