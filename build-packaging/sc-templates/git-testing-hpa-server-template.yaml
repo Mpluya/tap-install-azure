@@ -120,7 +120,7 @@ spec:
     apiVersion: kapp.k14s.io/v1alpha1
     kind: Config
     additionalLabels:
-      gitsha: #@ gitSha()
+      gitsha: wip
     rebaseRules:
       - path: [spec, replicas]
         type: copy
