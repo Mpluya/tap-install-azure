@@ -24,24 +24,24 @@ spec:
 #        subPath: config/mae/direct-binding-sample
 #        secretRef:
 #          name: tap-install-gitops-ssh
-    - git:
-        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
-        ref: origin/main
-        subPath: config/jeremy/wednesday-java-web-app
-        secretRef:
-          name: tap-install-gitops-ssh
-    - git:
-        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
-        ref: origin/main
-        subPath: config/jeremy/wednesday-java-web-app-team1
-        secretRef:
-          name: tap-install-gitops-ssh
-    - git:
-        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
-        ref: origin/main
-        subPath: config/jeremy/wednesday-java-web-app-team2
-        secretRef:
-          name: tap-install-gitops-ssh
+#    - git:
+#        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#        ref: origin/main
+#        subPath: config/jeremy/wednesday-java-web-app
+#        secretRef:
+#          name: tap-install-gitops-ssh
+#    - git:
+#        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#        ref: origin/main
+#        subPath: config/jeremy/wednesday-java-web-app-team1
+#        secretRef:
+#          name: tap-install-gitops-ssh
+#    - git:
+#        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+#        ref: origin/main
+#        subPath: config/jeremy/wednesday-java-web-app-team2
+#        secretRef:
+#          name: tap-install-gitops-ssh
     #  - git:
     #      url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
     #      ref: origin/main
@@ -88,6 +88,12 @@ spec:
         url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
         ref: origin/main
         subPath: config/mae/react-frontend
+        secretRef:
+          name: tap-install-gitops-ssh
+    - git:
+        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+        ref: origin/main
+        subPath: config/mae/go-ca-cert-workload
         secretRef:
           name: tap-install-gitops-ssh
   template:
