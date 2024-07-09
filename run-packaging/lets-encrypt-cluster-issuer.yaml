@@ -112,3 +112,11 @@ metadata:
   namespace: supplychains
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: jeremy
+imagePullSecrets:
+  - name: tap-registry
