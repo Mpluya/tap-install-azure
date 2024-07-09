@@ -22,7 +22,7 @@ metadata:
   labels:
     apps.tanzu.vmware.com/aggregate-to-deliverable: "true"
 rules:
-  - apiGroups: ["projectcontour.io/v1"]
+  - apiGroups: ["projectcontour.io/v1", "projectcontour.io"]
     resources: ["httpproxies"]
     verbs:
       - get
