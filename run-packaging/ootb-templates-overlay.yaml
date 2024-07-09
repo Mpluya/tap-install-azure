@@ -81,7 +81,6 @@ stringData:
           - apiVersionKindMatcher:
               apiVersion: serving.knative.dev/v1
               kind: Service
-    
         #@ end
     
         ---
