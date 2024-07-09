@@ -37,6 +37,23 @@ spec:
     #@ load("@ytt:struct", "struct")
     #@ load("@ytt:assert", "assert")
 
+    #@ def auto_scaling_param(key):
+    #@   if param("autoscaling") == None:
+    #@    return None
+    #@   end 
+    #@   if not key in data.values.params["autoscaling"]:
+    #@     return None
+    #@   end
+    #@   return data.values.params["autoscaling"][key]
+    #@ end
+
+    #@ def param(key):
+    #@   if not key in data.values.params:
+    #@     return None
+    #@   end
+    #@   return data.values.params[key]
+    #@ end
+    
     #@ def merge_labels(fixed_values):
     #@   labels = {}
     #@   if hasattr(data.values.workload.metadata, "labels"):
