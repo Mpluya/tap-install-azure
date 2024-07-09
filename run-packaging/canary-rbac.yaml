@@ -14,3 +14,22 @@ rules:
   - update
   - delete
   - deletecollection
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: httpproxies
+  labels:
+    apps.tanzu.vmware.com/aggregate-to-deliverable: "true"
+rules:
+  - apiGroups: ["projectcontour.io/v1"]
+    resources: ["httpproxies"]
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - patch
+      - update
+      - delete
+      - deletecollection
