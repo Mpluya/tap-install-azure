@@ -169,7 +169,7 @@ spec:
       virtualhost:
         fqdn: #@ data.values.workload.metadata.name
         tls:
-          secretName: wildcard-cert
+          secretName: kube-system/wildcard-cert
     ---
     apiVersion: autoscaling/v2
     kind: HorizontalPodAutoscaler
