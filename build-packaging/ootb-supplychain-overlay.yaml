@@ -21,8 +21,8 @@ stringData:
     ---
     spec:
       #@overlay/match missing_ok=True
+      #@overlay/match-child-defaults missing_ok=True
       selector:
-        #@overlay/match missing_ok=True
         apps.tanzu.vmware.com/has-tests: "true"
     
     #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
