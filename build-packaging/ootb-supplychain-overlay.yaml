@@ -15,6 +15,15 @@ stringData:
     #@ imagebasic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"basic-image-to-url"}})
     #@ testingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url"}})
     #@ imagetestingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url"}})
+    #@ imagetestingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url-package "}})
+    
+    #@overlay/match by=imagetestingscanningpackage, expects="0+"
+    ---
+    spec:
+      #@overlay/match missing_ok=True
+      selector:
+        #@overlay/match missing_ok=True
+        apps.tanzu.vmware.com/has-tests: "true"
     
     #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
     ---
