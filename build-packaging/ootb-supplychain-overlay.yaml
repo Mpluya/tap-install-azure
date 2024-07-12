@@ -15,9 +15,9 @@ stringData:
     #@ imagebasic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"basic-image-to-url"}})
     #@ testingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url"}})
     #@ imagetestingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url"}})
-    #@ imagetestingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url-package "}})
+    #@ imagetestingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url-package"}})
     
-    #@overlay/match by=imagetestingscanningpackage, expects="0+"
+    #@overlay/match by=imagetestingscanningpackage, expects="1+"
     ---
     spec:
       #@overlay/match missing_ok=True
