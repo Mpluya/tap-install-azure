@@ -36,15 +36,7 @@ spec:
   replicas: 1
   tokenSignature:
     signAndVerifyKeyRef:
-      name: auth0-server-key
----
-apiVersion: secretgen.carvel.dev/v1alpha1
-kind: SecretImport
-metadata:
-  name: auth0-server-key
-  namespace: auth0-system
-spec:
-  fromNamespace: tap-install
+      name: auth0-signing-key
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
