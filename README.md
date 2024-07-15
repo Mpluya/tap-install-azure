@@ -45,8 +45,6 @@ At this point, you should have already:
    export KEYVAULT_NAME="tap-eso-vault"
    export KEYVAULT_SECRET_NAME="example-externalsecret-key"
    export KEYVAULT_SECRET_VAlUE="This is our secret now"
-   export RESOURCE_GROUP="cssa-resource-group"
-   export LOCATION="westus"
 ```
 
 > environment variables for the AAD application
