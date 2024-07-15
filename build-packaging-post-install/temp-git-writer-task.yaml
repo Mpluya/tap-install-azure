@@ -1,0 +1,243 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: git-writer
+  namespace: tap-tasks
+spec:
+  stepTemplate:
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 1001
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: "RuntimeDefault"
+      runAsNonRoot: true
+  description: |-
+    A task that writes a given set of files (provided as a json base64-encoded)
+    to git repository under a specified directory.
+  params:
+    - name: git_server_address
+      type: string
+      description: The git server location
+      default: https://github.com
+    - name: git_repository
+      description: The repository path
+      type: string
+    - name: git_branch
+      description: The git branch to read and write
+      type: string
+      default: "main"
+    - name: git_user_email
+      description: User email address
+      type: string
+      default: "example@example.com"
+    - name: git_user_name
+      description: User name
+      type: string
+      default: "Example"
+    - name: git_commit_message
+      description: Message for the git commit
+      type: string
+      default: "New Commit"
+    - name: sub_path
+      description: Sub directory in which to write
+      type: string
+      default: "config"
+    - name: git_files
+      type: string
+      description: >
+        Base64-encoded json map of files to write to registry, for example -
+        eyAiUkVBRE1FLm1kIjogIiMgUmVhZG1lIiB9
+    - name: ca_cert_data
+      description: X509 encoded certificate authority data
+      type: string
+      default: ""
+    - name: git_server_kind
+      type: string
+      description: The git server kind (e.g. github, gitlab, gitea, etc)
+      default: github
+  steps:
+    - name: ensure-base-branch-exists
+      image: tanzu-supply-chain-docker-local.artifactory.eng.vmware.com/packages/ootb-templates/scripting-base@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
+      env:
+        - name: "HOME"
+          value: "/tekton/home/"
+      script: |
+        #!/usr/bin/env bash
+
+        hostname=$(echo $(params.git_server_address) | awk -F[/:] '{print $4}')
+        read -r -d '' ca_cert_data << EOM
+        $(params.ca_cert_data)
+        EOM
+
+        echo | gnutls-cli $hostname --verify-hostname $hostname
+        if [[ $? -ne 0 ]]; then
+
+          if [[ -z "$ca_cert_data" ]]; then
+            >&2 echo "unable to verify certificate on git server, please verify ca_cert_data is set"
+          else
+            echo | gnutls-cli --x509cafile=<(echo "$ca_cert_data") $hostname --verify-hostname $hostname &> /dev/null
+
+            if [[ $? -ne 0 ]]; then
+              >&2 echo "unable to verify git server's tls certificate against either system trust store or provided ca_cert_data"
+            else
+              CA_CERT_PATH=$(mktemp -d)
+              echo "$(params.ca_cert_data)" | tee -a ${CA_CERT_PATH}/shared_custom_ca.crt > /dev/null
+              git config --global http.sslCAinfo ${CA_CERT_PATH}/shared_custom_ca.crt
+            fi
+          fi
+        fi
+
+        if [[ "$(params.git_server_kind)" == "azure" ]]; then
+          token=$(scm token --path $(credentials.path)/.git-credentials --host $(params.git_server_address) --owner "$repo_owner" --repo "$repo_name" --kind $(params.git_server_kind))
+          b64_token=$(printf ":%s" "$token" | base64)
+          git config --global http.extraheader "Authorization: Basic ${b64_token}"
+        fi
+
+        set -o errexit
+        set -o pipefail
+        set -o xtrace
+
+        ssh_config_file=$(mktemp)
+
+        echo "
+        UserKnownHostsFile /tekton/creds/.ssh/known_hosts
+        Include $(credentials.path)/.ssh/config
+        " > $ssh_config_file
+
+        export GIT_SSH_COMMAND="ssh -F $ssh_config_file"
+
+        cd `mktemp -d`
+        git_repository="$(params.git_repository)"
+
+        i="0"
+
+        while [ $i -lt 5 ]; do
+          if git clone --depth 1 "$git_repository" ./repo; then
+            break
+          fi
+          SLEEP_LENGTH=$(perl -e "print 2 ** $i * 3")
+          sleep $SLEEP_LENGTH
+          (( i++ )) || true
+        done
+
+        cd ./repo
+
+        if git ls-remote --exit-code --heads origin "$(params.git_branch)"; then
+          echo "branch exists"
+        else
+          git checkout --orphan "$(params.git_branch)"
+          git rm --cached . -r || true
+          git config user.email "$(params.git_user_email)"
+          git config user.name "$(params.git_user_name)"
+          git commit -m "Initialize branch" --allow-empty
+
+          set +o errexit
+          git push origin $(params.git_branch) 2> git-push-errors.txt
+          EXITCODE=$?
+          if [[ $EXITCODE -ne 0 ]] && ! grep 'reference already exists' git-push-errors.txt -q ; then
+            exit 1
+          fi
+        fi
+    - name: git-clone-and-push
+      image: tanzu-supply-chain-docker-local.artifactory.eng.vmware.com/packages/ootb-templates/scripting-base@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
+      env:
+        - name: "HOME"
+          value: "/tekton/home/"
+      script: |
+        #!/usr/bin/env bash
+
+        hostname=$(echo $(params.git_server_address) | awk -F[/:] '{print $4}')
+        read -r -d '' ca_cert_data << EOM
+        $(params.ca_cert_data)
+        EOM
+
+        echo | gnutls-cli $hostname --verify-hostname $hostname &> /dev/null
+        if [[ $? -ne 0 ]]; then
+
+          if [[ -z "$ca_cert_data" ]]; then
+            >&2 echo "unable to verify certificate on git server, please verify ca_cert_data is set"
+          else
+            echo | gnutls-cli --x509cafile=<(echo "$ca_cert_data") $hostname --verify-hostname $hostname &> /dev/null
+
+            if [[ $? -ne 0 ]]; then
+              >&2 echo "unable to verify git server's tls certificate against either system trust store or provided ca_cert_data"
+            else
+              CA_CERT_PATH=$(mktemp -d)
+              echo "$(params.ca_cert_data)" | tee -a ${CA_CERT_PATH}/shared_custom_ca.crt > /dev/null
+              git config --global http.sslCAinfo ${CA_CERT_PATH}/shared_custom_ca.crt
+            fi
+          fi
+        fi
+
+        if [[ "$(params.git_server_kind)" == "azure" ]]; then
+          token=$(scm token --path $(credentials.path)/.git-credentials --host $(params.git_server_address) --owner "$repo_owner" --repo "$repo_name" --kind $(params.git_server_kind))
+          b64_token=$(printf ":%s" "$token" | base64)
+          git config --global http.extraheader "Authorization: Basic ${b64_token}"
+        fi
+
+        set -o errexit
+        set -o xtrace
+
+        ssh_config_file=$(mktemp)
+
+        echo "
+        UserKnownHostsFile /tekton/creds/.ssh/known_hosts
+        Include $(credentials.path)/.ssh/config
+        " > $ssh_config_file
+
+        export GIT_SSH_COMMAND="ssh -F $ssh_config_file"
+
+        cd `mktemp -d`
+
+        if git clone --depth 1 -b "$(params.git_branch)" "$(params.git_repository)" ./repo; then
+          cd ./repo
+        else
+          git clone --depth 1 "$(params.git_repository)" ./repo
+          cd ./repo
+          git checkout -b "$(params.git_branch)"
+        fi
+
+        git config user.email "$(params.git_user_email)"
+        git config user.name "$(params.git_user_name)"
+
+        mkdir -p $(params.sub_path) && rm -rf $(params.sub_path)/*
+        cd $(params.sub_path)
+
+        echo '$(params.git_files)' | base64 --decode > files.json
+        eval "$(cat files.json | jq -r 'to_entries | .[] | @sh "mkdir -p $(dirname \(.key)) && echo \(.value) > \(.key)"')"
+
+        rm files.json
+        git add .
+
+        if git diff --cached --exit-code; then
+          echo "Nothing to commit"
+          exit 0
+        fi
+
+        git commit -m "$(params.git_commit_message)"
+
+        set +o errexit
+        git push origin $(params.git_branch) && exit 0
+
+        echo "git push failed, retrying with exponential backoff"
+        PUSH_ATTEMPTS=0
+
+        MAX_RANDOM_VAL=32767
+        OFFSET_SEED=$(perl -e "print $RANDOM / $MAX_RANDOM_VAL + 2")
+        while [ $PUSH_ATTEMPTS -le 5 ]; do
+          SLEEP_LENGTH=$(perl -e "print $OFFSET_SEED ** $PUSH_ATTEMPTS * 15")
+          sleep $SLEEP_LENGTH
+          git remote prune origin
+          git gc --prune=now
+          git fetch origin
+          git rebase "origin/$(params.git_branch)"
+          git push origin $(params.git_branch) && exit 0
+          (( PUSH_ATTEMPTS++ ))
+        done
+
+        echo "git push failed after $PUSH_ATTEMPTS attempts"
+        exit 1
