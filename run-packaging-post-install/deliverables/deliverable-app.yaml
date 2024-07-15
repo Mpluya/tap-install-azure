@@ -30,6 +30,12 @@ spec:
         subPath: config/jeremy/server-with-sso
         secretRef:
           name: tap-install-gitops-ssh
+    - git:
+        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
+        ref: origin/main
+        subPath: config/jeremy/appsso-starter-java
+        secretRef:
+          name: tap-install-gitops-ssh
 #    - git:
 #        url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
 #        ref: origin/main
