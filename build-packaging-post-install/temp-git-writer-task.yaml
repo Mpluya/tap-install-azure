@@ -61,7 +61,7 @@ spec:
       default: github
   steps:
     - name: ensure-base-branch-exists
-      image: tanzu-supply-chain-docker-local.artifactory.eng.vmware.com/packages/ootb-templates/scripting-base@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
+      image: cxscssa.azurecr.io/tap-1-11-0/tap-packages@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
       env:
         - name: "HOME"
           value: "/tekton/home/"
@@ -143,7 +143,7 @@ spec:
           fi
         fi
     - name: git-clone-and-push
-      image: tanzu-supply-chain-docker-local.artifactory.eng.vmware.com/packages/ootb-templates/scripting-base@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
+      image: cxscssa.azurecr.io/tap-1-11-0/tap-packages@sha256:c3a8eb52585d6417ae3d8e050e803626f9669e3a9c27189a81b79586f1d0dac6
       env:
         - name: "HOME"
           value: "/tekton/home/"
