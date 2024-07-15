@@ -86,26 +86,26 @@ metadata:
 spec:
   fromNamespace: tap-install
 ---
-apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
-kind: ClientRegistration
-metadata:
-   name: client
-   namespace: auth0-system
-spec:
-  authServerSelector:
-    matchLabels: 
-      name: auth0-authserver
-      env: test
-  redirectURIs:
-    - #@ redirect_uri
-  requireUserConsent: false
-  clientAuthenticationMethod: client_secret_basic
-  authorizationGrantTypes:
-    - authorization_code
-    - client_credentials
-    - refresh_token
-  scopes:
-    - name: "openid"
-    - name: "email"
-    - name: "profile"
-    - name: "roles"
+#apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+#kind: ClientRegistration
+#metadata:
+#   name: client
+#   namespace: auth0-system
+#spec:
+#  authServerSelector:
+#    matchLabels:
+#      name: auth0-authserver
+#      env: test
+#  redirectURIs:
+#    - #@ redirect_uri
+#  requireUserConsent: false
+#  clientAuthenticationMethod: client_secret_basic
+#  authorizationGrantTypes:
+#    - authorization_code
+#    - client_credentials
+#    - refresh_token
+#  scopes:
+#    - name: "openid"
+#    - name: "email"
+#    - name: "profile"
+#    - name: "roles"
