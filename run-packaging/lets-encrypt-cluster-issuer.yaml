@@ -128,3 +128,11 @@ metadata:
   namespace: auth0-system
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: auth0-system
+spec:
+  fromNamespace: tap-install
