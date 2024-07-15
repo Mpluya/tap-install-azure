@@ -85,7 +85,7 @@ metadata:
   namespace: auth0-system
 spec:
   fromNamespace: tap-install
----
+#---
 #apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
 #kind: ClientRegistration
 #metadata:
