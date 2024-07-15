@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth0-system
+---
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: AuthServer
+metadata:
+  name: server
+  namespace: auth0-system
+  labels:
+    name: auth0-authserver
+    env: test
+  annotations:
+    sso.apps.tanzu.vmware.com/allow-client-namespaces: "*"
+spec:
+  identityProviders:
+    - name: idp
+      openID:
+        idToken:
+          claims:
+            - fromUpstream: "picture"
+              toClaim: "custom_picture"
+        issuerURI: https://dev-btlf8ayawht7ypme.us.auth0.com
+        clientID: emXNm3upFwj4Q3JObpFuLX1vj2Xmu5Ku
+        clientSecretRef:
+          name: auth0-client-secret
+        authorizationUri: https://dev-btlf8ayawht7ypme.us.auth0.com/authorize
+        tokenUri: https://dev-btlf8ayawht7ypme.us.auth0.com/oauth/token
+        jwksUri: https://dev-btlf8ayawht7ypme.us.auth0.com/.well-known/jwks.json
+        scopes: 
+          - openid
+          - profile
+          - email
+          - roles
+  replicas: 1
+  tokenSignature:
+    signAndVerifyKeyRef:
+      name: auth0-server-key
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: auth0-server-key
+  namespace: auth0-system
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: auth0-client-secret
+  namespace: tap-install
+spec:
+  refreshInterval: 0m
+  secretStoreRef:
+    kind: SecretStore
+    name: azure-secret-store
+
+  target:
+    name: auth0-client-secret
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        clientSecret: "{{ .auth0clientsecret }}"
+  data:
+  - secretKey: auth0clientsecret
+    remoteRef:
+      key: auth0clientsecret
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretExport
+metadata:
+  name: auth0-client-secret
+  namespace: tap-install
+spec:
+  toNamespaces: 
+  - "auth0-system"
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: auth0-client-secret
+  namespace: auth0-system
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: ClientRegistration
+metadata:
+   name: client
+   namespace: auth0-system
+spec:
+  authServerSelector:
+    matchLabels: 
+      name: auth0-authserver
+      env: test
+  redirectURIs:
+    - #@ redirect_uri
+  requireUserConsent: false
+  clientAuthenticationMethod: client_secret_basic
+  authorizationGrantTypes:
+    - authorization_code
+    - client_credentials
+    - refresh_token
+  scopes:
+    - name: "openid"
+    - name: "email"
+    - name: "profile"
+    - name: "roles"
