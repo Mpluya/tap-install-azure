@@ -13,6 +13,7 @@ metadata:
     env: test
   annotations:
     sso.apps.tanzu.vmware.com/allow-client-namespaces: "*"
+    sso.apps.tanzu.vmware.com/allow-unsafe-identity-provider: ""
 spec:
   identityProviders:
     - name: idp
