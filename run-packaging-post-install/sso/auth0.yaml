@@ -26,7 +26,7 @@ spec:
         clientID: emXNm3upFwj4Q3JObpFuLX1vj2Xmu5Ku
         clientSecretRef:
           name: auth0-client-secret
-        authorizationUri: https://dev-btlf8ayawht7ypme.us.auth0.com/authorize
+        authorizationUri: http://dev-btlf8ayawht7ypme.us.auth0.com/authorize
         tokenUri: https://dev-btlf8ayawht7ypme.us.auth0.com/oauth/token
         jwksUri: https://dev-btlf8ayawht7ypme.us.auth0.com/.well-known/jwks.json
         scopes: 
