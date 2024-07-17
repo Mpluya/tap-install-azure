@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tekton-pipelines-overlay
+  namespace: tap-install
+stringData:
+  tekton-pipelines-webhook-overlay.yml: |
+    #@ load("@ytt:overlay", "overlay")
+    
+    #@overlay/match by=overlay.subset({"kind": "HorizontalPodAutoscaler", "metadata": {"name": "tekton-pipelines-webhook"}}), expects="1+"
+    ---
+    spec:
+      #@overlay/match missing_ok=True
+      maxReplicas: 50
+      minReplicas: 5
+      #@overlay/remove
+      metrics:
+    
+    #@overlay/match by=overlay.subset({"kind": "HorizontalPodAutoscaler", "metadata": {"name": "tekton-pipelines-webhook"}}), expects="1+"
+    ---
+    spec:
+      #@overlay/match missing_ok=True
+      metrics:
+        - resource:
+            name: cpu
+            target:
+              averageUtilization: 75
+              type: Utilization
+          type: Resource
