@@ -4,7 +4,7 @@ metadata:
   name: tanzu-supply-chain-ootb
   namespace: tap-install
 spec:
-  serviceAccountName: tanzu-supplychain-sa
+  serviceAccountName: tap-install-gitops-sa
   fetch:
     - git:
         url: ssh://git@github.com/Mpluya/tanzu-supply-chain.git

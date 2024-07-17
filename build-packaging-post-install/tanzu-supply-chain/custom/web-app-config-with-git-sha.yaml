@@ -4,7 +4,7 @@ metadata:
   name: web-app-config-with-git-sha
   namespace: tap-install
 spec:
-  serviceAccountName: tanzu-supplychain-sa
+  serviceAccountName: tap-install-gitops-sa
   fetch:
     - git:
         url: ssh://git@github.com/Mpluya/tanzu-supply-chain.git
