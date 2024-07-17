@@ -1,6 +1,4 @@
 #@ load("@ytt:data", "data")
-
-#@ if/end "server-template" not in data.values.excluded_templates:
 ---
 apiVersion: carto.run/v1alpha1
 kind: ClusterConfigTemplate
