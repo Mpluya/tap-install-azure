@@ -3,7 +3,7 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterConfigTemplate
 metadata:
-  name: server-with-sso-template
+  name: server-replica
   annotations:
     doc: |
       This template consumes an input named config which contains a
