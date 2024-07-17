@@ -110,7 +110,7 @@ spec:
     apiVersion: v1
     kind: ConfigMap
     metadata:
-      name: #@ data.values.workload.metadata.name + "-server"
+      name: #@ data.values.workload.metadata.name + "-server-sre"
       labels: #@ merge_labels({ "app.kubernetes.io/component": "config" })
     data:
       delivery.yml: #@ yaml.encode(delivery())
