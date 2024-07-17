@@ -1,0 +1,22 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: tanzu-supply-chain-ootb
+  namespace: tap-install
+spec:
+  serviceAccountName: tanzu-supplychain-sa
+  fetch:
+    - git:
+        url: ssh://git@github.com/Mpluya/tanzu-supply-chain.git
+        ref: origin/main
+        subPath: ootb
+        secretRef:
+          name: tap-install-gitops-ssh
+  template:
+    - ytt: {}
+
+  deploy:
+    - kapp:
+        rawOptions:
+          - --dangerous-allow-empty-list-of-resources=true
+          - --diff-changes=true
