@@ -2,7 +2,7 @@ apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
   name: supplychain.supplychains.pve.tanzu.vmware.com
-  namespace: supplychains
+  namespace: jeremy
   annotations:
     kapp.k14s.io/change-group: "tanzu-supplychain-supplychain"
     kapp.k14s.io/change-rule.create-order-0: "upsert after upserting tanzu-supplychain-components"
