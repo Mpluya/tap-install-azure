@@ -129,7 +129,6 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
