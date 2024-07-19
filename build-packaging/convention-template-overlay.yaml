@@ -33,5 +33,5 @@ stringData:
                 wheneUnsatisfiable: ScheduleAnyway 
                 topologykey: topology.kubernetes.io/zone
               - maxSkew: 1
-                whereUnsatisfiable: ScheduleAnyway 
+                whenUnsatisfiable: ScheduleAnyway 
                 topologyKey: kubernetes.io/hostname
