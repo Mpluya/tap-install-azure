@@ -15,8 +15,9 @@ stringData:
       name: convention-template
     #@ end
 
-  #@overlay/match by=overlay.subset(convention_template())
-  ---
-  spec:
-    #@overlay/replace via=lambda left, right: left + right
-    ytt: "\n      topologySpreadConstraints:\n      - maxSkew: 1\n        wheneUnsatisfiable: ScheduleAnyway \n        topologykey: topology.kubernetes.io/zone"
+    #@overlay/match by=overlay.subset(convention_template())
+    ---
+    spec:
+      #@overlay/replace via=lambda left, right: left + right
+      ytt: "\n      topologySpreadConstraints:\n      - maxSkew: 1\n        wheneUnsatisfiable: ScheduleAnyway \n        topologykey: topology.kubernetes.io/zone"
+
