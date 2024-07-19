@@ -30,8 +30,8 @@ stringData:
                 effect: "NoSchedule"
               topologySpreadConstraints:
               - maxSkew: 1
-                wheneUnsatisfiable: ScheduleAnyway 
-                topologykey: topology.kubernetes.io/zone
+                whenUnsatisfiable: ScheduleAnyway 
+                topologyKey: topology.kubernetes.io/zone
               - maxSkew: 1
                 whenUnsatisfiable: ScheduleAnyway 
                 topologyKey: kubernetes.io/hostname
