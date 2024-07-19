@@ -1,0 +1,37 @@
+apiVersion: v1 
+kind: Secret
+metadata: 
+  name: convention-template-overlay
+  namespace: tap-install
+stringData:
+  convention-template-overlay.yaml: | 
+    #@ load("@ytt:overlay", "overlay")
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:yaml", "yaml")
+
+    #@ def convention_template(): 
+    kind: ClusterConfigTemplate 
+    metadata:
+      name: convention-template
+    #@ end
+
+    #@overlay/match by=overlay.subset(convention_template())
+    ---
+    spec:
+      #@overlay/replace via=lambda left, right: left + right
+      #@yaml/text-templated-strings 
+      ytt: |-
+                  nodeSelector: 
+                    userpool: #@ 'tap' if param("appNodePool") == None else data.values.params.appNodePool
+                  tolerations:
+                  - key: "userpool"
+                    operator: "Equal"
+                    value: #@ 'tap' if param("appNodePool") == None else data.values.params.appNodePool
+                    effect: "NoSchedule"
+                  topologySpreadConstraints:
+                  - maxSkew: 1
+                    wheneUnsatisfiable: ScheduleAnyway 
+                    topologykey: topology.kubernetes.io/zone
+                  - maxSkew: 1
+                    whereUnsatisfiable: ScheduleAnyway 
+                    topologyKey: kubernetes.io/hostname
