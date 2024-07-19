@@ -19,4 +19,5 @@ stringData:
     ---
     spec:
       #@overlay/replace via=lambda left, right: left + right
-      ytt: "            topologySpreadConstraints:\n            - maxSkew: 1\n              wheneUnsatisfiable: ScheduleAnyway \n              topologykey: topology.kubernetes.io/zone"
+      ytt: "          #@ if/end param(\"volumeMounts\"):\n          volumeMounts: #@ param(\"volumeMounts\")\n      #@ if/end param(\"volumes\"):\n      volumes: #@ param(\"volumes\")"
+
