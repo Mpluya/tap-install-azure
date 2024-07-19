@@ -21,10 +21,7 @@ stringData:
       #@overlay/replace via=lambda left, right: left + right
       #@yaml/text-templated-strings 
       ytt: |-
-                  topologySpreadConstraints:
-                  - maxSkew: 1
-                    wheneUnsatisfiable: ScheduleAnyway 
-                    topologykey: topology.kubernetes.io/zone
-                  - maxSkew: 1
-                    whereUnsatisfiable: ScheduleAnyway 
-                    topologyKey: kubernetes.io/hostname
+            topologySpreadConstraints:
+            - maxSkew: 1
+              wheneUnsatisfiable: ScheduleAnyway 
+              topologykey: topology.kubernetes.io/zone
