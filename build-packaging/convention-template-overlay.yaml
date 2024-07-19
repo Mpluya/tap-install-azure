@@ -21,13 +21,6 @@ stringData:
       #@overlay/replace via=lambda left, right: left + right
       #@yaml/text-templated-strings 
       ytt: |-
-                  nodeSelector: 
-                    userpool: #@ 'tap' if param("appNodePool") == None else data.values.params.appNodePool
-                  tolerations:
-                  - key: "userpool"
-                    operator: "Equal"
-                    value: #@ 'tap' if param("appNodePool") == None else data.values.params.appNodePool
-                    effect: "NoSchedule"
                   topologySpreadConstraints:
                   - maxSkew: 1
                     wheneUnsatisfiable: ScheduleAnyway 
