@@ -19,5 +19,5 @@ stringData:
     ---
     spec:
       #@overlay/replace via=lambda left, right: left + right
-      ytt: "\n      topologySpreadConstraints:\n      - maxSkew: 1\n        whenUnsatisfiable: ScheduleAnyway \n        topologyKey: topology.kubernetes.io/zone\n        labelSelector:\n          matchLabels: #@ merge_labels({ \"app.kubernetes.io/component\": \"run\", \"carto.run/workload-name\": data.values.workload.metadata.name })"
+      ytt: "\n      #@ if hasattr(data.values.workload.metadata, \"labels\") and hasattr(data.values.workload.metadata.labels, \"\n      topologySpreadConstraints:\n      - maxSkew: 1\n        whenUnsatisfiable: ScheduleAnyway \n        topologyKey: topology.kubernetes.io/zone\n        labelSelector:\n          matchLabels: #@ merge_labels({ \"app.kubernetes.io/component\": \"run\", \"carto.run/workload-name\": data.values.workload.metadata.name })\n      #@ end"
 
