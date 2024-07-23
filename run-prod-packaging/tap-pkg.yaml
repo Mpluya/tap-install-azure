@@ -6,6 +6,7 @@ metadata:
     kapp.k14s.io/change-rule.0: "upsert after upserting pkgr"
     kapp.k14s.io/change-rule.1: "delete before deleting pkgr"
     packaging.carvel.dev/downgradable: ""
+    ext.packaging.carvel.dev/ytt-paths-from-secret-name.99: tap-pkg-overlay-secret
   name: tap
   namespace: tap-install
 spec:
