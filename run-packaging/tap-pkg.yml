@@ -18,4 +18,3 @@ spec:
   values:
   - secretRef:
       name: tap-values
-g
