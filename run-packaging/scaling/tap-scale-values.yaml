@@ -17,36 +17,36 @@ stringData:
           enabled: true
           replicas: 2
     
-      cnrs:
-        resource_management:
-          - name: "controller"
-            limits:
-              cpu: 1000m
-              memory: 2Gi
-            requests:
-              cpu: 100m
-              memory: 512Mi
-          - name: "net-contour-controller"
-            limits:
-              cpu: 400m
-              memory: 2Gi
-            requests:
-              cpu: 40m
-              memory: 512Mi
-          - name: "autoscaler"
-            limits:
-              cpu: 1000m
-              memory: 2Gi
-            requests:
-              cpu: 100m
-              memory: 2Gi
-          - name: "activator"
-            limits:
-              cpu: 1000m
-              memory: 5Gi
-            requests:
-              cpu: 300m
-              memory: 5Gi
+    cnrs:
+      resource_management:
+        - name: "controller"
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        - name: "net-contour-controller"
+          limits:
+            cpu: 400m
+            memory: 2Gi
+          requests:
+            cpu: 40m
+            memory: 512Mi
+        - name: "autoscaler"
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 2Gi
+        - name: "activator"
+          limits:
+            cpu: 1000m
+            memory: 5Gi
+          requests:
+            cpu: 300m
+            memory: 5Gi
     
     tap_telemetry:
       limit_memory: 2Gi
@@ -64,14 +64,13 @@ stringData:
           max_workloads: 50
           max_deliveries: 50
           max_runnables: 50
-        # run cluster settings below
-         resources:
-           limits:
-             cpu: 4
-             memory: 2Gi
-           requests:
-             cpu: 3
-             memory: 1G
+        resources: 
+          limits:
+            cpu: 4
+            memory: 2Gi
+          requests:
+            cpu: 3
+            memory: 1Gi
 
     # only valid when controller: true
     #namespace_provisioner:
