@@ -11,10 +11,6 @@ stringData:
           type: Deployment
           replicas: 3
     
-    tap_gui:
-      deployment:
-        replicas: 3
-    
     buildservice:
       controller:
         resources:
@@ -25,12 +21,6 @@ stringData:
             memory: 1Gi
             cpu: 20m
     
-    appliveview_connector:
-      connector:
-        deployment:
-          enabled: true
-          replicas: 2
-            
     app_scanning:
       scans:
         maxConcurrentScans: 50
@@ -46,37 +36,7 @@ stringData:
 
     tap_telemetry:
       limit_memory: 2Gi
-    
-    cnrs:
-      resource_management:
-        - name: "controller"
-          limits:
-            cpu: 1000m
-            memory: 2Gi
-          requests:
-            cpu: 100m
-            memory: 512Mi
-        - name: "net-contour-controller"
-          limits:
-            cpu: 400m
-            memory: 2Gi
-          requests:
-            cpu: 40m
-            memory: 512Mi
-        - name: "autoscaler"
-          limits:
-            cpu: 1000m
-            memory: 2Gi
-          requests:
-            cpu: 100m
-            memory: 2Gi
-        - name: "activator"
-          limits:
-            cpu: 1000m
-            memory: 5Gi
-          requests:
-            cpu: 300m
-            memory: 5Gi
+
     amr:
       observer:
         app_limit_cpu: 500m
