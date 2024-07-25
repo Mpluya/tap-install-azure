@@ -12,7 +12,7 @@ stringData:
     spec:
       #@overlay/match missing_ok=True
       maxReplicas: 50
-      minReplicas: 15
+      minReplicas: 5
       #@overlay/remove
       metrics:
     
