@@ -71,7 +71,7 @@ spec:
         gitSha=$(oras manifest fetch-config ${image} | jq -r '.config.Labels.["org.opencontainers.image.source"]' | awk -F':' '{print $2}')
         
         # remove last-applied-configuration annotation due to results limits and add sha to annotations 
-        updatedConfig=$(echo -n $serviceConfig | jq 'del(.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | jq -c --arg sha "$gitSha" '.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
+        updatedConfig=$(echo -n $serviceConfig | jq --arg sha "$gitSha" '.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
         
         # write results
         echo -n "$updatedConfig" > "$(results.config.path)"
