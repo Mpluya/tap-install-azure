@@ -1,0 +1,24 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: tap-post-install-gitops
+  namespace: tap-install
+  annotations:
+    kapp.k14s.io/change-rule.0: "upsert after upserting pkgi"
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  fetch:
+  - git:
+      url: ssh://git@github.com/Mpluya/tap-install-azure
+      ref: origin/main
+      subPath: build-packaging-post-install
+      secretRef: 
+        name: tap-install-gitops-ssh
+  template:
+  - ytt: {}
+  deploy:
+  - kapp:
+      rawOptions:
+        - --dangerous-allow-empty-list-of-resources=true
+        - --diff-changes=true
+        - --wait=false

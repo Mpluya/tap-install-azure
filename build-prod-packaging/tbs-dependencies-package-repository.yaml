@@ -1,0 +1,16 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: pkgr
+  name: tbs-dependencies-package-repository
+  namespace: tap-install
+spec:
+  fetch:
+    imgpkgBundle:
+      secretRef:
+        name: tap-registry
+      image: cxscssa.azurecr.io/build-service-dependency-updater/package-repo
+      tagSelection:
+        semver:
+          constraints: 1.11.x

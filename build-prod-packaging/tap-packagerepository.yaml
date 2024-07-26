@@ -1,0 +1,14 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: pkgr
+  name: tanzu-tap-repository
+  namespace: tap-install
+spec:
+  fetch:
+    imgpkgBundle:
+      image: cxscssa.azurecr.io/tap-1-11-0/tap-packages:1.11.0
+      secretRef: 
+        name: tap-registry
+        namespace: tap-install

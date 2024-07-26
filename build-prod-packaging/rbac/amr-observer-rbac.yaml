@@ -1,0 +1,36 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: amr-observer-edit-token
+  namespace: tap-install
+spec:
+  secretStoreRef:
+    name: azure-secret-store
+    kind: SecretStore
+  refreshInterval: "1m"
+  target:
+    template:
+      data:
+        token: "{{ .cehEditToken | b64dec }}"
+  data:
+  - secretKey: cehEditToken
+    remoteRef:
+      key: cehEditToken
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretExport
+metadata:
+  name: amr-observer-edit-token
+  namespace: tap-install
+spec:
+  toNamespaces: 
+    - amr-observer-system
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: amr-observer-edit-token
+  namespace: amr-observer-system
+spec:
+  fromNamespace: tap-install

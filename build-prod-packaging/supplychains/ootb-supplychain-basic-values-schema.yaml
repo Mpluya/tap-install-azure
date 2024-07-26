@@ -1,0 +1,34 @@
+#@data/values-schema
+#@overlay/match-child-defaults missing_ok=True
+---
+#@schema/type any=True
+ootb_supplychain_basic_install:
+  carvel_package:
+    workflow_enabled: true
+    gitops_subpath: packages
+    name_suffix: cssa.vmware.com
+    openapiv3_enabled: true
+  registry:
+    ca_cert_data: ""
+    server: cxscssa.azurecr.io
+    repository: tap-build/workloads
+  external_delivery: true
+  gitops:
+    ssh_secret: tenant-gitops-ssh
+    server_address: ssh://git@github.com
+    repository_owner: Mpluya
+    repository_name: tap-azure-workload-config-repo
+    branch: main
+  maven:
+    repository:
+      url: ""
+      secret_name: ""
+  supported_workloads:
+  - type: web
+    cluster_config_template_name: config-template
+  - type: server
+    cluster_config_template_name: server-template
+  - type: worker
+    cluster_config_template_name: worker-template
+  - type: statefulset
+    cluster_config_template_name: statefulset-template

@@ -1,0 +1,77 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: git-sha-provider
+  namespace: tap-tasks
+  annotations:
+    kapp.k14s.io/create-strategy: fallback-on-update
+spec:
+  stepTemplate:
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 1001
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: "RuntimeDefault"
+      runAsNonRoot: true
+  params:
+    - name: config
+    - name: ca_cert_data
+      type: string
+      default: ""
+      description: >
+        PEM encoded certificate data for the image registry where the image
+        will be pushed to.
+  volumes:
+    - name: docker-config
+      emptyDir: {}
+    - name: ca-certs
+      emptyDir: {}
+  results:
+    - name: config
+  steps:
+    - name: update-config
+      image: cxscssa.azurecr.io/utils/module-detector-pipeline-image:0.5.0
+      env:
+        - name: "HOME"
+          value: "/tekton/home/"
+        - name: "DOCKER_CONFIG"
+          value: "/docker-config/"
+      volumeMounts:
+        - name: docker-config
+          mountPath: /docker-config
+        - name: ca-certs
+          mountPath: /certs
+      script: |-
+        #!/usr/bin/env bash
+        
+        set -x 
+        
+        # setup creds and certs
+        if [[ -f /tekton/creds/.docker/config.json ]]; then
+          cp /tekton/creds/.docker/config.json /docker-config/
+        else
+          echo "docker config not found. continuing" > /dev/null
+        fi
+
+        cp /etc/ssl/certs/ca-certificates.crt /certs/ca-certificates.crt
+        if [[ ! -z "$(params.ca_cert_data)" ]]; then
+          echo "$(params.ca_cert_data)" >> /certs/ca-certificates.crt
+        fi
+        
+        # assign to variable to use later
+        serviceConfig='$(params.config)'
+        
+        # extract image from config 
+        image=$(echo -n $serviceConfig | jq -r '.spec.containers[0].image')
+        
+        # get image metadata and then extract git sha from source label
+        gitSha=$(oras manifest fetch-config ${image} | jq -r '.config.Labels.["org.opencontainers.image.source"]' | awk -F':' '{print $2}')
+        
+        # remove last-applied-configuration annotation due to results limits and add sha to annotations 
+        updatedConfig=$(echo -n $serviceConfig | jq 'del(.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | jq -c --arg sha "$gitSha" '.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
+        
+        # write results
+        echo -n "$updatedConfig" > "$(results.config.path)"

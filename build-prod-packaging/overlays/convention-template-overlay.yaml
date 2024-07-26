@@ -1,0 +1,23 @@
+apiVersion: v1 
+kind: Secret
+metadata: 
+  name: convention-template-overlay
+  namespace: tap-install
+stringData:
+  convention-template-overlay.yaml: | 
+    #@ load("@ytt:overlay", "overlay")
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:yaml", "yaml")
+
+    #@ def convention_template(): 
+    kind: ClusterConfigTemplate 
+    metadata:
+      name: convention-template
+    #@ end
+
+    #@overlay/match by=overlay.subset (convention_template())
+    ---
+    spec:
+      #@overlay/replace via=lambda left, right: left + right
+      ytt: "\n      #@ if hasattr(data.values.workload.metadata, \"labels\") and hasattr(data.values.workload.metadata.labels, \"apps.tanzu.vmware.com/workload-type\") and data.values.workload.metadata.labels[\"apps.tanzu.vmware.com/workload-type\"] != \"web\":\n      topologySpreadConstraints:\n      - maxSkew: 1\n        whenUnsatisfiable: ScheduleAnyway \n        topologyKey: topology.kubernetes.io/zone\n        labelSelector:\n          matchLabels: #@ merge_labels({ \"app.kubernetes.io/component\": \"run\", \"carto.run/workload-name\": data.values.workload.metadata.name })\n      #@ end"
+

@@ -1,0 +1,147 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ootb-supply-chain-overlay
+  namespace: tap-install
+type: Opaque
+stringData:
+  ootb-supply-chain-overlay.yaml: |
+    #@ load("@ytt:overlay", "overlay")
+    #@ load("@ytt:template", "template")
+    #@ load("@ytt:data", "data")
+    
+    
+    #@ basic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-to-url"}})
+    #@ imagebasic = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"basic-image-to-url"}})
+    #@ testingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url"}})
+    #@ imagetestingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url"}})
+    #@ imagetestingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url-package"}})
+    
+    #@overlay/match by=imagetestingscanningpackage, expects="0+"
+    ---
+    spec:
+      #@overlay/match missing_ok=True
+      #@overlay/match-child-defaults missing_ok=True
+      selector:
+        apps.tanzu.vmware.com/has-tests: "true"
+    
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      params:
+      #@overlay/append
+      - name: deliverable_repository_owner
+        default: "Mpluya"
+      - name: deliverable_repository_name
+        default: "tap-azure-deliverable-config-repo"
+      - name: deliverable_branch
+        default: main
+
+
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      #@overlay/remove
+      - name: deliverable
+
+    #@overlay/match by=testingscanning, expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by=overlay.index(2)
+      #@overlay/insert before=True
+      - name: source-jackery
+        sources:
+        - name: source
+          resource: source-tester
+        templateRef:
+          kind: ClusterSourceTemplate
+          name: quality-pipeline
+
+
+    #@overlay/match by=testingscanning, expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: image-provider
+        #@overlay/replace
+        sources:
+        - name: source
+          resource: source-jackery
+
+    #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: config-writer
+      #@overlay/append
+      - name: create-deliverable
+        configs:
+          - resource: config-writer
+            name: config   
+        templateRef:
+          kind: ClusterConfigTemplate
+          name: config-deliverable-template  
+      - name: write-deliverable
+        configs:
+        - name: config
+          resource: create-deliverable   
+        params:
+        - name: serviceAccount
+          value: default
+        templateRef:
+          kind: ClusterTemplate
+          name: config-writer-deliverable-template
+
+    #@overlay/match by=overlay.or_op(testingscanning, basic, imagebasic, imagetestingscanning), expects="0+"
+    ---
+    spec:
+      resources:
+      #@overlay/match by="name", expects="0+"
+      - name: config-writer
+        #@overlay/replace
+        templateRef:
+          kind: ClusterConfigTemplate
+          name: config-writer-template
+
+    #@overlay/match by=testingscanning, expects="0+"
+    ---
+    spec:
+      resources:
+        #@overlay/match by=overlay.index(6)
+        #@overlay/insert before=True
+        - name: git-sha-provider
+          configs:
+            - name: config
+              resource: config-provider
+          templateRef:
+            kind: ClusterConfigTemplate
+            name: git-sha-provider
+          params:
+            - name: serviceAccount
+              default: #@ data.values.service_account
+            - name: registry
+              value: #@ data.values.registry
+        #@overlay/match by="name", expects="1+"
+        #@overlay/replace
+        - name: app-config
+          configs:
+            - name: config
+              resource: git-sha-provider
+          templateRef:
+            kind: ClusterConfigTemplate
+            #@ if len(data.values.supported_workloads) == 1:
+            name: #@ data.values.supported_workloads[0].cluster_config_template_name
+            #@ else:
+            options:
+              #@ for supported_workload in data.values.supported_workloads:
+              - name: #@ supported_workload.cluster_config_template_name
+                selector:
+                  matchLabels:
+                    apps.tanzu.vmware.com/workload-type: #@ supported_workload.type
+            #@ end
+            #@ end
