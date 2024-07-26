@@ -2,9 +2,9 @@ apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
   name: statefulset-app-config
-  namespace: tap-install
+  namespace: supplychains
 spec:
-  serviceAccountName: tap-install-gitops-sa
+  serviceAccountName: tanzu-supplychain-sa
   fetch:
     - git:
         url: ssh://git@github.com/Mpluya/tanzu-supply-chain.git
