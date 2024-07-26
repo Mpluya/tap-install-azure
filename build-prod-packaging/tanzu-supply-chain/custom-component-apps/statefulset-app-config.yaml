@@ -1,0 +1,22 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: statefulset-app-config
+  namespace: tap-install
+spec:
+  serviceAccountName: tap-install-gitops-sa
+  fetch:
+    - git:
+        url: ssh://git@github.com/Mpluya/tanzu-supply-chain.git
+        ref: origin/main
+        subPath: custom-components/statefulset-app-config
+        secretRef:
+          name: tap-install-gitops-ssh
+  template:
+    - ytt: {}
+
+  deploy:
+    - kapp:
+        rawOptions:
+          - --dangerous-allow-empty-list-of-resources=true
+          - --diff-changes=true
