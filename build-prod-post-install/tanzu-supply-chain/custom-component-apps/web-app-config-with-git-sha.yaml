@@ -2,7 +2,7 @@ apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
   name: web-app-config-with-git-sha
-  namespace: supplychain
+  namespace: supplychains
 spec:
   serviceAccountName: tanzu-supplychain-sa
   fetch:
