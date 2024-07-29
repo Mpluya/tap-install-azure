@@ -8,7 +8,7 @@ spec:
     refName: fluxcd-helm-controller.tanzu.vmware.com
     versionSelection:
       constraints: 0.36.2+vmware.1-tkg.1
-  serviceAccountName: tap-installer-sa
+  serviceAccountName: tap-install-sa
   values:
     - secretRef:
         name: helm-controller-values
