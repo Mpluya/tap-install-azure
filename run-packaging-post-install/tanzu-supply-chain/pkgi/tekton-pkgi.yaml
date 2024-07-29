@@ -3,6 +3,8 @@ kind: PackageInstall
 metadata:
   name: tekton-pipelines
   namespace: tap-install
+  annotations:
+    ext.packaging.carvel.dev/ytt-paths-from-secret-name.99: tap-scale-overlay
 spec:
   packageRef:
     refName: tekton.tanzu.vmware.com

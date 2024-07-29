@@ -46,14 +46,3 @@ stringData:
               limits:
                 cpu: 3
                 memory: 2500Mi
-  tekton-pipelines-webhook-overlay.yml: |
-    #@ load("@ytt:overlay", "overlay")
-    
-    #@overlay/match by=overlay.subset({"kind": "HorizontalPodAutoscaler", "metadata": {"name": "tekton-pipelines-webhook"}}), expects="0+"
-    ---
-    spec:
-      #@overlay/match missing_ok=True
-      maxReplicas: 50
-      minReplicas: 5
-      #@overlay/remove
-      metrics:
