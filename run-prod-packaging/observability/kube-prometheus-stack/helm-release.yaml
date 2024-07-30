@@ -56,7 +56,7 @@ spec:
               probeSelectorNilUsesHelmValues: false
               ruleSelectorNilUsesHelmValues: false
               serviceMonitorSelectorNilUsesHelmValues: false
-              podMonitorNamespaceSelector: "monitoring"
+              podMonitorNamespaceSelector: monitoring
               podMonitorSelector:
                 matchLabels:
                   prometheus: "true"
