@@ -51,6 +51,10 @@ spec:
                 - secretName: prometheus-cert
                   hosts:
                     - "prometheus.run-prod.cssa.tapsme.org"
+            prometheusSpec:
+              podMonitorSelector:
+                matchLabels:
+                  prometheus: "true"
           grafana:
             adminPassword: "{{ .grafanaPassword  }}"
             ingress:
