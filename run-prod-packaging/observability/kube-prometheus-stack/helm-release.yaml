@@ -65,7 +65,7 @@ spec:
                     - "grafana.run-prod.cssa.tapsme.org"
           kube-state-metrics:
             customResourceState:
-              enabled: false
+              enabled: true
               config:
                 spec:
                   resources:
