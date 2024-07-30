@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: contour-pods
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: contour
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  endpoints:
+    - port: "8000"
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: envoy-pods
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: envoy
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  endpoints:
+    - port: "8002"
