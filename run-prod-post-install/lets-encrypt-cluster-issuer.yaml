@@ -109,6 +109,14 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: monitoring
+spec:
+  fromNamespace: tap-install
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
