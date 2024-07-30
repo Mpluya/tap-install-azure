@@ -54,7 +54,7 @@ spec:
           grafana:
             adminPassword: "{{ .grafanaPassword  }}"
             ingress:
-              enabled: false
+              enabled: true
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt-production
               hosts:
