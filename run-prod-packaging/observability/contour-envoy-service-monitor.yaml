@@ -1,5 +1,5 @@
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   name: contour-pods
   namespace: monitoring
@@ -10,11 +10,12 @@ spec:
   namespaceSelector:
     matchNames:
       - tanzu-system-ingress
-  endpoints:
+  podMetricsEndpoints:
     - port: "8000"
+      path: /metrics
 ---
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   name: envoy-pods
   namespace: monitoring
@@ -25,5 +26,6 @@ spec:
   namespaceSelector:
     matchNames:
       - tanzu-system-ingress
-  endpoints:
+  podMetricsEndpoints:
     - port: "8002"
+      path: /stats/prometheus
