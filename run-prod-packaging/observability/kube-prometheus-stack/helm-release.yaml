@@ -52,6 +52,10 @@ spec:
                   hosts:
                     - "prometheus.run-prod.cssa.tapsme.org"
             prometheusSpec:
+              podMonitorSelectorNilUsesHelmValues: false
+              probeSelectorNilUsesHelmValues: false
+              ruleSelectorNilUsesHelmValues: false
+              serviceMonitorSelectorNilUsesHelmValues: false
               podMonitorSelector:
                 matchLabels:
                   prometheus: "true"
