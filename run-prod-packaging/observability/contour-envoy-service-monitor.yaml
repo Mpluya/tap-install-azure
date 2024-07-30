@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: contour
+      prometheus: "true"
   namespaceSelector:
     matchNames:
       - tanzu-system-ingress
@@ -23,6 +24,7 @@ spec:
   selector:
     matchLabels:
       app: envoy
+      prometheus: "true"
   namespaceSelector:
     matchNames:
       - tanzu-system-ingress
