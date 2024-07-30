@@ -108,3 +108,11 @@ metadata:
   namespace: bobbyhana
 imagePullSecrets:
   - name: tap-registry
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: monitoring
+imagePullSecrets:
+  - name: tap-registry
