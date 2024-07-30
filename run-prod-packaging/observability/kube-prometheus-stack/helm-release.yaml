@@ -56,7 +56,9 @@ spec:
               probeSelectorNilUsesHelmValues: false
               ruleSelectorNilUsesHelmValues: false
               serviceMonitorSelectorNilUsesHelmValues: false
-              podMonitorNamespaceSelector: monitoring
+              podMonitorNamespaceSelector: 
+                matchLabels:
+                  kubernetes.io/metadata.name: "monitoring"
               podMonitorSelector:
                 matchLabels:
                   prometheus: "true"
