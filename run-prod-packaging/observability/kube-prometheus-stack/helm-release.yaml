@@ -62,9 +62,9 @@ spec:
                       regex: true
                       source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
           
-                    # pod cannot be in kube-system or knative-serving namespaces
+                    # pod cannot be in kube-system or knative-serving or tanzu-system-ingress namespaces
                     - action: drop
-                      regex: (kube-system|knative-serving)
+                      regex: (kube-system|knative-serving|tanzu-system-ingress)
                       source_labels: [__meta_kubernetes_namespace]
           
                     - action: replace
