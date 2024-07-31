@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 56.6.2
+      version: 61.6.0
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
@@ -51,17 +51,7 @@ spec:
                 - secretName: prometheus-cert
                   hosts:
                     - "prometheus.run-prod.cssa.tapsme.org"
-            prometheusSpec:
-              podMonitorSelectorNilUsesHelmValues: false
-              probeSelectorNilUsesHelmValues: false
-              ruleSelectorNilUsesHelmValues: false
-              serviceMonitorSelectorNilUsesHelmValues: false
-              podMonitorNamespaceSelector: 
-                matchLabels:
-                  kubernetes.io/metadata.name: "monitoring"
-              podMonitorSelector:
-                matchLabels:
-                  prometheus: "true"
+
           grafana:
             adminPassword: "{{ .grafanaPassword  }}"
             ingress:
