@@ -69,7 +69,7 @@ spec:
           
                     - action: replace
                       source_labels: [__meta_kubernetes_namespace]
-                      target_label: bosh_namespace
+                      target_label: k8s_namespace
           grafana:
             adminPassword: "{{ .grafanaPassword  }}"
             ingress:

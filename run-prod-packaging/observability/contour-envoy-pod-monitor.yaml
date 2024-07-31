@@ -15,6 +15,10 @@ spec:
   podMetricsEndpoints:
     - port: "8000"
       path: /metrics
+      relabelings:
+      - action: replace
+        source_labels: [ __meta_kubernetes_namespace ]
+        target_label: k8s_namespace
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -33,3 +37,7 @@ spec:
   podMetricsEndpoints:
     - port: "8002"
       path: /stats/prometheus
+      relabelings:
+      - action: replace
+      source_labels: [ __meta_kubernetes_namespace ]
+      target_label: k8s_namespace
