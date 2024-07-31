@@ -41,8 +41,6 @@ spec:
       data:
         values.yaml: |
           prometheus:
-            monitor:
-              enabled: true
             ingress:
               enabled: true
               annotations:
