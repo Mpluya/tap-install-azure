@@ -6,6 +6,10 @@ metadata:
   labels:
     release: kube-prometheus-stack
 spec:
+  labelLimit: 63
+  labelNameLengthLimit: 511
+  labelValueLengthLimit: 1023
+
   selector:
     matchLabels:
       app: contour
@@ -28,6 +32,10 @@ metadata:
   labels:
     release: kube-prometheus-stack
 spec:
+  labelLimit: 63
+  labelNameLengthLimit: 511
+  labelValueLengthLimit: 1023
+
   selector:
     matchLabels:
       app: envoy
