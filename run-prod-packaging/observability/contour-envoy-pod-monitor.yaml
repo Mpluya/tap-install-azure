@@ -18,13 +18,13 @@ spec:
       relabelings:
       - action: replace
         sourceLabels: [ __meta_kubernetes_namespace ]
-        targetLabels: k8s_namespace
+        targetLabel: k8s_namespace
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: envoy-pods
-  namespace: monitoring
+  namespayce: monitoring
   labels:
     release: kube-prometheus-stack
 spec:
@@ -39,5 +39,5 @@ spec:
       path: /stats/prometheus
       relabelings:
       - action: replace
-      sourceLabels: [ __meta_kubernetes_namespace ]
-      targetLabels: k8s_namespace
+        sourceLabels: [ __meta_kubernetes_namespace ]
+        targetLabel: k8s_namespace
