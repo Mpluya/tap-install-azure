@@ -1,0 +1,35 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: contour-pods
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: contour
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  podMetricsEndpoints:
+    - port: "8000"
+      path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: envoy-pods
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: envoy
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  podMetricsEndpoints:
+    - port: "8002"
+      path: /stats/prometheus
