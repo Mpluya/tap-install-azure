@@ -17,8 +17,8 @@ spec:
       path: /metrics
       relabelings:
       - action: replace
-        source_labels: [ __meta_kubernetes_namespace ]
-        target_label: k8s_namespace
+        sourceLabels: [ __meta_kubernetes_namespace ]
+        targetLabels: k8s_namespace
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -39,5 +39,5 @@ spec:
       path: /stats/prometheus
       relabelings:
       - action: replace
-      source_labels: [ __meta_kubernetes_namespace ]
-      target_label: k8s_namespace
+      sourceLabels: [ __meta_kubernetes_namespace ]
+      targetLabels: k8s_namespace
