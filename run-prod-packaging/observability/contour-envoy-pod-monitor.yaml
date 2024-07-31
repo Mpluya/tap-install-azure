@@ -17,8 +17,7 @@ spec:
     matchNames:
       - tanzu-system-ingress
   podMetricsEndpoints:
-    - port: "8000"
-      path: /metrics
+    - port: "metrics"
       relabelings:
       - action: replace
         sourceLabels: [ __meta_kubernetes_namespace ]
