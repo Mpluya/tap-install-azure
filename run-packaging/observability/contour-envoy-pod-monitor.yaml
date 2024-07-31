@@ -1,0 +1,50 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: contour-pods
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  labelLimit: 63
+  labelNameLengthLimit: 511
+  labelValueLengthLimit: 1023
+
+  selector:
+    matchLabels:
+      app: contour
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  podMetricsEndpoints:
+    - port: "metrics"
+      relabelings:
+      - action: replace
+        sourceLabels: [ __meta_kubernetes_namespace ]
+        targetLabel: k8s_namespace
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: envoy-pods
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  labelLimit: 63
+  labelNameLengthLimit: 511
+  labelValueLengthLimit: 1023
+
+  selector:
+    matchLabels:
+      app: envoy
+  namespaceSelector:
+    matchNames:
+      - tanzu-system-ingress
+  podMetricsEndpoints:
+    - port: "8002"
+      path: /stats/prometheus
+      relabelings:
+      - action: replace
+        sourceLabels: [ __meta_kubernetes_namespace ]
+        targetLabel: k8s_namespace
