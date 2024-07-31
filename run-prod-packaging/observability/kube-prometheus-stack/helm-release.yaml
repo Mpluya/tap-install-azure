@@ -61,6 +61,15 @@ spec:
                     - action: keep
                       regex: true
                       source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          
+                    # pod cannot be in kube-system or knative-serving namespaces
+                    - action: drop
+                      regex: (kube-system|knative-serving)
+                      source_labels: [__meta_kubernetes_namespace]
+          
+                    - action: replace
+                      source_labels: [__meta_kubernetes_namespace]
+                      target_label: bosh_namespace
           grafana:
             adminPassword: "{{ .grafanaPassword  }}"
             ingress:
