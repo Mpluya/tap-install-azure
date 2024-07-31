@@ -144,3 +144,19 @@ metadata:
   namespace: auth0-system
 spec:
   fromNamespace: tap-install
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: monitoring
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: monitoring
+imagePullSecrets:
+  - name: tap-registry
