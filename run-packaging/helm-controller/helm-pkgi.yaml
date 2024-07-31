@@ -3,8 +3,6 @@ kind: PackageInstall
 metadata:
   name: helm-controller
   namespace: tap-install
-  annotations:
-    ext.packaging.carvel.dev/ytt-paths-from-secret-name.99: tolerations-overlay-secret
 spec:
   packageRef:
     refName: fluxcd-helm-controller.tanzu.vmware.com
