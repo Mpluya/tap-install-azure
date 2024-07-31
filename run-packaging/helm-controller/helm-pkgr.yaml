@@ -1,0 +1,9 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: tanzu-standard-repo-tmc
+  namespace: tap-install
+spec:
+  fetch:
+    imgpkgBundle:
+      image: extensions.aws-usw2.tmc.cloud.vmware.com/packages/standard/repo:v2024.4.19
