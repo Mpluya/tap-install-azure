@@ -62,9 +62,9 @@ spec:
                       regex: true
                       source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
           
-                    # pod cannot be in kube-system or knative-serving or tanzu-system-ingress namespaces
+                    # pod cannot be in kube-system namespaces
                     - action: drop
-                      regex: (kube-system|knative-serving|tanzu-system-ingress)
+                      regex: (kube-system)
                       source_labels: [__meta_kubernetes_namespace]
           
                     # allow override of default /metrics path
