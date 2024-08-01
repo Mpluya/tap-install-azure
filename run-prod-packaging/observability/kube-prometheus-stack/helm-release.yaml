@@ -62,9 +62,9 @@ spec:
                       regex: true
                       source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
           
-                    # pod cannot be in kube-system namespaces
+                    # pod cannot be in kube-system and monitoring namespaces
                     - action: drop
-                      regex: (kube-system)
+                      regex: (kube-system|monitoring)
                       source_labels: [__meta_kubernetes_namespace]
           
                     # allow override of default /metrics path
