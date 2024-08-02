@@ -83,8 +83,8 @@ spec:
       labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
     spec:
       selector:
-        matchLabels: #@ data.values.config.metadata.labels
-      template: #@ data.values.config
+        matchLabels: #@ data.values.configs.config.config.metadata.labels
+      template: #@ data.values.configs.config.config
     ---
     apiVersion: v1
     kind: Service
