@@ -73,8 +73,5 @@ spec:
         # remove last-applied-configuration annotation due to results limits and add sha to annotations 
         updatedConfig=$(echo -n $serviceConfig | jq --arg sha "$gitSha" '.metadata.annotations += {"apps.tanzu.vmware.com/git-sha": $sha}')
         
-        # convert json to yaml
-        yamlConverted=$(echo -n $updatedConfig | yq -p json -o yaml -)
-        
         # write results
-        echo -n "$yamlConverted" > "$(results.config.path)"
+        echo -n "$updatedConfig" > "$(results.config.path)"

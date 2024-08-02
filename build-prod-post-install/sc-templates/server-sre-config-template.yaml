@@ -29,6 +29,7 @@ spec:
   ytt: |
     #@ load("@ytt:data", "data")
     #@ load("@ytt:yaml", "yaml")
+    @ load("@ytt:json", "json")
     #@ load("@ytt:struct", "struct")
     #@ load("@ytt:assert", "assert")
 
@@ -70,7 +71,7 @@ spec:
     #@   return ports.values()
     #@ end
 
-    #@ config = data.values.config
+    #@ config = struct.encode(json.decode(data.values.config))
 
     #@ def delivery():
     ---
@@ -94,7 +95,7 @@ spec:
       name: #@ data.values.workload.metadata.name
       labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
     spec:
-      selector: #@ data.values.config.metadata.labels
+      selector: #@ config.metadata.labels
       ports:
       #@ hasattr(data.values.params, "ports") and len(data.values.params.ports) or assert.fail("one or more ports param must be provided.")
       #@ declared_ports = []
@@ -103,7 +104,7 @@ spec:
       #@ else:
       #@   declared_ports = struct.encode([{ "containerPort": 8080, "port": 8080, "name": "http"}])
       #@ end
-      #@ for p in merge_ports(declared_ports, data.values.config.spec.containers):
+      #@ for p in merge_ports(declared_ports, config.spec.containers):
       - #@ p
       #@ end
     #@ end
