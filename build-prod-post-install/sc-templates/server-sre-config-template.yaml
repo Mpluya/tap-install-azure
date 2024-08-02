@@ -29,7 +29,7 @@ spec:
   ytt: |
     #@ load("@ytt:data", "data")
     #@ load("@ytt:yaml", "yaml")
-    @ load("@ytt:json", "json")
+    #@ load("@ytt:json", "json")
     #@ load("@ytt:struct", "struct")
     #@ load("@ytt:assert", "assert")
 
