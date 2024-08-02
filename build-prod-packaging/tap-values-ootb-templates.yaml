@@ -8,7 +8,6 @@ stringData:
     ootb_templates:
       excluded_templates:
       - kaniko-build
-      - server-template
       carvel_package:
         parameters:
           - selector:
