@@ -70,6 +70,8 @@ spec:
     #@   return ports.values()
     #@ end
 
+    #@ config = data.values.config
+
     #@ def delivery():
     ---
     apiVersion: apps/v1
@@ -83,8 +85,8 @@ spec:
       labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
     spec:
       selector:
-        matchLabels: #@ data.values.configs.config.config.metadata.labels
-      template: #@ data.values.configs.config.config
+        matchLabels: #@ config.metadata.labels
+      template: #@ config
     ---
     apiVersion: v1
     kind: Service
