@@ -142,7 +142,7 @@ stringData:
               resource: config-provider
           templateRef:
             kind: ClusterConfigTemplate
-            name: git-sha-providergit ad
+            name: git-sha-provider
           params:
             - name: serviceAccount
               default: #@ data.values.service_account
