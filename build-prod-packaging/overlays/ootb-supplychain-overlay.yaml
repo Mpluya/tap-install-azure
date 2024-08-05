@@ -108,27 +108,27 @@ stringData:
           kind: ClusterConfigTemplate
           name: config-writer-template
 
-      #@overlay/match by=testingscanning, expects="0+"
-      ---
-      spec:
-        resources:
-          #@overlay/match by=overlay.index(4)
-          #@overlay/insert before=True
-          - name: policy
-            templateRef:
-              kind: ClusterImageTemplate
-              name: policy-enforcement-template
-            images:
-              - name: image
-                resource: image-scanner
-      
-          #@overlay/match by="name", expects="1+"
-          - name: config-provider
-            images:
-              #@overlay/replace via=lambda left, _: left
-              -
-                resource: policy
-                name: image
+    #@overlay/match by=testingscanning, expects="0+"
+    ---
+    spec:
+      resources:
+        #@overlay/match by=overlay.index(4)
+        #@overlay/insert before=True
+        - name: policy
+          templateRef:
+            kind: ClusterImageTemplate
+            name: policy-enforcement-template
+          images:
+            - name: image
+              resource: image-scanner
+    
+        #@overlay/match by="name", expects="1+"
+        - name: config-provider
+          images:
+            #@overlay/replace via=lambda left, _: left
+            -
+              resource: policy
+              name: image
 
     #@overlay/match by=testingscanning, expects="0+"
     ---
