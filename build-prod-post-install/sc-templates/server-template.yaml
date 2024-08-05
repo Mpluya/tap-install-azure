@@ -30,6 +30,7 @@ spec:
   ytt: |
     #@ load("@ytt:data", "data")
     #@ load("@ytt:yaml", "yaml")
+    #@ load("@ytt:json", "json")
     #@ load("@ytt:struct", "struct")
     #@ load("@ytt:assert", "assert")
 
@@ -71,7 +72,7 @@ spec:
     #@   return ports.values()
     #@ end
 
-    #@ config = struct.encode(data.values.config)
+    #@ config = struct.encode(json.decode(data.values.config))
     #@ def delivery():
     ---
     apiVersion: apps/v1
