@@ -125,10 +125,11 @@ stringData:
         #@overlay/match by="name", expects="1+"
         - name: config-provider
           images:
-            #@overlay/replace via=lambda left, _: left
-            -
-              resource: policy
-              name: image
+          #@overlay/match by=overlay.all, expects="1+"
+          - 
+            #@overlay/replace via=lambda left, right: right
+            resource: policy
+            name: image
 
     #@overlay/match by=testingscanning, expects="0+"
     ---
