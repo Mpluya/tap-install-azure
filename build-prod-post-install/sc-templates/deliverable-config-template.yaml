@@ -16,8 +16,6 @@ spec:
   healthRule:
     alwaysHealthy: {}
 
-  #@ label_exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association", "app.kubernetes.io/version"]) + "\"]"
-  #@yaml/text-templated-strings
   ytt: |
     #@ load("@ytt:yaml", "yaml")
     #@ load("@ytt:data", "data")
@@ -27,7 +25,7 @@ spec:
     #@ def merge_labels(fixed_values):
     #@   labels = {}
     #@   if hasattr(data.values.workload.metadata, "labels"):
-    #@     exclusions = (@= label_exclusions @)
+    #@     exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association", "app.kubernetes.io/version"]) + "\"]"
     #@     for k,v in dict(data.values.workload.metadata.labels).items():
     #@       if k not in exclusions:
     #@         labels[k] = v
