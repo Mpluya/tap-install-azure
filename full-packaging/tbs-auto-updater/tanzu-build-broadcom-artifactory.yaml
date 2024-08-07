@@ -1,0 +1,34 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tanzu-build-broadcom-artifactory
+  namespace: tap-install
+spec:
+  refreshInterval: 60m
+
+  secretStoreRef:
+    kind: SecretStore
+    name: azure-secret-store
+
+  target:
+    name: tanzu-build-broadcom-artifactory
+    creationPolicy: Owner
+    template:
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ .tapTbsBuildRegistryConfig }}"
+
+  data:
+    - secretKey: tapTbsBuildRegistryConfig
+      remoteRef:
+        key: tapTbsBuildRegistryConfig
+        decodingStrategy: Base64
+---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretExport
+metadata:
+  name: tanzu-build-broadcom-artifactory
+  namespace: tap-install
+spec:
+  toNamespaces:
+    - '*'
