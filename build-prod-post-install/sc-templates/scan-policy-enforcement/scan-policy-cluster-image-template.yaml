@@ -31,7 +31,7 @@ spec:
     #@ def merged_tekton_params():
     #@   params = []
     #@   params.append({ "name": "image", "value": data.values.image })
-    #@   params.append({ "name": "gate", "value": data.values.scan_severity_gate })
+    #@   params.append({ "name": "gate", "value": data.values.params["scan_severity_gate"]})
     #@   return params
     #@ end
     ---
