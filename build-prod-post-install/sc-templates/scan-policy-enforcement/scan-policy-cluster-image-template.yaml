@@ -3,6 +3,10 @@ kind: ClusterImageTemplate
 metadata:
   name: policy-enforcement-template
 spec:
+  params:
+    - name: scan_severity_gate
+      default: critical
+
   healthRule:
     singleConditionType: Ready
   imagePath: .status.outputs.imagePath
@@ -27,6 +31,7 @@ spec:
     #@ def merged_tekton_params():
     #@   params = []
     #@   params.append({ "name": "image", "value": data.values.image })
+    #@   params.append({ "name": "gate", "value": data.values.scan_severity_gate })
     #@   return params
     #@ end
     ---
