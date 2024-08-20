@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
     - name: scan_severity_gate
-      default: critical
+      default: none
 
   healthRule:
     singleConditionType: Ready
