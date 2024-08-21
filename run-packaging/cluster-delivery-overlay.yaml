@@ -22,3 +22,10 @@ stringData:
         sources:
         - resource: deployer
           name: source
+      - name: test-and-notify
+        templateRef:
+          kind: ClusterTemplate
+          name: test-and-notify-template
+        sources:
+        - resource: deployer
+          name: source

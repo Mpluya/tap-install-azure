@@ -1,0 +1,67 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterTemplate
+metadata:
+  name: test-and-notify-template-template
+spec:
+  params:
+    - name: serviceAccount
+      default: default
+  healthRule:
+    singleConditionType: Ready
+  lifecycle: tekton
+
+  #@ label_exclusions = "[\"" + "\", \"".join(["kapp.k14s.io/app", "kapp.k14s.io/association"]) + "\"]"
+  #@yaml/text-templated-strings
+  ytt: |
+    #@ load("@ytt:data", "data")
+    #@ load("@ytt:json", "json")
+
+    #@ def merge_labels(fixed_values):
+    #@   labels = {}
+    #@   if hasattr(data.values.workload.metadata, "labels"):
+    #@     exclusions = ""
+    #@     for k,v in dict(data.values.workload.metadata.labels).items():
+    #@       if k not in exclusions:
+    #@         labels[k] = v
+    #@       end
+    #@     end
+    #@   end
+    #@   labels.update(fixed_values)
+    #@   return labels
+    #@ end
+
+    #@ def merged_tekton_params():
+    #@   params = []
+    #@   params.append({ "name": "source-url", "value": data.values.source.url })
+    #@   params.append({ "name": "source-revision", "value": data.values.source.revision })
+    #@   params.append({ "name": "deliverable-name", "value": data.values.deliverable.metadata.name })
+    #@   params.append({ "name": "deliverable-namespace", "value": data.values.deliverable.metadata.namespace })    
+    #@   return params
+    #@ end
+    ---
+    apiVersion: carto.run/v1alpha1
+    kind: Runnable
+    metadata:
+      name: #@ data.values.workload.metadata.name
+      labels: #@ merge_labels({ "app.kubernetes.io/component": "test-and-notify" })
+    spec:
+      #@ if/end hasattr(data.values.deliverable.spec, "serviceAccountName"):
+      serviceAccountName: #@ data.values.deliverable.spec.serviceAccountName
+
+      runTemplateRef:
+        name: test-and-notify-pipelinerun
+        kind: ClusterRunTemplate
+
+      selector:
+        resource:
+          apiVersion: tekton.dev/v1beta1
+          kind: Pipeline
+
+        matchingLabels: 
+          apps.tanzu.vmware.com/intent: notify
+
+      inputs: 
+        tekton-params: #@ merged_tekton_params()
