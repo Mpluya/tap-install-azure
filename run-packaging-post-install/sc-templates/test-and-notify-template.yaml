@@ -44,7 +44,7 @@ spec:
     apiVersion: carto.run/v1alpha1
     kind: Runnable
     metadata:
-      name: #@ data.values.deliverable.metadata.name
+      name: #@ data.values.deliverable.metadata.name + "-test-and-notify"
       labels: #@ merge_labels({ "app.kubernetes.io/component": "test-and-notify" })
     spec:
       #@ if/end hasattr(data.values.deliverable.spec, "serviceAccountName"):
