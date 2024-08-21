@@ -6,10 +6,6 @@ kind: ClusterRunTemplate
 metadata:
   name: test-and-notify-pipelinerun
 spec:
-  outputs:
-    url: spec.params[?(@.name=="source-url")].value
-    revision: spec.params[?(@.name=="source-revision")].value
-
   template:
     apiVersion: tekton.dev/v1beta1
     kind: PipelineRun

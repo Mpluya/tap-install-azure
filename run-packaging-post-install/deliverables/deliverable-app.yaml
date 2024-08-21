@@ -9,7 +9,7 @@ spec:
     - git:
         url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
         ref: origin/main
-        subPath: config/mae/tanzu-java-web-app-1-7-azure
+        subPath: config/jeremy/friday-java-web-app
         secretRef:
           name: tap-install-gitops-ssh
   template:
