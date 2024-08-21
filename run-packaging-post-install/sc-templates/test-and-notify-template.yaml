@@ -35,7 +35,7 @@ spec:
     #@ def merged_tekton_params():
     #@   params = []
     #@   params.append({ "name": "source-url", "value": data.values.sources.source.url })
-    #@   params.append({ "name": "source-revision", "value": data.values.source.revision })
+    #@   params.append({ "name": "source-revision", "value": data.values.sources.source.revision })
     #@   params.append({ "name": "deliverable-name", "value": data.values.deliverable.metadata.name })
     #@   params.append({ "name": "deliverable-namespace", "value": data.values.deliverable.metadata.namespace })    
     #@   return params
