@@ -1,5 +1,4 @@
 #@ load("@ytt:data", "data")
-
 ---
 apiVersion: carto.run/v1alpha1
 kind: ClusterTemplate
@@ -22,7 +21,7 @@ spec:
     #@ def merge_labels(fixed_values):
     #@   labels = {}
     #@   if hasattr(data.values.workload.metadata, "labels"):
-    #@     exclusions = ""
+    #@     exclusions = (@= label_exclusions @)
     #@     for k,v in dict(data.values.workload.metadata.labels).items():
     #@       if k not in exclusions:
     #@         labels[k] = v
