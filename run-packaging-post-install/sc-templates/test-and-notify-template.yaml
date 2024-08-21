@@ -20,9 +20,9 @@ spec:
 
     #@ def merge_labels(fixed_values):
     #@   labels = {}
-    #@   if hasattr(data.values.workload.metadata, "labels"):
+    #@   if hasattr(data.values.deliverable.metadata, "labels"):
     #@     exclusions = (@= label_exclusions @)
-    #@     for k,v in dict(data.values.workload.metadata.labels).items():
+    #@     for k,v in dict(data.values.deliverable.metadata.labels).items():
     #@       if k not in exclusions:
     #@         labels[k] = v
     #@       end
@@ -34,7 +34,7 @@ spec:
 
     #@ def merged_tekton_params():
     #@   params = []
-    #@   params.append({ "name": "source-url", "value": data.values.source.url })
+    #@   params.append({ "name": "source-url", "value": data.values.sources.source.url })
     #@   params.append({ "name": "source-revision", "value": data.values.source.revision })
     #@   params.append({ "name": "deliverable-name", "value": data.values.deliverable.metadata.name })
     #@   params.append({ "name": "deliverable-namespace", "value": data.values.deliverable.metadata.namespace })    
@@ -44,7 +44,7 @@ spec:
     apiVersion: carto.run/v1alpha1
     kind: Runnable
     metadata:
-      name: #@ data.values.workload.metadata.name
+      name: #@ data.values.deliverable.metadata.name
       labels: #@ merge_labels({ "app.kubernetes.io/component": "test-and-notify" })
     spec:
       #@ if/end hasattr(data.values.deliverable.spec, "serviceAccountName"):
