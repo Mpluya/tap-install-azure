@@ -22,6 +22,8 @@ stringData:
         sources:
         - resource: deployer
           name: source
+      #@overlay/match by="name", expects="0+"
+      #@overlay/append
       - name: test-and-notify
         templateRef:
           kind: ClusterTemplate
