@@ -1,0 +1,60 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: test-and-notify-pipeline
+  namespace: tap-tasks
+  labels:
+    apps.tanzu.vmware.com/intent: notify
+spec:
+  params:
+    - name: source-url
+    - name: source-revision
+    - name: deliverable-name
+    - name: deliverable-namespace
+  tasks:
+    - name: parse
+      params:
+        - name: source-url
+          value: $(params.source-url)
+        - name: source-revision
+          value: $(params.source-revision)
+        - name: deliverable-name
+          value: $(params.deliverable-name)
+        - name: deliverable-namespace
+          value: $(params.deliverable-namespace)
+        - name: environment
+          value: dev
+      taskSpec:
+        params:
+          - name: source-url
+          - name: source-revision
+          - name: deliverable-name
+          - name: deliverable-namespace
+          - name: environment
+        results:
+          - description: git-sha
+            name: git-sha
+            type: string
+        steps:
+          - name: parse
+            image: cxscssa.azurecr.io/utils/module-detector-pipeline-image:0.5.0
+            script: |-
+              cd `mktemp -d`
+              wget -qO- $(params.source-url) | tar xvz -m
+
+              cd config/$(params.deliverable-namespace)/$(params.deliverable-name)/$(params.environment)
+              
+              yaml_file="delivery.yml"
+              git_sha_value=$(yq e '. | select((.kind == "Deployment" and .apiVersion == "apps/v1") or (.kind == "Service" and .apiVersion == "serving.knative.dev/v1")) | .spec.template.metadata.annotations."apps.tanzu.vmware.com/git-sha"' "$yaml_file")
+  
+              echo $git_sha_value > $(results.git-sha.path)
+    - name: slack
+      params:
+        - name: webhook-secret
+          value: webhook-secret
+        - name: message
+          value: "$(params.deliverable-name) source code commit sha - $(tasks.parse.results.git-sha)"
+      taskRef:
+        name: send-to-webhook-slack

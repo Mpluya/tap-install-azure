@@ -41,26 +41,21 @@ spec:
     #@   return params
     #@ end
     ---
-    apiVersion: carto.run/v1alpha1
-    kind: Runnable
+    apiVersion: tekton.dev/v1
+    kind: PipelineRun
     metadata:
-      name: #@ data.values.deliverable.metadata.name + "-test-and-notify"
+      generateName: #@ data.values.deliverable.metadata.name + "-test-and-notify"
       labels: #@ merge_labels({ "app.kubernetes.io/component": "test-and-notify" })
     spec:
       #@ if/end hasattr(data.values.deliverable.spec, "serviceAccountName"):
       serviceAccountName: #@ data.values.deliverable.spec.serviceAccountName
 
-      runTemplateRef:
-        name: test-and-notify-pipelinerun
-        kind: ClusterRunTemplate
-
-      selector:
-        resource:
-          apiVersion: tekton.dev/v1
-          kind: Pipeline
-
-        matchingLabels: 
-          apps.tanzu.vmware.com/intent: notify
-
-      inputs: 
-        tekton-params: #@ merged_tekton_params()
+      pipelineRef:
+        resolver: cluster
+        params:
+          - name: kind
+            value: pipeline
+          - name: namespace
+            value: tap-tasks
+          - name: name
+            value: test-and-notify-pipeline
