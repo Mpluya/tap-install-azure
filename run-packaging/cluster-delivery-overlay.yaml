@@ -15,13 +15,6 @@ stringData:
       resources:
       #@overlay/match by="name", expects="0+"
       #@overlay/append
-      - name: canary
-        templateRef:
-          kind: ClusterTemplate
-          name: canary-cluster-template
-        sources:
-        - resource: deployer
-          name: source
       - name: test-and-notify
         templateRef:
           kind: ClusterTemplate
