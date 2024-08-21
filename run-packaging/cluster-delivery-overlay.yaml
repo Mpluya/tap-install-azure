@@ -9,7 +9,7 @@ stringData:
     #@ load("@ytt:overlay", "overlay")
     #@ load("@ytt:template", "template")
         
-    #@overlay/match by=overlay.subset({"apiVersion": "carto.run/v1alpha1", "kind": "ClusterDelivery","metadata":{"name":"delivery-basic"}}), expects="0+"
+    #@overlay/match by=overlay.subset({"apiVersion": "carto.run/v1alpha1", "kind": "ClusterDelivery","metadata":{"name":"delivery-basic"}}), expects="1+"
     ---
     spec:
       resources:
@@ -22,8 +22,6 @@ stringData:
         sources:
         - resource: deployer
           name: source
-      #@overlay/match by="name", expects="0+"
-      #@overlay/append
       - name: test-and-notify
         templateRef:
           kind: ClusterTemplate
