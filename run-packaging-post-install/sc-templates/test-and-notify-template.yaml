@@ -4,7 +4,7 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterTemplate
 metadata:
-  name: test-and-notify-template-template
+  name: test-and-notify-template
 spec:
   params:
     - name: serviceAccount
