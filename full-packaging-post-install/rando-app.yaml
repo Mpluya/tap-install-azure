@@ -4,18 +4,11 @@ metadata:
   name: rando-app
   namespace: tap-install
 spec:
-  serviceAccountName: tap-install-sadata.packaging.carvel.dev
+  serviceAccountName: tap-install-sa
   fetch:
     - git:
         url: https://github.com/Mpluya/repo-with-large-file-storage.git
         ref: origin/master
-        subPath: test/dood
-        secretRef:
-          name: git-credentials
-    - git:
-        url: https://github.com/Mpluya/repo-with-large-file-storage.git
-        ref: origin/master
-        subPath: bro
         secretRef:
           name: git-credentials
   template:
