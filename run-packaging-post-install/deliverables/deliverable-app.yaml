@@ -21,7 +21,7 @@ spec:
     - git:
         url: ssh://git@github.com/Mpluya/tap-azure-deliverable-config-repo.git
         ref: origin/main
-        subPath: config/mae/tshoot-node-buildpack
+        subPath: config/mae/lease-frontend2
         secretRef:
           name: tap-install-gitops-ssh
   template:
