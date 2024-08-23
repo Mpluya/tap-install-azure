@@ -50,11 +50,11 @@ spec:
               git_sha_value=$(yq e '. | select((.kind == "Deployment" and .apiVersion == "apps/v1") or (.kind == "Service" and .apiVersion == "serving.knative.dev/v1")) | .spec.template.metadata.annotations."apps.tanzu.vmware.com/git-sha"' "$yaml_file")
   
               echo $git_sha_value > $(results.git-sha.path)
-    - name: slack
-      params:
-        - name: webhook-secret
-          value: webhook-secret
-        - name: message
-          value: "$(params.deliverable-name) source code commit sha - $(tasks.parse.results.git-sha)"
-      taskRef:
-        name: send-to-webhook-slack
+#    - name: slack
+#      params:
+#        - name: webhook-secret
+#          value: webhook-secret
+#        - name: message
+#          value: "$(params.deliverable-name) source code commit sha - $(tasks.parse.results.git-sha)"
+#      taskRef:
+#        name: send-to-webhook-slack
