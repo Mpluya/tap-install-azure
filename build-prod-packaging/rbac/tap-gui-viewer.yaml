@@ -133,3 +133,6 @@ rules:
 - apiGroups: [data.packaging.carvel.dev]
   resources: [packages]
   verbs: ['get', 'watch', 'list']
+- apiGroups: [packaging.carvel.dev]
+  resources: [packageinstalls]
+  verbs: ['get', 'watch', 'list']
