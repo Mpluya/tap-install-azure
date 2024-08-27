@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: tolerations-overlay-secret
+  name: update-queue-sidecar-overlay-secret
   namespace: tap-install
 stringData:
   update-queue-sidecar-overlay-secret.yaml: |
