@@ -5,6 +5,8 @@ metadata:
   namespace: tap-install
 stringData:
   update-queue-sidecar-overlay-secret.yaml: |
+    #@ load("@ytt:overlay", "overlay")
+    
     #@overlay/match by=overlay.subset({"kind":"Config"}), expects="1+"
     ---
     rebaseRules:
