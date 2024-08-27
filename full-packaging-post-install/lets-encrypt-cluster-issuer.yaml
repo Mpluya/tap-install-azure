@@ -95,6 +95,22 @@ metadata:
 imagePullSecrets:
   - name: tap-registry
 ---
+apiVersion: secretgen.carvel.dev/v1alpha1
+kind: SecretImport
+metadata:
+  name: tap-registry
+  namespace: jeremy
+spec:
+  fromNamespace: tap-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tap-acme-http01-solver
+  namespace: jeremy
+imagePullSecrets:
+  - name: tap-registry
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
