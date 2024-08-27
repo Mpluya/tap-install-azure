@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tolerations-overlay-secret
+  namespace: tap-install
+stringData:
+  update-queue-sidecar-overlay-secret.yaml: |
+    #@overlay/match by=overlay.subset({"kind":"Config"}), expects="1+"
+    ---
+    rebaseRules:
+      #@overlay/append
+      - path: [data, queue-sidecar-image]
+        type: copy
+        sources: [new, existing]
+        resourceMatchers:
+          - kindNamespaceNameMatcher: {kind: ConfigMap, namespace: knative-serving, name: config-deployment}
