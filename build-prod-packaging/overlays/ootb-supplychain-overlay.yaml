@@ -107,7 +107,7 @@ stringData:
     ---
     spec:
       resources:
-        #@overlay/match by=overlay.index(6)
+        #@overlay/match by=overlay.index(5)
         #@overlay/insert before=True
         - name: git-sha-provider
           configs:
