@@ -16,6 +16,7 @@ stringData:
     #@ testingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url"}})
     #@ imagetestingscanning = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url"}})
     #@ imagetestingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"scanning-image-scan-to-url-package"}})
+    #@ testingscanningpackage = overlay.subset({"kind": "ClusterSupplyChain", "metadata":{"name":"source-test-scan-to-url-package"}})
     
     #@overlay/match by=imagetestingscanningpackage, expects="0+"
     ---
@@ -128,7 +129,7 @@ stringData:
             #@overlay/match by=overlay.subset({"name": "image"})
             - resource: policy
 
-    #@overlay/match by=testingscanning, expects="0+"
+    #@overlay/match by=overlay.or_op(testingscanning, testingscanningpackage), expects="0+"
     ---
     spec:
       resources:
