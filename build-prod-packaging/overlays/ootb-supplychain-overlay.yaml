@@ -47,32 +47,6 @@ stringData:
       #@overlay/remove
       - name: deliverable
 
-    #@overlay/match by=testingscanning, expects="0+"
-    ---
-    spec:
-      resources:
-      #@overlay/match by=overlay.index(2)
-      #@overlay/insert before=True
-      - name: source-jackery
-        sources:
-        - name: source
-          resource: source-tester
-        templateRef:
-          kind: ClusterSourceTemplate
-          name: quality-pipeline
-
-
-    #@overlay/match by=testingscanning, expects="0+"
-    ---
-    spec:
-      resources:
-      #@overlay/match by="name", expects="0+"
-      - name: image-provider
-        #@overlay/replace
-        sources:
-        - name: source
-          resource: source-jackery
-
     #@overlay/match by=overlay.or_op(testingscanning, basic), expects="0+"
     ---
     spec:
@@ -113,7 +87,7 @@ stringData:
     ---
     spec:
       resources:
-        #@overlay/match by=overlay.index(5)
+        #@overlay/match by=overlay.index(4)
         #@overlay/insert before=True
         - name: policy
           templateRef:
@@ -133,7 +107,7 @@ stringData:
     ---
     spec:
       resources:
-        #@overlay/match by=overlay.index(7)
+        #@overlay/match by=overlay.index(6)
         #@overlay/insert before=True
         - name: git-sha-provider
           configs:
