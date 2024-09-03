@@ -71,6 +71,7 @@ spec:
     #@   return ports.values()
     #@ end
 
+    #@ config = struct.encode(json.decode(data.values.config))
     #@ def delivery():
     ---
     apiVersion: apps/v1
@@ -84,8 +85,8 @@ spec:
       labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
     spec:
       selector:
-        matchLabels: #@ data.values.config.metadata.labels
-      template: #@ data.values.config
+        matchLabels: #@ config.metadata.labels
+      template: #@ config
     ---
     apiVersion: v1
     kind: Service
@@ -93,7 +94,7 @@ spec:
       name: #@ data.values.workload.metadata.name
       labels: #@ merge_labels({ "app.kubernetes.io/component": "run", "carto.run/workload-name": data.values.workload.metadata.name })
     spec:
-      selector: #@ data.values.config.metadata.labels
+      selector: #@ config.metadata.labels
       ports:
       #@ hasattr(data.values.params, "ports") and len(data.values.params.ports) or assert.fail("one or more ports param must be provided.")
       #@ declared_ports = []
@@ -102,7 +103,7 @@ spec:
       #@ else:
       #@   declared_ports = struct.encode([{ "containerPort": 8080, "port": 8080, "name": "http"}])
       #@ end
-      #@ for p in merge_ports(declared_ports, data.values.config.spec.containers):
+      #@ for p in merge_ports(declared_ports, config.spec.containers):
       - #@ p
       #@ end
     #@ end
