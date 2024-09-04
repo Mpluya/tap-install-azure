@@ -83,7 +83,7 @@ stringData:
           kind: ClusterConfigTemplate
           name: config-writer-template
 
-    #@overlay/match by=testingscanning, expects="0+"
+    #@overlay/match by=overlay.or_op(testingscanning, testingscanningpackage), expects="0+"
     ---
     spec:
       resources:
@@ -107,7 +107,7 @@ stringData:
     ---
     spec:
       resources:
-        #@overlay/match by=overlay.index(5)
+        #@overlay/match by=overlay.index(6)
         #@overlay/insert before=True
         - name: git-sha-provider
           configs:
