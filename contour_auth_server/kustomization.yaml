@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: projectcontour-auth
+
+resources:
+  - github.com/projectcontour/contour-authserver/config/htpasswd
+
+patchesJson6902:
+  - target:
+      group: cert-manager.io
+      version: v1
+      kind: Certificate
+      name: htpasswd
+      namespace: projectcontour-auth
+    patch: |-
+      - op: add
+        path: /spec/issuerRef/kind
+        value: ClusterIssuer
+  - target:
+      group: cert-manager.io
+      version: v1
+      kind: Certificate
+      name: htpasswd
+      namespace: projectcontour-auth
+    patch: |-
+      - op: add
+        path: /spec/issuerRef/name
+        value: selfsigned-cluster-issuer
+images:
+  - name: contour-authserver:latest
+    newName: ghcr.io/projectcontour/contour-authserver
+    newTag: v4
